@@ -34,8 +34,8 @@ const advantages = [
 
 export function AdvantagesSection() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section className="py-16 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <SectionHeading
           title="Почему именно G.657.A2"
           subtitle="Пять вещей, которые реально отличают это волокно от обычного G.652."

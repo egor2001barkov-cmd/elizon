@@ -8,6 +8,12 @@ import {
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    // Case covers are local SVGs; allow crisp delivery on mobile
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   async rewrites() {
     return [...SEO_ROUTE_REWRITES];
   },

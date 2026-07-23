@@ -8,8 +8,8 @@ import { reviews } from "@/lib/data/applications";
 
 export function ReviewsSection() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section className="py-16 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <SectionHeading
           title="Отзывы"
           subtitle="Реальные слова от инженеров, руководителей проектов и закупок."

@@ -68,10 +68,10 @@ export function HeroSection() {
   }, [enable3d]);
 
   return (
-    <section className="relative min-h-screen overflow-hidden pt-28">
+    <section className="relative min-h-[100dvh] overflow-hidden pt-20 sm:pt-24 md:pt-28">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-32 top-20 h-[500px] w-[500px] rounded-full bg-[#6ECFFF]/10 blur-[120px]" />
-        <div className="absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-[#0A2540]/60 blur-[100px]" />
+        <div className="absolute -right-32 top-20 h-[320px] w-[320px] rounded-full bg-[#6ECFFF]/10 blur-[100px] sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
+        <div className="absolute -left-20 bottom-0 h-[280px] w-[280px] rounded-full bg-[#0A2540]/60 blur-[80px] sm:h-[400px] sm:w-[400px]" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -82,41 +82,43 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-5 py-12 md:px-8 lg:grid-cols-2 lg:gap-12 lg:py-20">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-12 md:px-8 lg:grid-cols-2 lg:gap-12 lg:py-20">
         <div>
-          <p className="mb-4 inline-block rounded-full border border-[#6ECFFF]/25 bg-[#6ECFFF]/8 px-4 py-1.5 text-sm text-[#6ECFFF]">
+          <p className="mb-3 inline-block rounded-full border border-[#6ECFFF]/25 bg-[#6ECFFF]/8 px-3 py-1.5 text-xs text-[#6ECFFF] sm:mb-4 sm:px-4 sm:text-sm">
             Прямой поставщик · Под заказ · {LEAD_TIME_LABEL}
           </p>
 
-          <h1 className="font-display text-4xl font-medium leading-[1.1] tracking-tight text-white md:text-5xl lg:text-[3.5rem]">
+          <h1 className="font-display text-[1.75rem] font-medium leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem]">
             Оптоволокно G.657.A2 —{" "}
             <span className="bg-gradient-to-r from-[#6ECFFF] to-[#99E8FF] bg-clip-text text-transparent">
-              радиус изгиба 7,5 мм
+              радиус изгиба 7,5&nbsp;мм
             </span>
           </h1>
 
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#8BA4BC]">
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-[#8BA4BC] sm:mt-6 sm:text-lg">
             Поставляем G.657.A2 напрямую — без посредников и без цен «по запросу через три недели».
             Катушки по 50 км под заказ, срок {LEAD_TIME_LABEL}. Для магистралей, FTTH и городских сетей.
           </p>
 
-          <p className="mt-4 text-sm text-[#6ECFFF]/80">
+          <p className="mt-3 text-sm text-[#6ECFFF]/80 sm:mt-4">
             Лучшие цены с завода, радиус изгиба 7,5 мм, 50 км в катушке.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button href={`${ROUTES.contacts}#form`}>Запросить цену</Button>
-            <Button href="#product" variant="secondary">
+          <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
+            <Button href={`${ROUTES.contacts}#form`} className="w-full sm:w-auto">
+              Запросить цену
+            </Button>
+            <Button href="#product" variant="secondary" className="w-full sm:w-auto">
               Смотреть продукт
             </Button>
-            <Button href="#cases" variant="ghost">
+            <Button href="#cases" variant="ghost" className="w-full sm:w-auto">
               Кейсы →
             </Button>
           </div>
         </div>
 
-        <div className="relative h-[400px] sm:h-[440px] md:h-[480px] lg:h-[520px]">
-          <div className="absolute inset-0 rounded-3xl border border-[#6ECFFF]/12 bg-white/[0.02] shadow-[0_0_60px_rgba(110,207,255,0.08)] backdrop-blur-sm" />
+        <div className="relative mx-auto aspect-[4/3] w-full max-w-lg sm:aspect-auto sm:h-[400px] sm:max-w-none md:h-[480px] lg:h-[520px]">
+          <div className="absolute inset-0 rounded-2xl border border-[#6ECFFF]/12 bg-white/[0.02] shadow-[0_0_60px_rgba(110,207,255,0.08)] backdrop-blur-sm sm:rounded-3xl" />
           {enable3d ? (
             <SceneCanvas
               type="spool"
@@ -129,10 +131,10 @@ export function HeroSection() {
             />
           ) : (
             <div
-              className="flex h-full w-full items-center justify-center rounded-3xl bg-gradient-to-br from-[#0A2540] via-[#0F3254] to-[#061829]"
+              className="flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#0A2540] via-[#0F3254] to-[#061829] sm:rounded-3xl"
               aria-hidden
             >
-              <div className="h-44 w-44 rounded-full border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 shadow-[0_0_40px_rgba(110,207,255,0.15)] md:h-52 md:w-52" />
+              <div className="h-36 w-36 rounded-full border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 shadow-[0_0_40px_rgba(110,207,255,0.15)] sm:h-44 sm:w-44 md:h-52 md:w-52" />
             </div>
           )}
         </div>

@@ -8,8 +8,8 @@ import { COMPANY } from "@/lib/constants";
 
 export function CtaSection() {
   return (
-    <section id="contact" className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section id="contact" className="py-16 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-2">
           <ScrollReveal>
             <SectionHeading

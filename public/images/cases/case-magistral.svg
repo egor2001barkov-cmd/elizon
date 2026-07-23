@@ -1,19 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
   <defs>
-    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0a1f35"/>
-      <stop offset="100%" stop-color="#071e33"/>
+    <linearGradient id="mg-bg" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#061829"/>
+      <stop offset="0.45" stop-color="#0A2540"/>
+      <stop offset="1" stop-color="#0d3254"/>
     </linearGradient>
+    <linearGradient id="mg-fiber" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#00D4FF" stop-opacity="0.15"/>
+      <stop offset="0.5" stop-color="#6ECFFF"/>
+      <stop offset="1" stop-color="#00D4FF" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="mg-glow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop stop-color="#00D4FF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#00D4FF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="mg-node" cx="50%" cy="50%" r="50%">
+      <stop stop-color="#B8F0FF"/>
+      <stop offset="0.4" stop-color="#00D4FF"/>
+      <stop offset="1" stop-color="#00D4FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="mg-blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
   </defs>
-  <rect width="640" height="360" fill="url(#sky)"/>
-  <rect y="260" width="640" height="100" fill="#0d2840"/>
-  <path d="M0 280 Q160 250 320 270 T640 260 L640 360 L0 360Z" fill="#102d48"/>
-  <line x1="40" y1="270" x2="600" y2="270" stroke="#6ECFFF" stroke-width="3" opacity="0.6"/>
-  <circle cx="120" cy="270" r="8" fill="#00D4FF" opacity="0.8"/>
-  <circle cx="320" cy="270" r="8" fill="#00D4FF" opacity="0.8"/>
-  <circle cx="520" cy="270" r="8" fill="#00D4FF" opacity="0.8"/>
-  <rect x="80" y="180" width="24" height="80" fill="#1a3a5c"/>
-  <line x1="92" y1="160" x2="92" y2="180" stroke="#6ECFFF" stroke-width="2"/>
-  <ellipse cx="92" cy="155" rx="20" ry="6" fill="none" stroke="#6ECFFF" stroke-width="1" opacity="0.4"/>
-  <text x="40" y="40" fill="#6ECFFF" font-family="system-ui" font-size="14" opacity="0.7">Магистраль · 38 км</text>
+  <rect width="800" height="450" fill="url(#mg-bg)"/>
+  <!-- grid -->
+  <g opacity="0.12" stroke="#6ECFFF" stroke-width="1">
+    <path d="M0 90h800M0 180h800M0 270h800M0 360h800"/>
+    <path d="M100 0v450M200 0v450M300 0v450M400 0v450M500 0v450M600 0v450M700 0v450"/>
+  </g>
+  <!-- terrain -->
+  <path d="M0 320 C120 290 200 340 320 310 C440 280 520 350 640 300 C720 270 780 310 800 295 V450 H0Z" fill="#0a1f35" opacity="0.9"/>
+  <path d="M0 350 C140 330 240 370 380 340 C520 310 620 360 800 330 V450 H0Z" fill="#071e33"/>
+  <!-- fiber ring / path -->
+  <path d="M80 240 C180 160 280 140 400 180 C520 220 620 150 720 200" stroke="url(#mg-fiber)" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M80 240 C180 160 280 140 400 180 C520 220 620 150 720 200" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+  <path d="M100 260 C200 200 300 190 400 220 C520 255 600 200 700 230" stroke="#6ECFFF" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.35"/>
+  <!-- towers -->
+  <g>
+    <rect x="108" y="200" width="10" height="90" rx="2" fill="#1a3a5c"/>
+    <path d="M113 200 L95 230 M113 200 L131 230 M113 220 L98 245 M113 220 L128 245" stroke="#2d4a6f" stroke-width="2"/>
+    <circle cx="113" cy="195" r="14" fill="url(#mg-node)" filter="url(#mg-blur)"/>
+    <circle cx="113" cy="195" r="5" fill="#00D4FF"/>
+  </g>
+  <g>
+    <rect x="392" y="165" width="12" height="100" rx="2" fill="#1a3a5c"/>
+    <path d="M398 165 L375 200 M398 165 L421 200 M398 190 L378 220 M398 190 L418 220" stroke="#2d4a6f" stroke-width="2"/>
+    <circle cx="398" cy="158" r="18" fill="url(#mg-node)" filter="url(#mg-blur)"/>
+    <circle cx="398" cy="158" r="6" fill="#B8F0FF"/>
+  </g>
+  <g>
+    <rect x="686" y="185" width="10" height="95" rx="2" fill="#1a3a5c"/>
+    <path d="M691 185 L672 218 M691 185 L710 218" stroke="#2d4a6f" stroke-width="2"/>
+    <circle cx="691" cy="178" r="14" fill="url(#mg-node)" filter="url(#mg-blur)"/>
+    <circle cx="691" cy="178" r="5" fill="#00D4FF"/>
+  </g>
+  <!-- badge -->
+  <rect x="28" y="28" width="220" height="36" rx="18" fill="#00D4FF" fill-opacity="0.12" stroke="#6ECFFF" stroke-opacity="0.35"/>
+  <text x="48" y="51" fill="#6ECFFF" font-family="system-ui,sans-serif" font-size="15" font-weight="600">Магистраль · 38 км · 3 стыка</text>
+  <!-- soft vignette -->
+  <rect width="800" height="450" fill="url(#mg-glow)" opacity="0.25"/>
 </svg>

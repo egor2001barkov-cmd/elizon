@@ -10,8 +10,8 @@ import { applicationPath, ROUTES } from "@/lib/seo/routes";
 
 export function ApplicationsPreview() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section className="py-16 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <SectionHeading
           title="Где применяется наше оптоволокно"
           subtitle="Телеком, магистрали, дата-центры, промышленность — одно волокно для разных задач."
