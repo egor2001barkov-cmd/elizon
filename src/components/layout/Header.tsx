@@ -196,9 +196,6 @@ export function Header() {
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
             {mobileSection === null && (
               <nav className="px-3 py-2" aria-label="Мобильная навигация">
-                <p className="mb-2 px-3 text-xs uppercase tracking-wider text-[#6ECFFF]/80">
-                  Весь сайт — не одностраничник
-                </p>
                 <ul className="space-y-1">
                   {MOBILE_PRIMARY_LINKS.map((item) => {
                     const active = isNavLinkActive(pathname, item.href);
