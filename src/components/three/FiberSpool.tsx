@@ -111,17 +111,14 @@ export function FiberSpool({
   useFrame((state, delta) => {
     if (!groupRef.current) return;
 
-    if (autoRotate && !interactive) {
+    // Same continuous spin on mobile and desktop (even when interactive controls exist)
+    if (autoRotate) {
       groupRef.current.rotation.y += delta * 0.35;
     }
 
     if (hovered) {
-      targetRotation.current.y += delta * 0.8;
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(
-        groupRef.current.rotation.y,
-        targetRotation.current.y,
-        0.05
-      );
+      targetRotation.current.y += delta * 0.45;
+      groupRef.current.rotation.y += delta * 0.15;
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
         Math.sin(state.clock.elapsedTime * 0.5) * 0.08,

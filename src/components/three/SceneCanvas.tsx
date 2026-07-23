@@ -64,7 +64,7 @@ function SceneObject({
   return (
     <FiberSpool
       interactive={interactive}
-      autoRotate={autoRotate && !interactive}
+      autoRotate={autoRotate}
       scrollUnwind={scrollUnwind}
       hovered={hovered}
       variant={spoolVariant}
@@ -79,13 +79,15 @@ export function SceneCanvas({
   scrollUnwind = 0,
   className = "",
   height = "100%",
-  force3D = false,
+  force3D = true,
   spoolVariant = "default",
 }: SceneCanvasProps) {
   const [hovered, setHovered] = useState(false);
   const [mounted, setMounted] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const useFallback = isMobile && !force3D && !interactive;
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  // Same 3D scene as desktop on mobile; SVG fallback only for reduced-motion or explicit force3D=false
+  const useFallback = prefersReducedMotion || (isMobile && !force3D && !interactive);
 
   useEffect(() => setMounted(true), []);
 
@@ -107,17 +109,22 @@ export function SceneCanvas({
 
   return (
     <div
-      className={`relative ${className}`}
+      className={`relative touch-pan-y ${className}`}
       style={{ height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onPointerDown={() => setHovered(true)}
     >
       <Canvas
-        dpr={isMobile ? [1, 1] : [1, 1.5]}
-        gl={{ antialias: !isMobile, alpha: true, powerPreference: "high-performance" }}
-        style={{ background: "transparent" }}
+        dpr={isMobile ? [1, 1.5] : [1, 1.75]}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: isMobile ? "default" : "high-performance",
+        }}
+        style={{ background: "transparent", touchAction: interactive ? "none" : "pan-y" }}
       >
-        <PerspectiveCamera makeDefault position={[0, 1.5, 5]} fov={40} />
+        <PerspectiveCamera makeDefault position={[0, 1.5, 5]} fov={isMobile ? 42 : 40} />
         <SceneLights />
         {type !== "bend" && <ParticleGrid />}
 
@@ -136,6 +143,10 @@ export function SceneCanvas({
           <OrbitControls
             enableZoom={false}
             enablePan={false}
+            enableRotate
+            enableDamping
+            dampingFactor={0.08}
+            rotateSpeed={isMobile ? 0.7 : 0.9}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 1.5}
             autoRotate={false}
@@ -144,8 +155,8 @@ export function SceneCanvas({
       </Canvas>
 
       {interactive && (
-        <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-[#8BA4BC]/60">
-          Покрутите мышью
+        <p className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-[#8BA4BC]/60">
+          {isMobile ? "Покрутите пальцем" : "Покрутите мышью"}
         </p>
       )}
     </div>

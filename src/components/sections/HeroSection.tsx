@@ -41,15 +41,16 @@ export function HeroSection() {
       cancelIdleCallback?: (id: number) => void;
     };
 
+    // Start 3D sooner so mobile matches desktop animation quickly
     if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(start, { timeout: 1800 });
+      const id = w.requestIdleCallback(start, { timeout: 600 });
       return () => {
         cancelled = true;
         w.cancelIdleCallback?.(id);
       };
     }
 
-    const t = window.setTimeout(start, 900);
+    const t = window.setTimeout(start, 200);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
@@ -114,13 +115,15 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative h-[350px] md:h-[450px] lg:h-[520px]">
+        <div className="relative h-[400px] sm:h-[440px] md:h-[480px] lg:h-[520px]">
           <div className="absolute inset-0 rounded-3xl border border-[#6ECFFF]/12 bg-white/[0.02] shadow-[0_0_60px_rgba(110,207,255,0.08)] backdrop-blur-sm" />
           {enable3d ? (
             <SceneCanvas
               type="spool"
               spoolVariant="realistic"
               scrollUnwind={scrollUnwind}
+              force3D
+              autoRotate
               className="h-full w-full"
               height="100%"
             />
@@ -129,7 +132,7 @@ export function HeroSection() {
               className="flex h-full w-full items-center justify-center rounded-3xl bg-gradient-to-br from-[#0A2540] via-[#0F3254] to-[#061829]"
               aria-hidden
             >
-              <div className="h-40 w-40 rounded-full border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 shadow-[0_0_40px_rgba(110,207,255,0.15)] md:h-52 md:w-52" />
+              <div className="h-44 w-44 rounded-full border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 shadow-[0_0_40px_rgba(110,207,255,0.15)] md:h-52 md:w-52" />
             </div>
           )}
         </div>

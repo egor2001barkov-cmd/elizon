@@ -174,21 +174,32 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
           const isActive = hoveredCategory === category.slug;
           return (
             <li key={category.slug}>
-              <Link
-                href={category.href}
-                onClick={onNavigate}
+              <button
+                type="button"
+                onClick={() => selectCategory(category.slug)}
                 onMouseEnter={() => selectCategory(category.slug)}
-                className={`flex min-h-[44px] items-center px-4 py-2.5 text-sm font-medium transition-colors ${
+                className={`flex min-h-[44px] w-full items-center px-4 py-2.5 text-left text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-[#00D4FF]/10 text-[#6ECFFF]"
                     : "text-[#8BA4BC] hover:bg-white/[0.03] hover:text-white"
                 }`}
               >
                 {category.title}
-              </Link>
+              </button>
             </li>
           );
         })}
+        {activeCategory && (
+          <li className="border-t border-white/8 px-4 py-2 sm:hidden">
+            <Link
+              href={activeCategory.href}
+              onClick={onNavigate}
+              className="text-xs font-medium text-[#6ECFFF]"
+            >
+              {activeCategory.title} — весь раздел →
+            </Link>
+          </li>
+        )}
       </ul>
 
       <ul className="shrink-0 border-b border-white/8 py-1 sm:w-48 sm:border-b-0 sm:border-r md:w-52">
@@ -196,22 +207,33 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
           const isActive = hoveredSub === sub.slug;
           return (
             <li key={sub.slug}>
-              <Link
-                href={sub.href}
-                onClick={onNavigate}
+              <button
+                type="button"
+                onClick={() => setHoveredSub(sub.slug)}
                 onMouseEnter={() => setHoveredSub(sub.slug)}
                 title={sub.metaTitle}
-                className={`flex min-h-[44px] items-center px-4 py-2.5 text-sm transition-colors ${
+                className={`flex min-h-[44px] w-full items-center px-4 py-2.5 text-left text-sm transition-colors ${
                   isActive
                     ? "bg-[#00D4FF]/10 font-medium text-[#6ECFFF]"
                     : "text-[#8BA4BC] hover:bg-white/[0.03] hover:text-[#6ECFFF]"
                 }`}
               >
                 {sub.title}
-              </Link>
+              </button>
             </li>
           );
         })}
+        {activeSub && (
+          <li className="border-t border-white/8 px-4 py-2 sm:hidden">
+            <Link
+              href={activeSub.href}
+              onClick={onNavigate}
+              className="text-xs font-medium text-[#6ECFFF]"
+            >
+              {activeSub.title} — открыть →
+            </Link>
+          </li>
+        )}
       </ul>
 
       <div className="min-w-0 flex-1 px-4 py-3 sm:px-5 sm:py-4">

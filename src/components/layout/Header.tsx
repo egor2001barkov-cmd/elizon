@@ -20,11 +20,11 @@ import { InvoiceModal } from "@/components/forms/InvoiceModal";
 
 const APPLICATION_NAV = getApplicationNavChildren();
 
+type MobilePanel = "root" | "catalog" | "applications" | "company";
+
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [catalogExpanded, setCatalogExpanded] = useState(false);
-  const [companyExpanded, setCompanyExpanded] = useState(false);
-  const [applicationsExpanded, setApplicationsExpanded] = useState(false);
+  const [mobilePanel, setMobilePanel] = useState<MobilePanel>("root");
   const [callbackOpen, setCallbackOpen] = useState(false);
   const [invoiceOpen, setInvoiceOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -38,9 +38,7 @@ export function Header() {
 
   useEffect(() => {
     setOpen(false);
-    setCatalogExpanded(false);
-    setCompanyExpanded(false);
-    setApplicationsExpanded(false);
+    setMobilePanel("root");
   }, [pathname]);
 
   useEffect(() => {
@@ -54,9 +52,7 @@ export function Header() {
 
   const closeMobile = () => {
     setOpen(false);
-    setCatalogExpanded(false);
-    setCompanyExpanded(false);
-    setApplicationsExpanded(false);
+    setMobilePanel("root");
   };
 
   return (
@@ -137,7 +133,10 @@ export function Header() {
             <button
               type="button"
               className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/10"
-              onClick={() => setOpen(!open)}
+              onClick={() => {
+                setMobilePanel("root");
+                setOpen(!open);
+              }}
               aria-label={open ? "Закрыть меню" : "Открыть меню"}
               aria-expanded={open}
             >
@@ -165,146 +164,187 @@ export function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-[#020a12]/70 backdrop-blur-sm lg:hidden"
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-[#020a12]/75 backdrop-blur-sm lg:hidden"
               aria-label="Закрыть меню"
               onClick={closeMobile}
             />
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-x-0 top-[3.75rem] z-50 flex max-h-[calc(100dvh-3.75rem)] flex-col border-t border-[#00D4FF]/10 bg-[#071e33]/98 backdrop-blur-xl lg:hidden"
-              style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+            <motion.aside
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 320 }}
+              className="fixed inset-y-0 right-0 z-50 flex w-[min(100vw,26rem)] flex-col border-l border-[#00D4FF]/15 bg-[#071e33]/98 shadow-[-20px_0_60px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:hidden"
+              style={{ paddingTop: "env(safe-area-inset-top)" }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Меню навигации"
             >
-              <nav className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
-                {NAV_LINKS.map((link) => {
-                  if ("megaMenu" in link && link.megaMenu === "catalog") {
-                    return (
-                      <div key={link.href} className="mb-2 overflow-hidden rounded-xl border border-white/8 bg-white/[0.02]">
-                        <button
-                          type="button"
-                          onClick={() => setCatalogExpanded((v) => !v)}
-                          className="flex min-h-[52px] w-full items-center justify-between px-4 py-3 text-left text-base font-medium text-white"
-                          aria-expanded={catalogExpanded}
-                        >
-                          Каталог
-                          <span className={`text-xs transition-transform ${catalogExpanded ? "rotate-180" : ""}`}>
-                            ▼
-                          </span>
-                        </button>
-                        {catalogExpanded && (
-                          <div className="border-t border-white/8 px-3 py-3">
-                            <CatalogMenuContent variant="mobile" onNavigate={closeMobile} />
-                            <div className="mt-3 grid gap-2 border-t border-white/8 pt-3">
-                              {catalogMenuQuickLinks.map((item) => (
-                                <Link
-                                  key={item.href}
-                                  href={item.href}
-                                  onClick={closeMobile}
-                                  className="min-h-[44px] rounded-lg px-3 py-2.5 text-sm text-[#8BA4BC] hover:bg-white/5 hover:text-[#6ECFFF]"
-                                >
-                                  {item.label}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  }
+              <div className="flex shrink-0 items-center justify-between gap-3 border-b border-white/10 px-4 py-3.5">
+                {mobilePanel !== "root" ? (
+                  <button
+                    type="button"
+                    onClick={() => setMobilePanel("root")}
+                    className="flex min-h-[44px] items-center gap-2 rounded-lg px-2 text-sm text-[#6ECFFF] hover:bg-white/5"
+                  >
+                    <BackIcon className="h-4 w-4" />
+                    Назад
+                  </button>
+                ) : (
+                  <p className="text-xs font-medium uppercase tracking-wider text-[#6ECFFF]">
+                    Меню ELIZON
+                  </p>
+                )}
+                <button
+                  type="button"
+                  onClick={closeMobile}
+                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-white hover:bg-white/5"
+                  aria-label="Закрыть"
+                >
+                  <CloseIcon className="h-4 w-4" />
+                </button>
+              </div>
 
-                  if ("megaMenu" in link && link.megaMenu === "applications") {
-                    return (
-                      <div key={link.href} className="mb-2 overflow-hidden rounded-xl border border-white/8 bg-white/[0.02]">
-                        <button
-                          type="button"
-                          onClick={() => setApplicationsExpanded((v) => !v)}
-                          className="flex min-h-[52px] w-full items-center justify-between px-4 py-3 text-left text-base font-medium text-white"
-                          aria-expanded={applicationsExpanded}
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+                {mobilePanel === "root" && (
+                  <nav className="px-3 py-3">
+                    {NAV_LINKS.map((link) => {
+                      if ("megaMenu" in link && link.megaMenu === "catalog") {
+                        return (
+                          <button
+                            key={link.href}
+                            type="button"
+                            onClick={() => setMobilePanel("catalog")}
+                            className="mb-1 flex min-h-[52px] w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-medium text-white hover:bg-white/5"
+                          >
+                            Каталог
+                            <ChevronRight className="h-4 w-4 text-[#6ECFFF]/70" />
+                          </button>
+                        );
+                      }
+                      if ("megaMenu" in link && link.megaMenu === "applications") {
+                        return (
+                          <button
+                            key={link.href}
+                            type="button"
+                            onClick={() => setMobilePanel("applications")}
+                            className="mb-1 flex min-h-[52px] w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-medium text-white hover:bg-white/5"
+                          >
+                            Сферы
+                            <ChevronRight className="h-4 w-4 text-[#6ECFFF]/70" />
+                          </button>
+                        );
+                      }
+                      if ("megaMenu" in link && link.megaMenu === "company") {
+                        return (
+                          <button
+                            key={link.href}
+                            type="button"
+                            onClick={() => setMobilePanel("company")}
+                            className="mb-1 flex min-h-[52px] w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-medium text-white hover:bg-white/5"
+                          >
+                            Компания
+                            <ChevronRight className="h-4 w-4 text-[#6ECFFF]/70" />
+                          </button>
+                        );
+                      }
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={closeMobile}
+                          className={`mb-1 flex min-h-[52px] items-center rounded-xl px-4 py-3 text-base ${
+                            isNavLinkActive(pathname, link.href)
+                              ? "text-[#6ECFFF]"
+                              : "text-[#8BA4BC] hover:bg-white/5 hover:text-white"
+                          }`}
                         >
-                          Сферы
-                          <span className={`text-xs transition-transform ${applicationsExpanded ? "rotate-180" : ""}`}>
-                            ▼
-                          </span>
-                        </button>
-                        {applicationsExpanded && (
-                          <ul className="border-t border-white/8 px-2 py-2">
-                            <li>
-                              <Link
-                                href={ROUTES.applications}
-                                onClick={closeMobile}
-                                className="flex min-h-[44px] items-center rounded-lg px-3 py-2.5 text-sm font-medium text-[#6ECFFF] hover:bg-white/5"
-                              >
-                                Все сферы применения
-                              </Link>
-                            </li>
-                            {APPLICATION_NAV.map((item) => (
-                              <li key={item.href}>
-                                <Link
-                                  href={item.href}
-                                  onClick={closeMobile}
-                                  title={item.title}
-                                  className="flex min-h-[44px] items-center rounded-lg px-3 py-2.5 text-sm text-[#8BA4BC] hover:bg-white/5 hover:text-[#6ECFFF]"
-                                >
-                                  {item.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    );
-                  }
+                          {link.label}
+                        </Link>
+                      );
+                    })}
+                  </nav>
+                )}
 
-                  if ("megaMenu" in link && link.megaMenu === "company") {
-                    return (
-                      <div key={link.href} className="mb-2 overflow-hidden rounded-xl border border-white/8 bg-white/[0.02]">
-                        <button
-                          type="button"
-                          onClick={() => setCompanyExpanded((v) => !v)}
-                          className="flex min-h-[52px] w-full items-center justify-between px-4 py-3 text-left text-base font-medium text-white"
-                          aria-expanded={companyExpanded}
+                {mobilePanel === "catalog" && (
+                  <div className="px-2 py-3">
+                    <div className="mb-3 border-b border-white/8 px-3 pb-3">
+                      <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">Каталог ELIZON</p>
+                      <p className="mt-1 text-sm text-[#8BA4BC]">
+                        Оптоволокно, цилиндры FO-0.25, комплектующие — как в десктоп-меню
+                      </p>
+                    </div>
+                    <CatalogMenuContent variant="desktop" onNavigate={closeMobile} />
+                    <div className="mt-4 flex flex-wrap gap-2 border-t border-white/8 px-3 pt-3">
+                      {catalogMenuQuickLinks.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={closeMobile}
+                          className="min-h-[40px] rounded-lg border border-white/8 px-3 py-2 text-sm text-[#8BA4BC] hover:border-[#6ECFFF]/30 hover:text-[#6ECFFF]"
                         >
-                          Компания
-                          <span className={`text-xs transition-transform ${companyExpanded ? "rotate-180" : ""}`}>
-                            ▼
-                          </span>
-                        </button>
-                        {companyExpanded && (
-                          <ul className="border-t border-white/8 px-2 py-2">
-                            {ABOUT_NAV_CHILDREN.map((item) => (
-                              <li key={item.href}>
-                                <Link
-                                  href={item.href}
-                                  onClick={closeMobile}
-                                  className="flex min-h-[44px] items-center rounded-lg px-3 py-2.5 text-sm text-[#8BA4BC] hover:bg-white/5 hover:text-[#6ECFFF]"
-                                >
-                                  {item.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    );
-                  }
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-                  return (
+                {mobilePanel === "applications" && (
+                  <div className="px-3 py-3">
+                    <div className="mb-3 border-b border-white/8 px-1 pb-3">
+                      <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">Сферы применения</p>
+                      <p className="mt-1 text-sm text-[#8BA4BC]">Те же разделы, что в десктоп-меню</p>
+                    </div>
                     <Link
-                      key={link.href}
-                      href={link.href}
+                      href={ROUTES.applications}
                       onClick={closeMobile}
-                      className="mb-1 flex min-h-[48px] items-center rounded-xl px-4 py-3 text-[#8BA4BC] hover:bg-white/5 hover:text-white"
+                      className="mb-2 flex min-h-[48px] items-center rounded-xl bg-[#00D4FF]/10 px-4 py-3 text-sm font-medium text-[#6ECFFF]"
                     >
-                      {link.label}
+                      Все сферы применения →
                     </Link>
-                  );
-                })}
-              </nav>
+                    <ul className="space-y-0.5">
+                      {APPLICATION_NAV.map((item) => (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            onClick={closeMobile}
+                            title={item.title}
+                            className="flex min-h-[48px] items-center rounded-xl px-4 py-3 text-sm text-[#8BA4BC] hover:bg-white/5 hover:text-[#6ECFFF]"
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {mobilePanel === "company" && (
+                  <div className="px-3 py-3">
+                    <div className="mb-3 border-b border-white/8 px-1 pb-3">
+                      <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">Компания</p>
+                      <p className="mt-1 text-sm text-[#8BA4BC]">Те же ссылки, что в десктоп-меню</p>
+                    </div>
+                    <ul className="space-y-0.5">
+                      {ABOUT_NAV_CHILDREN.map((item) => (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            onClick={closeMobile}
+                            className="flex min-h-[48px] items-center rounded-xl px-4 py-3 text-sm text-[#8BA4BC] hover:bg-white/5 hover:text-[#6ECFFF]"
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
 
               <div
-                className="shrink-0 space-y-2 border-t border-white/8 px-4 py-4"
+                className="shrink-0 space-y-2 border-t border-white/10 px-4 py-4"
                 style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
               >
                 <Button
@@ -335,7 +375,7 @@ export function Header() {
                   Запросить цену
                 </Button>
               </div>
-            </motion.div>
+            </motion.aside>
           </>
         )}
       </AnimatePresence>
@@ -377,6 +417,30 @@ function DocIcon({ className }: { className?: string }) {
     >
       <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
       <path d="M14 2v6h6M8 13h8M8 17h8M8 9h2" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden>
+      <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function BackIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden>
+      <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ChevronRight({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden>
+      <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
