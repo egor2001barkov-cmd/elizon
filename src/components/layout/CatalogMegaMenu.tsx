@@ -378,7 +378,7 @@ export function CatalogMegaMenu({ active }: CatalogMegaMenuProps) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
-    const onClickOutside = (e: MouseEvent) => {
+    const onClickOutside = (e: Event) => {
       const target = e.target as Node;
       if (
         !rootRef.current?.contains(target) &&
@@ -389,15 +389,27 @@ export function CatalogMegaMenu({ active }: CatalogMegaMenuProps) {
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClickOutside);
+    document.addEventListener("touchstart", onClickOutside, { passive: true });
     return () => {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClickOutside);
+      document.removeEventListener("touchstart", onClickOutside);
       clearCloseTimer();
     };
   }, [clearCloseTimer]);
 
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    const lock = window.matchMedia("(max-width: 1023px)").matches;
+    if (lock) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className="relative shrink-0">
       <div
         className={`inline-flex min-h-[44px] items-center rounded-lg text-sm transition-colors ${
           active || open ? "text-[#6ECFFF]" : "text-[#8BA4BC]"
@@ -405,17 +417,20 @@ export function CatalogMegaMenu({ active }: CatalogMegaMenuProps) {
         onMouseEnter={keepOpen}
         onMouseLeave={handleZoneLeave}
       >
-        <Link
-          href={CATALOG_HUB_PATH}
-          className="rounded-lg px-3 py-2 hover:text-white"
+        <button
+          type="button"
+          className="rounded-lg px-2.5 py-2 hover:text-white sm:px-3"
+          onClick={() => setOpen((v) => !v)}
           onMouseEnter={keepOpen}
+          aria-expanded={open}
+          aria-haspopup="true"
         >
           Каталог
-        </Link>
+        </button>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-9 items-center justify-center rounded-lg hover:bg-white/5"
+          className="flex h-11 w-8 items-center justify-center rounded-lg hover:bg-white/5 sm:w-9"
           aria-expanded={open}
           aria-haspopup="true"
           aria-label="Открыть меню каталога"
@@ -426,44 +441,63 @@ export function CatalogMegaMenu({ active }: CatalogMegaMenuProps) {
       </div>
 
       {open && (
-      <div
-        ref={panelRef}
-        className="absolute left-0 top-[calc(100%-16px)] z-[120] w-[min(100vw-2rem,56rem)] pt-4"
-        onMouseEnter={keepOpen}
-        onMouseLeave={handleZoneLeave}
-      >
-        <div className="max-h-[min(70vh,32rem)] overflow-y-auto overscroll-contain lg:max-h-none">
-          <div className="overflow-hidden rounded-2xl border border-[#00D4FF]/15 bg-[#071e33]/98 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-            <div className="border-b border-white/8 px-4 py-3 sm:px-6 sm:py-4">
-              <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">Каталог ELIZON</p>
-              <p className="mt-1 text-sm text-[#8BA4BC]">
-                Оптоволокно, цилиндры FO-0.25, комплектующие — все разделы
+        <>
+          {/* Mobile/tablet: full side panel (same content as desktop mega menu) */}
+          <button
+            type="button"
+            className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm lg:hidden"
+            aria-label="Закрыть меню каталога"
+            onClick={() => setOpen(false)}
+          />
+          <div
+            ref={panelRef}
+            className="fixed inset-y-0 right-0 z-[210] flex w-[min(100vw,28rem)] flex-col border-l border-[#00D4FF]/20 bg-[#061829] shadow-[-24px_0_60px_rgba(0,0,0,0.55)] lg:absolute lg:inset-auto lg:left-0 lg:top-[calc(100%-16px)] lg:z-[120] lg:w-[min(100vw-2rem,56rem)] lg:border-0 lg:bg-transparent lg:pt-4 lg:shadow-none"
+            onMouseEnter={keepOpen}
+            onMouseLeave={handleZoneLeave}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 lg:hidden">
+              <p className="text-xs font-medium uppercase tracking-wider text-[#6ECFFF]">
+                Каталог ELIZON
               </p>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white"
+                aria-label="Закрыть"
+              >
+                ✕
+              </button>
             </div>
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain lg:max-h-[min(70vh,32rem)]">
+              <div className="overflow-hidden border-0 bg-[#061829] lg:rounded-2xl lg:border lg:border-[#00D4FF]/15 lg:bg-[#071e33]/98 lg:shadow-[0_20px_60px_rgba(0,0,0,0.45)] lg:backdrop-blur-xl">
+                <div className="hidden border-b border-white/8 px-4 py-3 sm:px-6 sm:py-4 lg:block">
+                  <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">Каталог ELIZON</p>
+                  <p className="mt-1 text-sm text-[#8BA4BC]">
+                    Оптоволокно, цилиндры FO-0.25, комплектующие — все разделы
+                  </p>
+                </div>
 
-            <div
-              className="px-4 py-4 sm:px-6 sm:py-5"
-              onMouseEnter={keepOpen}
-            >
-              <CatalogMenuContent variant="desktop" onNavigate={() => setOpen(false)} />
-            </div>
+                <div className="px-3 py-4 sm:px-6 sm:py-5" onMouseEnter={keepOpen}>
+                  <CatalogMenuContent variant="desktop" onNavigate={() => setOpen(false)} />
+                </div>
 
-            <div className="flex flex-wrap items-center gap-3 border-t border-white/8 bg-white/[0.02] px-4 py-3 sm:gap-4 sm:px-6">
-              {catalogMenuQuickLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="min-h-[44px] py-2 text-sm text-[#8BA4BC] transition-colors hover:text-[#6ECFFF] first:text-[#6ECFFF] first:hover:text-[#00D4FF]"
-                >
-                  {link.label}
-                  {!link.label.includes("₽") && !link.label.includes("калькулятор") ? " →" : ""}
-                </Link>
-              ))}
+                <div className="flex flex-wrap items-center gap-3 border-t border-white/8 bg-white/[0.02] px-4 py-3 sm:gap-4 sm:px-6">
+                  {catalogMenuQuickLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="min-h-[44px] py-2 text-sm text-[#8BA4BC] transition-colors hover:text-[#6ECFFF] first:text-[#6ECFFF] first:hover:text-[#00D4FF]"
+                    >
+                      {link.label}
+                      {!link.label.includes("₽") && !link.label.includes("калькулятор") ? " →" : ""}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
       )}
     </div>
   );
