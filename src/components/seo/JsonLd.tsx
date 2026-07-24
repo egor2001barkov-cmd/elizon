@@ -203,7 +203,7 @@ export function FaqJsonLd({ items }: { items: FaqItem[] }) {
         buildFaqPageSchema(items),
         buildBreadcrumbSchema([
           { label: "Главная", href: "/" },
-          { label: "FAQ" },
+          { label: "Частые вопросы" },
         ])
       )}
     />

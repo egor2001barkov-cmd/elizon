@@ -146,7 +146,7 @@ export function HeroSection() {
 
           <p className="mt-4 max-w-lg text-base leading-relaxed text-[#8BA4BC] sm:mt-6 sm:text-lg">
             Поставляем G.657.A2 напрямую — без посредников и без цен «по запросу через три недели».
-            Катушки по 50 км под заказ, срок {LEAD_TIME_LABEL}. Для магистралей, FTTH и городских сетей.
+            Катушки по 50 км под заказ, срок {LEAD_TIME_LABEL}. Для магистралей, абонентского доступа и городских сетей.
           </p>
 
           <p className="mt-3 text-sm text-[#6ECFFF]/80 sm:mt-4">

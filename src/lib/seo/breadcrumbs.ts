@@ -51,7 +51,7 @@ export const BREADCRUMBS = {
   ],
   faq: [
     { label: "Главная", href: "/" },
-    { label: "FAQ" },
+    { label: "Частые вопросы" },
   ],
   offer: [
     { label: "Главная", href: "/" },

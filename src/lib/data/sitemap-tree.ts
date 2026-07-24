@@ -106,7 +106,7 @@ export const sitemapTree: SitemapNode[] = [
   { label: "Услуги", href: ROUTES.services },
   { label: "Доставка и оплата", href: ROUTES.delivery },
   { label: "Блог", href: "/blog" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Частые вопросы", href: "/faq" },
   { label: "Контакты", href: ROUTES.contacts },
   {
     label: "Оптоволокно по городам",

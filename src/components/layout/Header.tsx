@@ -30,7 +30,7 @@ const MOBILE_PRIMARY_LINKS = [
   { href: ROUTES.about, label: "Компания", section: "company" as const },
   { href: ROUTES.contacts, label: "Контакты" },
   { href: ROUTES.delivery, label: "Доставка и оплата" },
-  { href: ROUTES.faq, label: "FAQ" },
+  { href: ROUTES.faq, label: "Частые вопросы" },
   { href: ROUTES.services, label: "Услуги" },
   { href: ROUTES.cart, label: "Корзина" },
 ] as const;

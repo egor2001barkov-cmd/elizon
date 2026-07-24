@@ -79,7 +79,7 @@ export function BlogArticleContent({ article }: BlogArticleContentProps) {
         </Link>
         {" · "}
         <Link href="/faq" className="text-[#6ECFFF] hover:underline">
-          FAQ
+          Частые вопросы
         </Link>
         {" · "}
         <Link href={ROUTES.delivery} className="text-[#6ECFFF] hover:underline">

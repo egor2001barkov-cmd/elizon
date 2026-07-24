@@ -53,7 +53,7 @@ export function FiberBend() {
           />
         </mesh>
 
-        {/* Bend radius indicator ring */}
+        {/* Индикатор радиуса изгиба */}
         <mesh position={[0, 0.75, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[0.075, 0.003, 8, 32]} />
           <meshBasicMaterial color="#00D4FF" transparent opacity={0.5} />

@@ -24,7 +24,7 @@ export function BlogIndexContent() {
     <ContentPageShell
       breadcrumbPage="blog"
       title="Блог ELIZON — статьи об оптоволокне"
-      subtitle="25 экспертных материалов для инженеров, руководителей проектов и отделов закупок: выбор волокна, сравнения, монтаж, FTTH, цены и региональные поставки."
+      subtitle="25 экспертных материалов для инженеров, руководителей проектов и отделов закупок: выбор волокна, сравнения, монтаж, абонентский доступ, цены и региональные поставки."
     >
       {clusterOrder.map((cluster) => {
         const articles = blogArticles.filter((a) => a.cluster === cluster);

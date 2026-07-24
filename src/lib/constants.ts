@@ -35,7 +35,7 @@ export const FOOTER_LINKS = {
   ],
   info: [
     { href: ROUTES.delivery, label: "Доставка и оплата" },
-    { href: ROUTES.faq, label: "FAQ" },
+    { href: ROUTES.faq, label: "Частые вопросы" },
     { href: ROUTES.blog, label: "Блог" },
     { href: ROUTES.catalog, label: "Каталог" },
   ],

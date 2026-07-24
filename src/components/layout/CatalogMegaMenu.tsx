@@ -253,7 +253,7 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
                       {product.label}
                       {product.featured && (
                         <span className="ml-1.5 text-[10px] uppercase tracking-wider text-[#00D4FF]/80">
-                          хит
+                          популярное
                         </span>
                       )}
                     </Link>

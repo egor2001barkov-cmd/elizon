@@ -68,18 +68,18 @@ const STATIC_PRODUCT_PHOTOS: Record<string, ProductPhoto> = {
   },
   "g657a1-242": {
     src: "/images/products/spool-packaging.jpg",
-    alt: "Катушка оптоволокна G.657.A1 242 мкм, 50 км — гибкое волокно для FTTH от ELIZON",
+    alt: "Катушка оптоволокна G.657.A1 242 мкм, 50 км — гибкое волокно для абонентского доступа от ELIZON",
     caption: "G.657.A1 — улучшенная гибкость для сетей доступа",
   },
   "g655-242": {
     src: "/images/products/spool-warehouse.jpg",
-    alt: "Катушка оптоволокна G.655 242 мкм, 50 км — для DWDM-магистралей ELIZON",
+    alt: "Катушка оптоволокна G.655 242 мкм, 50 км — для магистралей со спектральным уплотнением ELIZON",
     caption: "G.655 — низкая дисперсия для дальних трасс",
   },
   "patch-cable": {
     src: "/images/products/spool-packaging.jpg",
     alt: "Патч-корды LC/LC и другие коннекторы — оптические коммутационные шнуры ELIZON",
-    caption: "Патч-корды под заказ с OTDR-тестом",
+    caption: "Патч-корды под заказ с рефлектометрическим контролем",
   },
   "custom-length": {
     src: "/images/products/spool-warehouse.jpg",

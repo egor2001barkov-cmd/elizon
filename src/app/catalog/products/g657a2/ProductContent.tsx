@@ -37,7 +37,7 @@ const advantages = [
   },
   {
     title: "Готово к сварке",
-    text: "С обеих сторон. Распаковал, протестировал OTDR, сварил — без сюрпризов.",
+    text: "С обеих сторон. Распаковал, проверил рефлектометром, сварил — без сюрпризов.",
   },
 ];
 
@@ -184,7 +184,7 @@ export function ProductContent() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#00D4FF]">→</span>
-                  50,4 км — меньше сварок на магистрали и в районе FTTH
+                  50,4 км — меньше сварок на магистрали и в районе с оптикой до дома
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#00D4FF]">→</span>
