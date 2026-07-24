@@ -58,8 +58,11 @@ export function CatalogContent() {
               </h2>
               <div className="grid gap-6 md:grid-cols-3">
                 {catalogTree.map((category, i) => (
-                  <ScrollReveal key={category.slug} delay={i * 0.06}>
-                    <Link href={`${PRODUCTS_BASE}/${category.slug}`}>
+                  <ScrollReveal key={category.slug} delay={i * 0.06} className="h-full">
+                    <Link
+                      href={`${PRODUCTS_BASE}/${category.slug}`}
+                      className="block h-full rounded-2xl outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#00D4FF]"
+                    >
                       <GlassCard className="h-full transition-colors hover:border-[#6ECFFF]/30">
                         <h3 className="text-xl font-medium text-white">{category.title}</h3>
                         <p className="mt-2 line-clamp-3 text-sm text-[#8BA4BC]">

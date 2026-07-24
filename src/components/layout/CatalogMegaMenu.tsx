@@ -174,10 +174,12 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
           const isActive = hoveredCategory === category.slug;
           return (
             <li key={category.slug}>
-              <button
-                type="button"
-                onClick={() => selectCategory(category.slug)}
+              {/* Links (not buttons): tap navigates; hover only previews the panel */}
+              <Link
+                href={category.href}
+                onClick={onNavigate}
                 onMouseEnter={() => selectCategory(category.slug)}
+                onFocus={() => selectCategory(category.slug)}
                 className={`flex min-h-[44px] w-full items-center px-4 py-2.5 text-left text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-[#00D4FF]/10 text-[#6ECFFF]"
@@ -185,21 +187,10 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
                 }`}
               >
                 {category.title}
-              </button>
+              </Link>
             </li>
           );
         })}
-        {activeCategory && (
-          <li className="border-t border-white/8 px-4 py-2 sm:hidden">
-            <Link
-              href={activeCategory.href}
-              onClick={onNavigate}
-              className="text-xs font-medium text-[#6ECFFF]"
-            >
-              {activeCategory.title} — весь раздел →
-            </Link>
-          </li>
-        )}
       </ul>
 
       <ul className="shrink-0 border-b border-white/8 py-1 sm:w-48 sm:border-b-0 sm:border-r md:w-52">
@@ -207,10 +198,11 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
           const isActive = hoveredSub === sub.slug;
           return (
             <li key={sub.slug}>
-              <button
-                type="button"
-                onClick={() => setHoveredSub(sub.slug)}
+              <Link
+                href={sub.href}
+                onClick={onNavigate}
                 onMouseEnter={() => setHoveredSub(sub.slug)}
+                onFocus={() => setHoveredSub(sub.slug)}
                 title={sub.metaTitle}
                 className={`flex min-h-[44px] w-full items-center px-4 py-2.5 text-left text-sm transition-colors ${
                   isActive
@@ -219,21 +211,10 @@ export function CatalogMenuContent({ onNavigate, variant = "desktop" }: CatalogM
                 }`}
               >
                 {sub.title}
-              </button>
+              </Link>
             </li>
           );
         })}
-        {activeSub && (
-          <li className="border-t border-white/8 px-4 py-2 sm:hidden">
-            <Link
-              href={activeSub.href}
-              onClick={onNavigate}
-              className="text-xs font-medium text-[#6ECFFF]"
-            >
-              {activeSub.title} — открыть →
-            </Link>
-          </li>
-        )}
       </ul>
 
       <div className="min-w-0 flex-1 px-4 py-3 sm:px-5 sm:py-4">
@@ -478,7 +459,14 @@ export function CatalogMegaMenu({ active }: CatalogMegaMenuProps) {
                 </div>
 
                 <div className="px-3 py-4 sm:px-6 sm:py-5" onMouseEnter={keepOpen}>
-                  <CatalogMenuContent variant="desktop" onNavigate={() => setOpen(false)} />
+                  {/* Mobile/tablet drawer: accordion with real links.
+                      Desktop: multi-column mega menu (sections are links too). */}
+                  <div className="lg:hidden">
+                    <CatalogMenuContent variant="mobile" onNavigate={() => setOpen(false)} />
+                  </div>
+                  <div className="hidden lg:block">
+                    <CatalogMenuContent variant="desktop" onNavigate={() => setOpen(false)} />
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 border-t border-white/8 bg-white/[0.02] px-4 py-3 sm:gap-4 sm:px-6">

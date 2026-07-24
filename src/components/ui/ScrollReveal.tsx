@@ -46,6 +46,8 @@ export function ScrollReveal({
       viewport={{ once: true, margin: "-40px", amount: 0.15 }}
       variants={variants}
       className={className}
+      // Keep children clickable even while animating / if in-view never fires
+      style={{ pointerEvents: "auto" }}
     >
       {children}
     </motion.div>

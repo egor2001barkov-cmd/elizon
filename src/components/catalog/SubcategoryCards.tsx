@@ -37,8 +37,11 @@ function SubcategoryCard({
   const count = getProductsForSubcategory(subcategory).length;
 
   return (
-    <ScrollReveal delay={delay}>
-      <Link href={href}>
+    <ScrollReveal delay={delay} className="h-full">
+      <Link
+        href={href}
+        className="block h-full rounded-2xl outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#00D4FF]"
+      >
         <GlassCard className="h-full transition-colors hover:border-[#6ECFFF]/30">
           <p className="text-xs uppercase tracking-wider text-[#6ECFFF]/70">
             {count} {count === 1 ? "позиция" : "позиции"}
