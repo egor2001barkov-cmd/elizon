@@ -73,8 +73,8 @@ export function Header() {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "border-b border-[#00D4FF]/10 bg-[#071e33]/95 backdrop-blur-xl shadow-[0_4px_30px_rgba(77,184,232,0.06)]"
-            : "bg-[#071e33]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none"
+            ? "border-b border-[#00D4FF]/10 bg-[#071e33] shadow-[0_4px_30px_rgba(77,184,232,0.06)] md:bg-[#071e33]/95 md:backdrop-blur-xl"
+            : "bg-[#071e33] md:bg-[#071e33]/90 md:backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none"
         }`}
       >
         <div

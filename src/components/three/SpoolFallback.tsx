@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type { SpoolVariant } from "./FiberSpool";
 
 type FallbackType = "spool" | "telecom" | "bend";
@@ -11,7 +10,15 @@ interface SpoolFallbackProps {
   className?: string;
 }
 
-export function SpoolFallback({ type = "spool", variant = "default", className = "" }: SpoolFallbackProps) {
+/**
+ * Lightweight SVG stand-in for WebGL scenes.
+ * No framer-motion / Three — safe on low-end mobile browsers.
+ */
+export function SpoolFallback({
+  type = "spool",
+  variant = "default",
+  className = "",
+}: SpoolFallbackProps) {
   if (type === "telecom") {
     return (
       <div className={`flex items-center justify-center ${className}`}>
@@ -20,8 +27,26 @@ export function SpoolFallback({ type = "spool", variant = "default", className =
           <rect x="30" y="70" width="60" height="4" fill="#2d4a6f" rx="1" />
           <rect x="30" y="100" width="60" height="4" fill="#2d4a6f" rx="1" />
           <rect x="54" y="30" width="12" height="16" fill="#00D4FF" rx="2" opacity="0.8" />
-          <ellipse cx="60" cy="25" rx="20" ry="6" fill="none" stroke="#00D4FF" strokeWidth="1.5" opacity="0.4" />
-          <ellipse cx="60" cy="25" rx="32" ry="10" fill="none" stroke="#00D4FF" strokeWidth="1" opacity="0.25" />
+          <ellipse
+            cx="60"
+            cy="25"
+            rx="20"
+            ry="6"
+            fill="none"
+            stroke="#00D4FF"
+            strokeWidth="1.5"
+            opacity="0.4"
+          />
+          <ellipse
+            cx="60"
+            cy="25"
+            rx="32"
+            ry="10"
+            fill="none"
+            stroke="#00D4FF"
+            strokeWidth="1"
+            opacity="0.25"
+          />
           <rect x="45" y="155" width="30" height="10" fill="#0A2540" rx="2" />
           <line x1="64" y1="120" x2="70" y2="155" stroke="#00D4FF" strokeWidth="2" />
         </svg>
@@ -40,8 +65,18 @@ export function SpoolFallback({ type = "spool", variant = "default", className =
             strokeWidth="3"
             strokeLinecap="round"
           />
-          <circle cx="80" cy="40" r="8" fill="none" stroke="#00D4FF" strokeWidth="1.5" strokeDasharray="3 2" />
-          <text x="55" y="25" fill="#8BA4BC" fontSize="10">7,5 мм</text>
+          <circle
+            cx="80"
+            cy="40"
+            r="8"
+            fill="none"
+            stroke="#00D4FF"
+            strokeWidth="1.5"
+            strokeDasharray="3 2"
+          />
+          <text x="55" y="25" fill="#8BA4BC" fontSize="10">
+            7,5 мм
+          </text>
         </svg>
       </div>
     );
@@ -53,22 +88,22 @@ export function SpoolFallback({ type = "spool", variant = "default", className =
   const fiberA = realistic ? "#D62828" : "#00D4FF";
   const fiberB = realistic ? "#E63946" : "#4DE8FF";
   const glowColor = realistic ? "#D62828" : "#00D4FF";
+  const gradId = realistic ? "spoolGradR" : "spoolGradD";
+  const glowId = realistic ? "fiberGlowR" : "fiberGlowD";
 
   return (
     <div className={`flex items-center justify-center ${className}`}>
-      <motion.div
-        animate={{ rotateY: [0, 360] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        style={{ perspective: 600 }}
-        className="relative h-48 w-48"
+      <div
+        className="spool-spin relative h-44 w-44 sm:h-48 sm:w-48"
+        style={{ transformStyle: "preserve-3d" }}
       >
-        <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden>
+        <svg viewBox="0 0 200 200" className="h-full w-full drop-shadow-[0_0_24px_rgba(0,212,255,0.15)]" aria-hidden>
           <defs>
-            <linearGradient id="spoolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={realistic ? "#8B1520" : "#0A2540"} />
               <stop offset="100%" stopColor={glowColor} />
             </linearGradient>
-            <radialGradient id="fiberGlow">
+            <radialGradient id={glowId}>
               <stop offset="0%" stopColor={glowColor} stopOpacity="0.8" />
               <stop offset="100%" stopColor={glowColor} stopOpacity="0" />
             </radialGradient>
@@ -89,10 +124,10 @@ export function SpoolFallback({ type = "spool", variant = "default", className =
               opacity={0.7}
             />
           ))}
-          <circle cx="100" cy="100" r="20" fill="url(#fiberGlow)" />
-          <ellipse cx="100" cy="100" rx="18" ry="6" fill="url(#spoolGrad)" opacity="0.5" />
+          <circle cx="100" cy="100" r="20" fill={`url(#${glowId})`} />
+          <ellipse cx="100" cy="100" rx="18" ry="6" fill={`url(#${gradId})`} opacity="0.5" />
         </svg>
-      </motion.div>
+      </div>
     </div>
   );
 }

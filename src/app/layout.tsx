@@ -74,12 +74,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${inter.variable} ${spaceGrotesk.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased">
+      <body className="min-h-full flex flex-col antialiased bg-[#071e33] text-white">
         <CartProvider>
           <BackgroundGlow />
           <OrganizationJsonLd />
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 min-h-0">{children}</main>
           <Footer />
           <CartDrawer />
         </CartProvider>

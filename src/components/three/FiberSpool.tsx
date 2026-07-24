@@ -2,7 +2,7 @@
 
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Float, MeshTransmissionMaterial } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import * as THREE from "three";
 
 export type SpoolVariant = "default" | "realistic";
@@ -33,11 +33,12 @@ function FiberWindings({
   const windings = useMemo(() => {
     const palette = WINDING_COLORS[variant];
     const items: { radius: number; y: number; color: string }[] = [];
-    const layers = 28;
+    // Fewer layers + lower segment count: much cheaper GPU than 28×64 tori
+    const layers = 16;
     for (let i = 0; i < layers; i++) {
       items.push({
-        radius: 1.15 + i * 0.045 - unwind * 0.02,
-        y: -0.55 + i * 0.038,
+        radius: 1.15 + i * 0.075 - unwind * 0.02,
+        y: -0.55 + i * 0.068,
         color: palette[i % 3],
       });
     }
@@ -48,7 +49,7 @@ function FiberWindings({
     <group>
       {windings.map((w, i) => (
         <mesh key={i} position={[0, w.y, 0]} rotation={[Math.PI / 2, 0, i * 0.15]}>
-          <torusGeometry args={[w.radius, 0.018, 8, 64]} />
+          <torusGeometry args={[w.radius, 0.022, 6, 32]} />
           <meshStandardMaterial
             color={w.color}
             emissive={w.color}
@@ -161,19 +162,17 @@ export function FiberSpool({
         <FiberWindings unwind={scrollUnwind} variant={variant} />
         {/* Unwound fiber trail */}
         <UnwoundFiber amount={scrollUnwind} />
-        {/* Glass fiber tip glow */}
+        {/* Fiber tip glow — standard material only (MeshTransmissionMaterial freezes mobile GPUs) */}
         <mesh position={[1.65 + scrollUnwind * 2, 0.1, 0]}>
-          <sphereGeometry args={[0.04, 16, 16]} />
-          <MeshTransmissionMaterial
-            backside
-            samples={4}
-            thickness={0.5}
-            chromaticAberration={0.1}
-            anisotropy={0.3}
-            distortion={0.2}
-            distortionScale={0.2}
-            temporalDistortion={0.1}
+          <sphereGeometry args={[0.04, 12, 12]} />
+          <meshStandardMaterial
             color="#00D4FF"
+            emissive="#00D4FF"
+            emissiveIntensity={0.9}
+            metalness={0.4}
+            roughness={0.2}
+            transparent
+            opacity={0.95}
           />
         </mesh>
         {/* Center hub detail */}

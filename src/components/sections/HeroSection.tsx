@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import { LEAD_TIME_LABEL } from "@/lib/constants";
 import { ROUTES } from "@/lib/seo/routes";
+import { SpoolFallback } from "@/components/three/SpoolFallback";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 const SceneCanvas = dynamic(
   () => import("@/components/three/SceneCanvas").then((m) => m.SceneCanvas),
@@ -19,17 +21,61 @@ const SceneCanvas = dynamic(
   }
 );
 
+/** Desktop-only 3D: phones get SVG to avoid WebGL white-screen crashes. */
+function canUseHero3D(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const wide = window.matchMedia("(min-width: 1024px)").matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    return fine && wide && !reduced;
+  } catch {
+    return false;
+  }
+}
+
+function HeroVisual({
+  enable3d,
+  scrollUnwind,
+}: {
+  enable3d: boolean;
+  scrollUnwind: number;
+}) {
+  if (!enable3d) {
+    return (
+      <SpoolFallback
+        type="spool"
+        variant="realistic"
+        className="h-full w-full"
+      />
+    );
+  }
+
+  return (
+    <ErrorBoundary
+      fallback={
+        <SpoolFallback type="spool" variant="realistic" className="h-full w-full" />
+      }
+    >
+      <SceneCanvas
+        type="spool"
+        spoolVariant="realistic"
+        scrollUnwind={scrollUnwind}
+        force3D={false}
+        autoRotate
+        className="h-full w-full"
+        height="100%"
+      />
+    </ErrorBoundary>
+  );
+}
+
 export function HeroSection() {
   const [scrollUnwind, setScrollUnwind] = useState(0);
   const [enable3d, setEnable3d] = useState(false);
 
-  // Defer WebGL until after first paint / idle — improves LCP on mobile
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    if (prefersReduced) return;
+    if (!canUseHero3D()) return;
 
     let cancelled = false;
     const start = () => {
@@ -41,16 +87,16 @@ export function HeroSection() {
       cancelIdleCallback?: (id: number) => void;
     };
 
-    // Start 3D sooner so mobile matches desktop animation quickly
+    // Defer WebGL until after first paint so LCP stays stable
     if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(start, { timeout: 600 });
+      const id = w.requestIdleCallback(start, { timeout: 1500 });
       return () => {
         cancelled = true;
         w.cancelIdleCallback?.(id);
       };
     }
 
-    const t = window.setTimeout(start, 200);
+    const t = window.setTimeout(start, 800);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
@@ -69,9 +115,12 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden pt-20 sm:pt-24 md:pt-28">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-32 top-20 h-[320px] w-[320px] rounded-full bg-[#6ECFFF]/10 blur-[100px] sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
-        <div className="absolute -left-20 bottom-0 h-[280px] w-[280px] rounded-full bg-[#0A2540]/60 blur-[80px] sm:h-[400px] sm:w-[400px]" />
+      {/* Lightweight mobile glows — no 100px CSS blur (crashes some iOS GPUs) */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div className="absolute -right-20 top-16 h-[220px] w-[220px] rounded-full bg-[#6ECFFF]/[0.12] sm:hidden" />
+        <div className="absolute -left-16 bottom-8 h-[180px] w-[180px] rounded-full bg-[#0A2540]/80 sm:hidden" />
+        <div className="absolute -right-32 top-20 hidden h-[500px] w-[500px] rounded-full bg-[#6ECFFF]/10 blur-[120px] sm:block" />
+        <div className="absolute -left-20 bottom-0 hidden h-[400px] w-[400px] rounded-full bg-[#0A2540]/60 blur-[80px] sm:block" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -118,25 +167,10 @@ export function HeroSection() {
         </div>
 
         <div className="relative mx-auto aspect-[4/3] w-full max-w-lg sm:aspect-auto sm:h-[400px] sm:max-w-none md:h-[480px] lg:h-[520px]">
-          <div className="absolute inset-0 rounded-2xl border border-[#6ECFFF]/12 bg-white/[0.02] shadow-[0_0_60px_rgba(110,207,255,0.08)] backdrop-blur-sm sm:rounded-3xl" />
-          {enable3d ? (
-            <SceneCanvas
-              type="spool"
-              spoolVariant="realistic"
-              scrollUnwind={scrollUnwind}
-              force3D
-              autoRotate
-              className="h-full w-full"
-              height="100%"
-            />
-          ) : (
-            <div
-              className="flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#0A2540] via-[#0F3254] to-[#061829] sm:rounded-3xl"
-              aria-hidden
-            >
-              <div className="h-36 w-36 rounded-full border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 shadow-[0_0_40px_rgba(110,207,255,0.15)] sm:h-44 sm:w-44 md:h-52 md:w-52" />
-            </div>
-          )}
+          <div className="absolute inset-0 rounded-2xl border border-[#6ECFFF]/12 bg-white/[0.02] shadow-[0_0_60px_rgba(110,207,255,0.08)] sm:rounded-3xl" />
+          <div className="relative h-full w-full">
+            <HeroVisual enable3d={enable3d} scrollUnwind={scrollUnwind} />
+          </div>
         </div>
       </div>
     </section>
