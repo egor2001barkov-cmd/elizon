@@ -7,12 +7,16 @@ import {
 } from "./src/lib/seo/routes";
 
 const nextConfig: NextConfig = {
+  // Self-host on RU VPS (Timeweb/Selectel/Beget) — Vercel IPs often unreachable from RU mobile
+  output: "standalone",
   poweredByHeader: false,
   images: {
     // Case covers are local SVGs; allow crisp delivery on mobile
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // unoptimized for simpler self-host without sharp on small VPS (can re-enable later)
+    unoptimized: process.env.NEXT_IMAGE_UNOPTIMIZED === "1",
   },
   async rewrites() {
     return [...SEO_ROUTE_REWRITES];

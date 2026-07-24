@@ -1,0 +1,14 @@
+# Put this on a RU VPS with Caddy installed.
+# Point A-records elizon.ru + www.elizon.ru to the VPS IP (reg.ru DNS).
+# Caddy auto-issues Let's Encrypt certs.
+
+elizon.ru, www.elizon.ru {
+	encode gzip zstd
+	reverse_proxy 127.0.0.1:3000
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}
