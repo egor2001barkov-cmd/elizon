@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 interface SectionHeadingProps {
@@ -12,6 +9,9 @@ interface SectionHeadingProps {
   as?: "h1" | "h2";
 }
 
+/**
+ * Server-safe heading — no framer-motion (opacity:0 SSR blanked mobile pages).
+ */
 export function SectionHeading({
   title,
   subtitle,
@@ -20,7 +20,6 @@ export function SectionHeading({
   as = "h2",
 }: SectionHeadingProps) {
   const alignClass = align === "center" ? "text-center mx-auto" : "";
-  const reduceMotion = useReducedMotion();
   const headingClass =
     "font-display text-2xl font-medium tracking-tight text-white sm:text-3xl md:text-4xl lg:text-[2.75rem]";
 
@@ -32,19 +31,13 @@ export function SectionHeading({
     );
 
   return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      className={`mb-8 max-w-2xl sm:mb-10 md:mb-12 ${alignClass} ${className}`}
-    >
+    <div className={`mb-8 max-w-2xl sm:mb-10 md:mb-12 ${alignClass} ${className}`}>
       {heading}
       {subtitle && (
         <p className="mt-3 text-sm leading-relaxed text-[#8BA4BC] sm:mt-4 sm:text-base md:text-lg">
           {subtitle}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }

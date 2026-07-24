@@ -73,13 +73,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${spaceGrotesk.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased bg-[#071e33] text-white">
+    <html
+      lang="ru"
+      className={`${inter.variable} ${spaceGrotesk.variable} h-full`}
+      style={{ backgroundColor: "#071e33", colorScheme: "dark" }}
+    >
+      <body
+        className="min-h-full flex flex-col antialiased bg-[#071e33] text-white"
+        style={{ backgroundColor: "#071e33", color: "#ffffff", margin: 0 }}
+      >
         <CartProvider>
           <BackgroundGlow />
           <OrganizationJsonLd />
           <Header />
-          <main className="flex-1 min-h-0">{children}</main>
+          <main className="relative z-0 flex-1 min-h-0">{children}</main>
           <Footer />
           <CartDrawer />
         </CartProvider>

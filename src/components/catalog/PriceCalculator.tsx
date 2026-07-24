@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
@@ -104,15 +103,10 @@ export function PriceCalculator() {
         </div>
       </div>
 
-      <motion.div
-        key={km}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mt-4 text-sm text-[#8BA4BC]"
-      >
+      <div className="mt-4 text-sm text-[#8BA4BC]">
         {km} км ÷ 50 × {product.pricePer50Km.toLocaleString("ru-RU")} ₽ ={" "}
         <span className="text-white">{price.toLocaleString("ru-RU")} ₽</span>
-      </motion.div>
+      </div>
 
       <Button className="mt-6 w-full" onClick={handleAdd}>
         Добавить в корзину — {price.toLocaleString("ru-RU")} ₽
