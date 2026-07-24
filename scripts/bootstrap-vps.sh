@@ -39,10 +39,18 @@ else
 fi
 cd /opt/elizon
 
-if [[ ! -f .env ]]; then
-  cp .env.example .env
-  sed -i 's|^NEXT_PUBLIC_SITE_URL=.*|NEXT_PUBLIC_SITE_URL=https://elizon.ru|' .env || true
-fi
+# docker compose env_file cannot parse unquoted < in values
+cat > .env << 'EOF'
+NEXT_PUBLIC_SITE_URL=https://elizon.ru
+CONTACT_EMAIL=support@elizon.ru
+SMTP_HOST=smtp.yandex.ru
+SMTP_PORT=587
+SMTP_USER=support@elizon.ru
+SMTP_PASS=
+SMTP_FROM=ELIZON support@elizon.ru
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+EOF
 
 echo "==> docker build (5-20 min on 1GB RAM)"
 docker compose up -d --build
