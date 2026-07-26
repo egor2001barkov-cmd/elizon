@@ -107,6 +107,9 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   manifest: "/site.webmanifest",
+  verification: {
+    yandex: "c289fa171baf66b2",
+  },
   // geo-подсказки для локального SEO (не меняют title/description)
   other: {
     "geo.region": "RU-MOW",
