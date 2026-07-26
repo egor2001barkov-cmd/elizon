@@ -107,11 +107,6 @@ export function FiberSpool({
 }: FiberSpoolProps) {
   const isRealistic = variant === "realistic";
   const groupRef = useRef<THREE.Group>(null);
-  const flangeAMat = useRef<THREE.MeshStandardMaterial>(null);
-  const flangeBMat = useRef<THREE.MeshStandardMaterial>(null);
-  const coreMat = useRef<THREE.MeshStandardMaterial>(null);
-  const hubMat = useRef<THREE.MeshStandardMaterial>(null);
-  const sunMix = useRef(0);
   const targetRotation = useRef({ x: 0, y: 0 });
 
   useFrame((state, delta) => {
@@ -122,31 +117,6 @@ export function FiberSpool({
       groupRef.current.rotation.y += delta * 0.35;
     }
 
-    // Warm specular response under sun light
-    sunMix.current = THREE.MathUtils.damp(sunMix.current, hovered ? 1 : 0, 6, delta);
-    const s = sunMix.current;
-    if (flangeAMat.current && flangeBMat.current) {
-      const rough = (isRealistic ? SILVER.roughness : 0.3) * (1 - s * 0.45);
-      flangeAMat.current.roughness = rough;
-      flangeBMat.current.roughness = rough;
-      flangeAMat.current.metalness = (isRealistic ? SILVER.metalness : 0.7) + s * 0.08;
-      flangeBMat.current.metalness = flangeAMat.current.metalness;
-      // Subtle warm tint while sun is on
-      flangeAMat.current.emissive.setRGB(s * 0.12, s * 0.08, s * 0.02);
-      flangeBMat.current.emissive.setRGB(s * 0.12, s * 0.08, s * 0.02);
-      flangeAMat.current.emissiveIntensity = s * 0.35;
-      flangeBMat.current.emissiveIntensity = s * 0.35;
-    }
-    if (coreMat.current) {
-      coreMat.current.roughness = (isRealistic ? RED_CORE.roughness : 0.4) * (1 - s * 0.25);
-      coreMat.current.emissive.setRGB(s * 0.18, s * 0.06, s * 0.02);
-      coreMat.current.emissiveIntensity = s * 0.25;
-    }
-    if (hubMat.current && isRealistic) {
-      hubMat.current.emissiveIntensity = 0.08 + s * 0.4;
-      hubMat.current.emissive.setRGB(0.55 + s * 0.35, 0.5 + s * 0.25, 0.4 + s * 0.05);
-    }
-
     if (hovered) {
       targetRotation.current.y += delta * 0.45;
       groupRef.current.rotation.y += delta * 0.15;
@@ -154,12 +124,6 @@ export function FiberSpool({
         groupRef.current.rotation.x,
         Math.sin(state.clock.elapsedTime * 0.5) * 0.08,
         0.05
-      );
-    } else {
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(
-        groupRef.current.rotation.x,
-        0,
-        0.04
       );
     }
   });
@@ -171,7 +135,6 @@ export function FiberSpool({
         <mesh position={[0, 0.55, 0]}>
           <cylinderGeometry args={[1.65, 1.65, 0.12, 48]} />
           <meshStandardMaterial
-            ref={flangeAMat}
             color={isRealistic ? SILVER.color : "#1a3a5c"}
             metalness={isRealistic ? SILVER.metalness : 0.7}
             roughness={isRealistic ? SILVER.roughness : 0.3}
@@ -181,7 +144,6 @@ export function FiberSpool({
         <mesh position={[0, -0.55, 0]}>
           <cylinderGeometry args={[1.65, 1.65, 0.12, 48]} />
           <meshStandardMaterial
-            ref={flangeBMat}
             color={isRealistic ? SILVER.color : "#1a3a5c"}
             metalness={isRealistic ? SILVER.metalness : 0.7}
             roughness={isRealistic ? SILVER.roughness : 0.3}
@@ -191,7 +153,6 @@ export function FiberSpool({
         <mesh>
           <cylinderGeometry args={[0.55, 0.55, 1.0, 32]} />
           <meshStandardMaterial
-            ref={coreMat}
             color={isRealistic ? RED_CORE.color : "#0d2840"}
             metalness={isRealistic ? RED_CORE.metalness : 0.5}
             roughness={isRealistic ? RED_CORE.roughness : 0.4}
@@ -218,7 +179,6 @@ export function FiberSpool({
         <mesh position={[0, 0.55, 0]}>
           <cylinderGeometry args={[0.25, 0.25, 0.15, 16]} />
           <meshStandardMaterial
-            ref={hubMat}
             color={isRealistic ? "#A8ADB8" : "#00D4FF"}
             emissive={isRealistic ? "#888" : "#00D4FF"}
             emissiveIntensity={isRealistic ? 0.08 : 0.3}

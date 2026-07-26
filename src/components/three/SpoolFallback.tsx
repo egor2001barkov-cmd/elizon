@@ -107,7 +107,7 @@ export function SpoolFallback({
 
   return (
     <div
-      className={`spool-fallback-root group flex items-center justify-center ${className}`}
+      className={`flex items-center justify-center ${className}`}
       role="img"
       aria-label="Катушка оптоволокна G.657.A2 — схематичное изображение"
     >
@@ -115,12 +115,7 @@ export function SpoolFallback({
         className="relative h-[min(58vw,280px)] w-[min(58vw,280px)] sm:h-56 sm:w-56 md:h-64 md:w-64"
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* Warm sun wash on hover (SVG fallback) */}
-        <div
-          className="spool-sun-glow pointer-events-none absolute -right-4 -top-6 h-28 w-28 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:h-36 sm:w-36"
-          aria-hidden
-        />
-        {/* Background stars — dots only, no cross sparkles */}
+        {/* Background stars — dots only */}
         <svg
           viewBox="0 0 200 200"
           className="pointer-events-none absolute inset-0 h-full w-full"
