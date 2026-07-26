@@ -77,13 +77,6 @@ export function FeaturedProductSection() {
                 >
                   Подробнее о продукте
                 </Button>
-                <a
-                  href="/api/spec"
-                  download
-                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-6 py-3 text-sm text-[#8BA4BC] transition-colors hover:border-[#00D4FF]/40 hover:text-white sm:w-auto"
-                >
-                  Скачать спецификацию (PDF)
-                </a>
               </div>
             </div>
           </ScrollReveal>

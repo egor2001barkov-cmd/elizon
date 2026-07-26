@@ -61,6 +61,21 @@ export function checkRateLimit(ip: string, pathname: string): RateLimitResult {
     return minute;
   }
 
+  if (pathname.startsWith("/api/admin/login")) {
+    const minute = checkWindow(`admin-login:${ip}`, 60_000, 5);
+    if (!minute.ok) return minute;
+    // Brute-force slowdown: max 20 attempts / hour per IP
+    return checkWindow(`admin-login-hour:${ip}`, 3_600_000, 20);
+  }
+
+  // Admin data APIs — throttle even with valid session (stolen cookie scrape)
+  if (
+    pathname.startsWith("/api/admin/leads") ||
+    pathname.startsWith("/api/admin/cases")
+  ) {
+    return checkWindow(`admin-data:${ip}`, 60_000, 60);
+  }
+
   if (pathname.startsWith("/api/spec")) {
     return checkWindow(
       `spec:${ip}`,

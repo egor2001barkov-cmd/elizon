@@ -1,70 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Дата-центр">
   <defs>
-    <linearGradient id="dc-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#050f1a"/>
-      <stop offset="0.5" stop-color="#0A2540"/>
-      <stop offset="1" stop-color="#0c2d4a"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#051525"/>
+      <stop offset="45%" stop-color="#0A2540"/>
+      <stop offset="100%" stop-color="#0E3558"/>
     </linearGradient>
-    <linearGradient id="dc-rack" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#163a58"/>
-      <stop offset="1" stop-color="#0A2540"/>
+    <linearGradient id="f1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#99E8FF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#99E8FF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#99E8FF" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="dc-link" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="#00D4FF" stop-opacity="0.2"/>
-      <stop offset="0.5" stop-color="#6ECFFF"/>
-      <stop offset="1" stop-color="#00D4FF" stop-opacity="0.2"/>
-    </linearGradient>
-    <filter id="dc-glow">
-      <feGaussianBlur stdDeviation="6"/>
-    </filter>
+    <radialGradient id="g" cx="50%" cy="48%" r="50%">
+      <stop offset="0%" stop-color="#99E8FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#99E8FF" stop-opacity="0"/>
+    </radialGradient>
   </defs>
-  <rect width="800" height="450" fill="url(#dc-bg)"/>
-  <circle cx="400" cy="200" r="160" fill="#00D4FF" opacity="0.04"/>
-  <!-- floor -->
-  <path d="M0 360 L800 360 L800 450 L0 450Z" fill="#061829"/>
-  <path d="M0 360 L80 300 H720 L800 360Z" fill="#0a1f35" opacity="0.8"/>
-  <!-- left hall racks -->
-  <g>
-    <rect x="90" y="140" width="70" height="200" rx="6" fill="url(#dc-rack)" stroke="#1e4a6f"/>
-    <rect x="175" y="120" width="70" height="220" rx="6" fill="url(#dc-rack)" stroke="#1e4a6f"/>
-    <rect x="260" y="150" width="70" height="190" rx="6" fill="url(#dc-rack)" stroke="#1e4a6f"/>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#g)"/>
+  <!-- racks left of center, still in frame when cropped -->
+  <g opacity="0.4" transform="translate(220, 280)">
+    <rect x="0" y="40" width="56" height="160" rx="4" fill="#0D2D4A" stroke="#6ECFFF" stroke-width="1.5"/>
+    <rect x="70" y="10" width="56" height="190" rx="4" fill="#0D2D4A" stroke="#6ECFFF" stroke-width="1.5"/>
+    <rect x="140" y="50" width="56" height="150" rx="4" fill="#0D2D4A" stroke="#6ECFFF" stroke-width="1.5"/>
+    <g fill="#00D4FF">
+      <circle cx="28" cy="70" r="2.5"/><circle cx="28" cy="95" r="2.5"/><circle cx="28" cy="120" r="2.5"/>
+      <circle cx="98" cy="40" r="2.5"/><circle cx="98" cy="65" r="2.5"/><circle cx="98" cy="90" r="2.5"/>
+      <circle cx="168" cy="80" r="2.5"/><circle cx="168" cy="105" r="2.5"/>
+    </g>
   </g>
-  <!-- right hall racks -->
-  <g>
-    <rect x="470" y="150" width="70" height="190" rx="6" fill="url(#dc-rack)" stroke="#1e4a6f"/>
-    <rect x="555" y="120" width="70" height="220" rx="6" fill="url(#dc-rack)" stroke="#1e4a6f"/>
-    <rect x="640" y="140" width="70" height="200" rx="6" fill="url(#dc-rack)" stroke="#1e4a6f"/>
+  <path d="M-20 400 C 200 300, 400 500, 600 380 S 1000 280, 1220 360" fill="none" stroke="url(#f1)" stroke-width="4"/>
+  <path d="M-20 440 C 220 340, 420 530, 620 420 S 1020 320, 1220 400" fill="none" stroke="#99E8FF" stroke-width="2" opacity="0.4"/>
+  <g transform="translate(600, 360)">
+    <ellipse cx="0" cy="-78" rx="118" ry="34" fill="#C5CAD4"/>
+    <rect x="-118" y="-78" width="236" height="156" fill="#8B1520"/>
+    <ellipse cx="0" cy="78" rx="118" ry="34" fill="#A0A6B2"/>
+    <ellipse cx="0" cy="-78" rx="118" ry="34" fill="#D8DCE4"/>
+    <g fill="none" stroke="#FF4D5A" stroke-width="5">
+      <ellipse cx="0" cy="-42" rx="68" ry="17"/>
+      <ellipse cx="0" cy="-8" rx="80" ry="19"/>
+      <ellipse cx="0" cy="28" rx="86" ry="19"/>
+      <ellipse cx="0" cy="58" rx="72" ry="16"/>
+    </g>
   </g>
-  <!-- LEDs -->
-  <g>
-    <rect x="102" y="160" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.7"/>
-    <rect x="102" y="175" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.35"/>
-    <rect x="102" y="190" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.55"/>
-    <rect x="102" y="205" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.3"/>
-    <rect x="102" y="220" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.65"/>
-    <rect x="187" y="140" width="46" height="6" rx="1" fill="#B8F0FF" opacity="0.8"/>
-    <rect x="187" y="155" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.5"/>
-    <rect x="187" y="170" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.4"/>
-    <rect x="187" y="185" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.7"/>
-    <rect x="272" y="170" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.55"/>
-    <rect x="272" y="185" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.45"/>
-    <rect x="272" y="200" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.6"/>
-    <rect x="482" y="170" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.6"/>
-    <rect x="482" y="185" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.4"/>
-    <rect x="482" y="200" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.55"/>
-    <rect x="567" y="140" width="46" height="6" rx="1" fill="#B8F0FF" opacity="0.75"/>
-    <rect x="567" y="155" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.5"/>
-    <rect x="567" y="170" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.45"/>
-    <rect x="652" y="160" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.65"/>
-    <rect x="652" y="175" width="46" height="6" rx="1" fill="#6ECFFF" opacity="0.35"/>
-    <rect x="652" y="190" width="46" height="6" rx="1" fill="#00D4FF" opacity="0.55"/>
-  </g>
-  <!-- optical link between halls -->
-  <path d="M330 220 C380 180 420 180 470 220" stroke="url(#dc-link)" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <path d="M330 240 C380 280 420 280 470 240" stroke="#00D4FF" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
-  <circle cx="400" cy="220" r="16" fill="#00D4FF" opacity="0.15" filter="url(#dc-glow)"/>
-  <circle cx="400" cy="220" r="5" fill="#B8F0FF"/>
-  <text x="358" y="210" fill="#8BA4BC" font-family="system-ui,sans-serif" font-size="11">+2 дБ</text>
-  <rect x="28" y="28" width="280" height="36" rx="18" fill="#00D4FF" fill-opacity="0.12" stroke="#6ECFFF" stroke-opacity="0.35"/>
-  <text x="48" y="51" fill="#6ECFFF" font-family="system-ui,sans-serif" font-size="15" font-weight="600">ЦОД · 280 км · резервный канал</text>
 </svg>

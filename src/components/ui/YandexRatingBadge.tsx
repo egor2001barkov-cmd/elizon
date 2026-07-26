@@ -1,4 +1,5 @@
 import { COMPANY } from "@/lib/constants";
+import { ROUTES } from "@/lib/seo/routes";
 
 function YandexLogo({ className }: { className?: string }) {
   return (
@@ -20,14 +21,20 @@ function YandexLogo({ className }: { className?: string }) {
 
 export function YandexRatingBadge() {
   const { rating, maxRating, url } = COMPANY.yandexMaps;
+  const href = url || ROUTES.contacts;
+  const external = Boolean(url);
 
   return (
     <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       className="inline-flex items-center gap-3 rounded-xl border border-white/10 bg-[#0A2540]/90 px-3.5 py-2.5 shadow-lg backdrop-blur-sm transition-colors hover:border-[#FC3F1D]/40"
-      aria-label={`Рейтинг ${rating} из ${maxRating} на Яндекс Картах`}
+      aria-label={
+        url
+          ? `Рейтинг ${rating} из ${maxRating} на Яндекс.Бизнес`
+          : "Контакты ELIZON — карточка Яндекс.Бизнес в настройке"
+      }
     >
       <YandexLogo className="h-8 w-8 shrink-0" />
       <div className="min-w-0">
@@ -37,7 +44,9 @@ export function YandexRatingBadge() {
           </span>
           <span className="text-sm text-[#8BA4BC]">/ {maxRating}</span>
         </div>
-        <p className="mt-0.5 text-xs text-[#8BA4BC]">Яндекс Карты</p>
+        <p className="mt-0.5 text-xs text-[#8BA4BC]">
+          {url ? "Яндекс.Бизнес" : "Яндекс · контакты"}
+        </p>
       </div>
     </a>
   );

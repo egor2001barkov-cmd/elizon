@@ -95,19 +95,6 @@ export function GenericProductContent({ product, breadcrumbs }: GenericProductCo
                     </p>
                   )}
 
-                  {product.specPdfUrl && (
-                    <p className="mt-4">
-                      <a
-                        href={product.specPdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-[#6ECFFF] hover:underline"
-                      >
-                        Скачать спецификацию (PDF) →
-                      </a>
-                    </p>
-                  )}
-
                   <ul className="mt-6 space-y-2">
                     {product.highlights.map((h) => (
                       <li key={h} className="flex gap-2 text-sm text-[#8BA4BC]">

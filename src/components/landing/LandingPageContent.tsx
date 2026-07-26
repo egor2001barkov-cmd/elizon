@@ -60,13 +60,39 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
 
       <WarehouseTrustSection />
 
+      {landing.type === "city" ? (
+        <ScrollReveal>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
+            <h2 className="font-display text-lg font-medium text-white">
+              Гео: {landing.cityName} и логистика ELIZON
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[#8BA4BC]">
+              Регион: {landing.region}. Срок доставки после готовности партии:{" "}
+              {landing.deliveryDays}. Комплектация — склад в Лобне; заявки и офис — Москва.
+              Удобно писать в WhatsApp или MAX — контакты в подвале.
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-2 text-xs text-[#8BA4BC]">
+              <li className="rounded-full border border-white/10 px-3 py-1">
+                оптоволокно {landing.cityName}
+              </li>
+              <li className="rounded-full border border-white/10 px-3 py-1">G.657.A2</li>
+              <li className="rounded-full border border-white/10 px-3 py-1">
+                доставка {landing.cityIn}
+              </li>
+            </ul>
+          </div>
+        </ScrollReveal>
+      ) : null}
+
       <ScrollReveal>
-        <div className="flex flex-wrap gap-4">
-          <Button href={landing.catalogHref}>Смотреть в каталоге</Button>
-          <Button href={`${ROUTES.contacts}#form`} variant="secondary">
+        <div className="flex flex-wrap gap-3 sm:gap-4">
+          <Button href={landing.catalogHref} className="!min-h-[44px]">
+            Смотреть в каталоге
+          </Button>
+          <Button href={`${ROUTES.contacts}#form`} variant="secondary" className="!min-h-[44px]">
             Запросить цену
           </Button>
-          <Button href={`${ROUTES.catalog}#calculator`} variant="ghost">
+          <Button href="/#calculator" variant="ghost" className="!min-h-[44px]">
             Калькулятор
           </Button>
         </div>
@@ -76,7 +102,7 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
         <ScrollReveal>
           <Link
             href={landing.caseReference}
-            className="block rounded-2xl border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 p-6 transition-colors hover:border-[#6ECFFF]/40"
+            className="block rounded-2xl border border-[#6ECFFF]/20 bg-[#6ECFFF]/5 p-5 sm:p-6 transition-colors hover:border-[#6ECFFF]/40"
           >
             <p className="text-sm text-[#6ECFFF]">Кейс поставки →</p>
             <p className="mt-2 font-medium text-white">Читать подробный кейс с цифрами</p>
@@ -138,18 +164,6 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
       {landing.type === "cylinder" && (
         <>
           <CylinderModelsGrid />
-          {landing.specPdfUrl && (
-            <ScrollReveal>
-              <a
-                href={landing.specPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center rounded-xl border border-[#6ECFFF]/25 bg-[#6ECFFF]/5 px-5 py-3 text-sm text-[#6ECFFF] hover:border-[#6ECFFF]/40"
-              >
-                Скачать спецификацию FO-0.25 (PDF) →
-              </a>
-            </ScrollReveal>
-          )}
           <ScrollReveal>
             <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4 sm:p-6">
               <h2 className="font-display text-lg font-medium text-white">Другие запросы по цилиндрам</h2>

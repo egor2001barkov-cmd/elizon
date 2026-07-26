@@ -44,14 +44,20 @@ export function WhyUsContent() {
         ))}
       </div>
 
-      <ProseBlock title="Социальные доказательства" paragraphs={[]} />
+      <ProseBlock
+        title="Что говорят с объектов"
+        paragraphs={[
+          "Ниже — формулировки от инженеров и закупок. Без идеальных пятёрок в каждом абзаце.",
+        ]}
+      />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {reviews.map((review, i) => (
-          <ScrollReveal key={review.name} delay={i * 0.08}>
+          <ScrollReveal key={review.name} delay={i * 0.05}>
             <GlassCard hover={false} className="h-full">
               <p className="font-medium text-white">{review.name}</p>
               <p className="text-xs text-[#8BA4BC]">{review.role}</p>
+              <p className="text-xs text-[#6ECFFF]/80">{review.company}</p>
               <p className="mt-4 text-sm leading-relaxed text-[#8BA4BC]">
                 &ldquo;{review.text}&rdquo;
               </p>

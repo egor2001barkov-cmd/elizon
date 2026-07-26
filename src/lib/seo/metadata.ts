@@ -75,7 +75,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   home: {
     title: "ELIZON — Оптоволокно G.657.A2 купить от 150 000 ₽ | Прямая поставка",
     description:
-      "Оптоволокно G.657.A2 242 мкм от поставщика. Катушка 50 км — от 150 000 ₽, радиус 7,5 мм. Срок 14–21 день. телеком, абонентский доступ, магистрали.",
+      "Прямые поставки G.657.A2 242 мкм: катушка 50 км от 150 000 ₽, радиус изгиба 7,5 мм, срок 14–21 рабочий день. Для операторов связи и монтажных бригад по всей России.",
     path: "/",
     titleAbsolute: true,
     ogImage: DEFAULT_OG_IMAGE,
@@ -83,7 +83,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   catalog: {
     title: "Каталог оптоволокна — цены и заказ",
     description:
-      "Каталог оптоволокна: G.657.A2, G.652.D, G.655, патч-корды, цилиндры. Катушки 50 км, срок 14–21 день, цены от завода. Калькулятор и счёт.",
+      "Позиции в наличии под заказ: G.657.A2, G.652.D, G.655, патч-корды, FO-цилиндры. Цены с завода, калькулятор длины, счёт на организацию за 15 минут.",
     path: ROUTES.catalog,
     keywords: [...DEFAULT_KEYWORDS, "каталог оптоволокна", "цена оптоволокна"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -91,7 +91,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   productG657a2: {
     title: "G.657.A2 242 мкм — купить катушку 50 км от 150 000 ₽",
     description:
-      "Волокно G.657.A2 242 мкм — катушка 50 км от 150 000 ₽. Радиус 7,5 мм, без водяного пика. Под заказ 14–21 день. Характеристики и PDF.",
+      "Карточка G.657.A2 242 мкм: 50 км на катушке, 7,5 мм радиус, ≤0,22 дБ/км @1550 нм. Спецификация PDF, паспорт и рефлектограмма на партию. Отгрузка 14–21 день.",
     path: "/optovolokno/g657/g657a2",
     keywords: [
       ...DEFAULT_KEYWORDS,
@@ -104,7 +104,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   cart: {
     title: "Оформление заказа оптоволокна",
     description:
-      "Оформление заказа оптоволокна: контакты, доставка, оплата. Менеджер подтвердит цену и срок 14–21 день.",
+      "Корзина ELIZON: укажите контакты, город и адрес — менеджер подтвердит цену, срок 14–21 день и способ оплаты. Страница не индексируется.",
     path: ROUTES.cart,
     keywords: [...DEFAULT_KEYWORDS, "заказ оптоволокна", "купить катушку"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -112,7 +112,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   payment: {
     title: "Оплата заказа",
     description:
-      "Оплата заказа оптоволокна: 100% предоплата безналом через банковский эквайринг.",
+      "Оплата заказа оптоволокна ELIZON: 100% предоплата безналом. После оплаты фиксируем партию и срок отгрузки. Страница служебная, без индексации.",
     path: ROUTES.payment,
     keywords: [...DEFAULT_KEYWORDS, "оплата заказа", "предоплата безналом"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -120,7 +120,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   applications: {
     title: "Оптоволокно по сферам применения — телеком, абонентский доступ, магистрали",
     description:
-      "Оптоволокно по сферам: телеком, абонентский доступ, магистрали, ЦОД, промышленность, спектральное уплотнение, дроны. G.657.A2 и G.652.D, срок 14–21 день.",
+      "Где ставят наше волокно: городские сети, FTTH, магистрали, ЦОД, промышленность, DWDM и тросы БПЛА. Подбор типа волокна и срок 14–21 день.",
     path: ROUTES.applications,
     keywords: [
       ...DEFAULT_KEYWORDS,
@@ -139,7 +139,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   about: {
     title: "О компании — прямой поставщик оптоволокна",
     description:
-      "ELIZON — поставки оптоволокна G.657.A2 с заводов. Срок 14–21 день, МСЭ-Т, фиксация цены от 10 катушек. Москва, доставка по РФ.",
+      "ELIZON — канал поставок G.657.A2 и G.652.D с заводов. Москва, Арбат 27. Работаем с юрлицами: счета, паспорта, отгрузка по РФ за 14–21 день.",
     path: ROUTES.about,
     keywords: [...DEFAULT_KEYWORDS, "поставщик оптоволокна", "прямые поставки", "официальный дистрибьютор"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -147,23 +147,30 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   whyUs: {
     title: "Почему мы — 5 причин выбрать ELIZON",
     description:
-      "Почему выбирают ELIZON: прямые поставки, G.657.A2 радиус 7,5 мм, катушка 50 км, срок 14–21 день. Отзывы, рейтинг 4,7.",
+      "Чем отличаемся от перекупщиков: цена с завода, катушки 50 км, G.657.A2 с радиусом 7,5 мм, фиксированный срок и менеджер на связи за 15 минут.",
     path: ROUTES.whyUs,
     keywords: [...DEFAULT_KEYWORDS, "почему ELIZON", "прямой поставщик", "отзывы"],
     ogImage: DEFAULT_OG_IMAGE,
   },
   advantages: {
-    title: "Наши преимущества — 8 причин купить оптоволокно у ELIZON",
+    title: "Преимущества ELIZON — G.657.A2, цена, срок 14–21 день",
     description:
-      "Преимущества ELIZON: заводские цены, склад в Москве, доставка по РФ, от 150 000 ₽/50 км, гарантия и сертификаты МСЭ-Т.",
+      "Почему берут оптоволокно у ELIZON: прямые поставки, G.657.A2 радиус 7,5 мм, катушка 50 км, доставка по РФ, документы МСЭ-Т. Для телекома, FTTH и БПЛА.",
     path: ROUTES.advantages,
-    keywords: [...DEFAULT_KEYWORDS, "преимущества", "оптом", "гарантия"],
+    keywords: [
+      ...DEFAULT_KEYWORDS,
+      "преимущества поставщика оптоволокна",
+      "G.657.A2 преимущества",
+      "оптоволокно для БПЛА",
+      "оптоволокно оптом",
+      "прямой поставщик",
+    ],
     ogImage: DEFAULT_OG_IMAGE,
   },
   services: {
     title: "Услуги — поставка, подбор волокна, рефлектометрический контроль",
     description:
-      "Услуги: поставка оптоволокна, подбор типа волокна, фиксация цены, рефлектометрический контроль, нестандартные длины катушек.",
+      "Подбор G.652/G.657, нестандартные длины, фиксация цены на объём, OTDR-контроль по запросу. Поставка катушек под график бригад.",
     path: ROUTES.services,
     keywords: [...DEFAULT_KEYWORDS, "услуги", "подбор волокна", "рефлектометрия"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -171,23 +178,23 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   delivery: {
     title: "Доставка и оплата оптоволокна",
     description:
-      "Доставка оптоволокна по России: Москва, СПб, регионы. Предоплата безналом или счёт. Срок 14–21 день. Самовывоз в Москве.",
+      "Самовывоз Москва · Деловые Линии и ПЭК в регионы · ЖД от крупных партий. Оплата: счёт или 100% предоплата. Срок производства 14–21 день.",
     path: ROUTES.delivery,
     keywords: [...DEFAULT_KEYWORDS, "доставка оптоволокна", "оплата", "запросить счёт"],
     ogImage: DEFAULT_OG_IMAGE,
   },
   faq: {
-    title: "Частые вопросы — частые вопросы об оптоволокне",
+    title: "FAQ: цена, сроки и документы на оптоволокно",
     description:
-      "Ответы на частые вопросы: цена G.657.A2, сроки, документы, доставка, оплата, совместимость G.657.A2 и G.652.D.",
+      "Сколько стоит G.657.A2, когда привезут, какие документы, чем A2 отличается от G.652.D, как оплатить счёт — короткие ответы без воды.",
     path: ROUTES.faq,
-    keywords: [...DEFAULT_KEYWORDS, "частые вопросы", "вопросы", "G.657.A2 цена"],
+    keywords: [...DEFAULT_KEYWORDS, "FAQ оптоволокно", "G.657.A2 цена", "срок поставки"],
     ogImage: DEFAULT_OG_IMAGE,
   },
   offer: {
     title: "Публичная оферта",
     description:
-      "Публичная оферта на поставку оптоволокна и телеком-оборудования. Условия заказа, оплаты, доставки и гарантии.",
+      "Условия публичной оферты ELIZON: заказ, оплата, поставка оптоволокна и сопутствующего оборудования, ответственность сторон.",
     path: ROUTES.offer,
     keywords: [...DEFAULT_KEYWORDS, "оферта", "договор"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -195,7 +202,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   privacy: {
     title: "Политика конфиденциальности",
     description:
-      "Политика обработки персональных данных. Cookies, аналитика, права пользователей по 152-ФЗ.",
+      "Как ELIZON обрабатывает персональные данные из форм и звонков: цели, сроки хранения, права субъекта по 152-ФЗ, cookies и аналитика.",
     path: ROUTES.privacy,
     keywords: ["политика конфиденциальности", "персональные данные", "ELIZON"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -203,7 +210,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   sitemapPage: {
     title: "Карта сайта",
     description:
-      "Карта сайта: каталог, блог, регионы, сферы применения, услуги, частые вопросы, юридические документы.",
+      "Полная навигация по elizon.ru: каталог, сферы, кейсы, блог, города, FAQ, доставка и юридические страницы.",
     path: ROUTES.sitemapPage,
     keywords: [...DEFAULT_KEYWORDS, "карта сайта"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -211,7 +218,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   blog: {
     title: "Блог — статьи об оптоволокне и телекоме",
     description:
-      "Статьи: выбор G.657.A2, сравнения, монтаж, абонентский доступ, цены, поставки. Материалы для инженеров и закупок.",
+      "Практические заметки: G.657.A2 vs G.652.D, монтаж, OTDR, FTTH, цены и закупка оптом. Для инженеров, прорабов и закупок.",
     path: ROUTES.blog,
     keywords: [...DEFAULT_KEYWORDS, "блог", "статьи", "G.657.A2 vs G.652.D"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -219,7 +226,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   moscow: {
     title: "Оптоволокно в Москве — купить G.657.A2 от 150 000 ₽",
     description:
-      "Оптоволокно G.657.A2 в Москве и МО. Прямые поставки, самовывоз Арбат, доставка 1–2 дня после готовности.",
+      "Поставки G.657.A2 в Москву и МО: самовывоз с Арбата, курьер 1–2 дня после готовности партии, счёт на юрлицо, паспорт на катушку.",
     path: "/moscow",
     keywords: [...DEFAULT_KEYWORDS, "оптоволокно Москва", "купить Москва"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -227,7 +234,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   spb: {
     title: "Оптоволокно в Санкт-Петербурге — G.657.A2 за 14–21 день",
     description:
-      "Оптоволокно G.657.A2 в Санкт-Петербурге и ЛО. Прямые поставки, доставка 2–4 дня после готовности.",
+      "G.657.A2 для СПб и Ленобласти: производство 14–21 день, доставка ТК 2–4 дня, документы для приёмки, фиксация цены от 10 катушек.",
     path: "/spb",
     keywords: [...DEFAULT_KEYWORDS, "оптоволокно Санкт-Петербург", "G.657.A2 СПб"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -235,7 +242,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   contacts: {
     title: "Контакты — запросить цену и счёт",
     description:
-      "Контакты: телефон, email, форма заявки. Цена на G.657.A2 и счёт на организацию — ответ за 15 минут в рабочее время.",
+      "Телефон +7 (926) 449-41-04, support@elizon.ru, Telegram @egorconsult. Заявка на цену G.657.A2 и счёт — обычно отвечаем за 15 минут.",
     path: ROUTES.contacts,
     keywords: [...DEFAULT_KEYWORDS, "запросить цену", "выставить счёт", "контакты ELIZON"],
     ogImage: DEFAULT_OG_IMAGE,
@@ -243,7 +250,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   notFound: {
     title: "Страница не найдена",
     description:
-      "Страница не найдена. Перейдите в каталог оптоволокна или закажите G.657.A2 — от 150 000 ₽/50 км, срок 14–21 день.",
+      "Такой страницы нет. Загляните в каталог или оставьте заявку на G.657.A2 — от 150 000 ₽ за 50 км, срок 14–21 день.",
     path: "/404",
     titleAbsolute: true,
     ogImage: DEFAULT_OG_IMAGE,
@@ -271,7 +278,14 @@ export function createPageMetadata(key: PageKey, overrides?: Metadata): Metadata
       siteName: SITE_NAME,
       locale: "ru_RU",
       type: "website",
-      images: [{ url: ogImage, alt: `${SITE_NAME} — оптоволокно` }],
+      images: [
+        {
+          url: ogImage,
+          alt: `${SITE_NAME} — оптоволокно G.657.A2`,
+          width: 1200,
+          height: 630,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -279,9 +293,20 @@ export function createPageMetadata(key: PageKey, overrides?: Metadata): Metadata
       description: seo.description,
       images: [ogImage],
     },
+    // Google/Yandex: крупные сниппеты и превью, без смены title/description
     robots: noindex
       ? { index: false, follow: false, googleBot: { index: false, follow: false } }
-      : { index: true, follow: true },
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        },
     ...overrides,
   };
 }

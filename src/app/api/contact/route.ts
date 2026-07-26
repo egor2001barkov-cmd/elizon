@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { getContactInboxEmail, sendContactEmail } from "@/lib/email/send-mail";
 import { guardContactRequest, type SanitizedContactPayload } from "@/lib/security/api-guard";
 import { LIMITS } from "@/lib/security/constants";
+import { isAllowedOrigin, redactLeadForLog } from "@/lib/security/origin";
 import { PAYMENT_LABELS } from "@/lib/data/order-form";
+import { appendLead, type LeadKind } from "@/lib/data/leads-store";
 
 interface CartItemPayload {
   productId: string;
@@ -24,7 +26,7 @@ function formatCartLines(cart: CartItemPayload[]): string[] {
   });
 }
 
-function formatMessage(body: SanitizedContactPayload): { html: string; plain: string } {
+function formatMessage(body: SanitizedContactPayload): { plain: string } {
   const title =
     body.type === "callback"
       ? "Заявка на обратный звонок ELIZON"
@@ -69,8 +71,7 @@ function formatMessage(body: SanitizedContactPayload): { html: string; plain: st
     }
   }
 
-  const plain = lines.filter(Boolean).join("\n");
-  return { html: plain, plain };
+  return { plain: lines.filter(Boolean).join("\n") };
 }
 
 async function sendTelegram(message: string): Promise<boolean> {
@@ -110,7 +111,17 @@ function buildEmailSubject(body: SanitizedContactPayload): string {
   return "Заявка ELIZON";
 }
 
+/** Uniform response — never echo lead fields back to the client. */
+function acceptedResponse() {
+  return NextResponse.json({ success: true });
+}
+
 export async function POST(request: Request) {
+  // Block cross-site form spam / lead harvesters
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const contentLength = request.headers.get("content-length");
   if (contentLength && parseInt(contentLength, 10) > LIMITS.maxBodyBytes) {
     return NextResponse.json({ error: "Слишком большой запрос" }, { status: 413 });
@@ -121,13 +132,54 @@ export async function POST(request: Request) {
     const guard = guardContactRequest(raw);
 
     if (!guard.ok) {
+      // Honeypot bots get fake success (already in guard) — keep that behaviour
       return guard.response;
     }
 
     const body = guard.data;
     const { plain } = formatMessage(body);
-
     const inbox = getContactInboxEmail();
+
+    // Persist for admin CRM (orders / clients) — never returned to public client
+    try {
+      const kind: LeadKind =
+        body.type === "callback"
+          ? "callback"
+          : body.type === "invoice"
+            ? "invoice"
+            : body.type === "order" || Boolean(body.cart?.length)
+              ? "order"
+              : "contact";
+      await appendLead({
+        kind,
+        name: body.name,
+        phone: body.phone,
+        email: body.email,
+        companyName: body.companyName,
+        inn: body.inn,
+        kpp: body.kpp,
+        legalAddress: body.legalAddress,
+        city: body.city,
+        deliveryAddress: body.deliveryAddress,
+        preferredDate: body.preferredDate,
+        paymentMethod: body.paymentMethod,
+        quantity: body.quantity,
+        comment: body.comment,
+        cart: body.cart?.map((item) => ({
+          productId: item.productId,
+          name: item.name,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+          km: item.km,
+          isCustom: item.isCustom,
+          leadTime: item.leadTime,
+        })),
+        total: body.total,
+        subject: buildEmailSubject(body),
+      });
+    } catch {
+      console.error("[ELIZON Contact] leads store write failed");
+    }
 
     const [telegramSent, emailSent] = await Promise.all([
       sendTelegram(plain),
@@ -139,18 +191,28 @@ export async function POST(request: Request) {
     ]);
 
     if (!telegramSent && !emailSent) {
-      console.log(`[ELIZON Contact Form → ${inbox}]`, plain);
-      return NextResponse.json({
-        success: true,
-        note: "Заявка принята (режим разработки)",
-      });
+      // Dev fallback only — never print full PII in production logs
+      if (process.env.NODE_ENV !== "production") {
+        console.log(`[ELIZON Contact Form → ${inbox}]`, plain);
+      } else {
+        console.warn(
+          "[ELIZON Contact] delivery channels unavailable",
+          redactLeadForLog(`type=${body.type ?? "contact"} name_len=${body.name.length}`)
+        );
+      }
+      // Still accept — admin must configure SMTP/Telegram; do not leak lead to client
+      return acceptedResponse();
     }
 
-    return NextResponse.json({ success: true });
+    return acceptedResponse();
   } catch {
     return NextResponse.json(
       { error: "Не удалось отправить заявку" },
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
 }

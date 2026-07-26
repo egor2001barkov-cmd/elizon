@@ -1,0 +1,22 @@
+{
+  "name": "ELIZON — оптоволокно G.657.A2",
+  "short_name": "ELIZON",
+  "description": "Прямые поставки оптоволокна G.657.A2 242 мкм: катушки 50 км, FO-цилиндры, документы и отгрузка по России.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#071e33",
+  "theme_color": "#071e33",
+  "lang": "ru-RU",
+  "dir": "ltr",
+  "orientation": "any",
+  "categories": ["business", "shopping"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

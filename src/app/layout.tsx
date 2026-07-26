@@ -3,9 +3,11 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { OrganizationJsonLd } from "@/components/seo/JsonLd";
+import { Analytics } from "@/components/seo/Analytics";
 import { CartProvider } from "@/context/CartContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { BackgroundGlow } from "@/components/ui/BackgroundGlow";
+import { CookieBanner } from "@/components/ui/CookieBanner";
 import {
   DEFAULT_OG_IMAGE,
   PAGE_SEO,
@@ -34,6 +36,11 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#071e33" },
+    { media: "(prefers-color-scheme: light)", color: "#071e33" },
+  ],
+  colorScheme: "dark" as const,
 };
 
 export const metadata: Metadata = {
@@ -44,7 +51,22 @@ export const metadata: Metadata = {
   },
   description: home.description,
   keywords: home.keywords,
-  alternates: { canonical: "/" },
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "business",
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+  },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": [{ url: "/feed.xml", title: "ELIZON — блог" }],
+    },
+  },
   openGraph: {
     title: home.title,
     description: home.description,
@@ -52,7 +74,14 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: "ru_RU",
     type: "website",
-    images: [{ url: homeOg, alt: `${SITE_NAME} — оптоволокно` }],
+    images: [
+      {
+        url: homeOg,
+        alt: `${SITE_NAME} — оптоволокно G.657.A2`,
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -60,10 +89,30 @@ export const metadata: Metadata = {
     description: home.description,
     images: [homeOg],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
     apple: "/favicon.svg",
+  },
+  manifest: "/site.webmanifest",
+  // geo-подсказки для локального SEO (не меняют title/description)
+  other: {
+    "geo.region": "RU-MOW",
+    "geo.placename": "Москва",
+    "geo.position": "55.751522;37.591278",
+    ICBM: "55.751522, 37.591278",
   },
 };
 
@@ -85,10 +134,13 @@ export default function RootLayout({
         <CartProvider>
           <BackgroundGlow />
           <OrganizationJsonLd />
+          <Analytics />
           <Header />
           <main className="relative z-0 flex-1 min-h-0">{children}</main>
           <Footer />
+          {/* Cart only on public site; AdminShell is self-contained */}
           <CartDrawer />
+          <CookieBanner />
         </CartProvider>
       </body>
     </html>

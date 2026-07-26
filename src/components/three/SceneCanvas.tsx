@@ -117,19 +117,17 @@ export function SceneCanvas({
 
   const isNarrow = useMediaQuery("(max-width: 1023px)");
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const coarsePointer = useMediaQuery("(pointer: coarse)");
 
   const webglOk = useMemo(() => (mounted ? hasWebGL() : false), [mounted]);
 
-  // Phones/tablets: SVG fallback. Desktop with WebGL: 3D.
-  // force3D only overrides when WebGL is available and device is not low-end.
+  // Prefer 3D spool on all devices with WebGL (incl. mobile).
+  // force3D keeps 3D even if the device looks constrained; low-end / reduced-motion still fall back.
   const useFallback =
     !mounted ||
     webglFailed ||
     !webglOk ||
     prefersReducedMotion ||
-    isLowEndDevice() ||
-    ((isNarrow || coarsePointer) && !force3D);
+    (isLowEndDevice() && !force3D);
 
   useEffect(() => setMounted(true), []);
 
@@ -168,12 +166,12 @@ export function SceneCanvas({
         onMouseLeave={() => setHovered(false)}
       >
         <Canvas
-          dpr={[1, 1.25]}
+          dpr={isNarrow ? [1, 1.5] : [1, 1.5]}
           gl={{
-            antialias: false,
+            antialias: !isNarrow,
             alpha: true,
-            powerPreference: "default",
-            failIfMajorPerformanceCaveat: true,
+            powerPreference: isNarrow ? "high-performance" : "default",
+            failIfMajorPerformanceCaveat: false,
           }}
           style={{ background: "transparent", touchAction: interactive ? "none" : "pan-y" }}
           onCreated={({ gl }) => {
@@ -185,7 +183,11 @@ export function SceneCanvas({
             canvas.addEventListener("webglcontextlost", onLost, false);
           }}
         >
-          <PerspectiveCamera makeDefault position={[0, 1.5, 5]} fov={40} />
+          <PerspectiveCamera
+            makeDefault
+            position={isNarrow ? [0, 1.2, 4.2] : [0, 1.5, 5]}
+            fov={isNarrow ? 42 : 40}
+          />
           <SceneLights />
           {type !== "bend" && <ParticleGrid />}
 

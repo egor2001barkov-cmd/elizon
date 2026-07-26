@@ -49,10 +49,17 @@ export const FOOTER_LINKS = {
 export const COMPANY = {
   name: "ELIZON",
   legalName: "ИП Баркова Инна Теймуразовна",
+  /** Заполните в .env: NEXT_PUBLIC_COMPANY_INN / OGRNIP — на сайте покажем в блоке реквизитов */
+  inn: process.env.NEXT_PUBLIC_COMPANY_INN?.trim() || "",
+  ogrnip: process.env.NEXT_PUBLIC_COMPANY_OGRNIP?.trim() || "",
   phone: "+7 (926) 449-41-04",
   phoneTel: "+79264494104",
   email: "support@elizon.ru",
+  /** Офис / приёмка заявок */
   address: "г. Москва, ул. Арбат, 27",
+  /** Склад — город без улицы */
+  warehouseCity: "Лобня",
+  warehouseAreaSqm: 5000,
   coordinates: {
     lat: 55.751522,
     lon: 37.591278,
@@ -60,10 +67,15 @@ export const COMPANY = {
   yandexMaps: {
     rating: 4.7,
     maxRating: 5,
-    url: "https://yandex.ru/maps/?text=%D0%93.%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D1%83%D0%BB.%20%D0%90%D1%80%D0%B1%D0%B0%D1%82%2C%2027",
+    /** Карточка Яндекс.Бизнес — NEXT_PUBLIC_YANDEX_BUSINESS_URL в .env */
+    url: process.env.NEXT_PUBLIC_YANDEX_BUSINESS_URL?.trim() || "",
   },
-  telegram: "https://t.me/elizon_fiber",
-} as const;
+  telegram: "https://t.me/egorconsult",
+  telegramHandle: "@egorconsult",
+  whatsapp: "https://wa.me/79264494104",
+  /** MAX messenger */
+  max: "https://max.ru/u/f9LHodD0cOItJSh1AA1MDS2HDYoTT9oL_KKMhwHn8zyLw-xEzcGCCkeX8Oo",
+};
 
 export function buildYandexMapEmbedUrl(
   lat: number,

@@ -9,7 +9,7 @@ export const faqItems: FaqItem[] = [
     id: "products",
     question: "Какое оптоволокно вы поставляете?",
     answer:
-      "G.657.A2 242 мкм (флагман), G.652.D, G.657.A1, G.655, патч-корды LC/LC/SC/FC, волокно нестандартной длины (25, 75, 100 км). Полный каталог — на странице /catalog.",
+      "G.657.A2 242 мкм (флагман), G.652.D, G.657.A1, G.655, патч-корды LC/LC/SC/FC, волокно нестандартной длины (25, 75, 100 км). Полный каталог — на странице /katalog.",
   },
   {
     id: "stock",
@@ -85,7 +85,7 @@ export const faqItems: FaqItem[] = [
     id: "response-time",
     question: "Как быстро отвечаете на заявки?",
     answer:
-      "В рабочее время — в течение 15 минут. Email: support@elizon.ru, Telegram: @elizon_fiber.",
+      "В рабочее время — в течение 15 минут. Email: support@elizon.ru, Telegram: @egorconsult.",
   },
   {
     id: "individuals",

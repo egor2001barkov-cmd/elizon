@@ -6,22 +6,24 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Button } from "@/components/ui/Button";
 import { CaseCoverImage } from "@/components/cases/CaseCoverImage";
-import { caseStudies } from "@/lib/data/cases";
+import { caseStudies, type CaseStudy } from "@/lib/data/cases";
 
-export function CasesSection() {
+export function CasesSection({ cases }: { cases?: CaseStudy[] }) {
+  const items = cases?.length ? cases : caseStudies;
+
   return (
     <section id="cases" className="py-16 sm:py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <SectionHeading
           title="Кейсы"
-          subtitle="Как наше волокно работает на реальных объектах — с цифрами и результатами."
+          subtitle="Что реально ставили и как прошло — без идеальных слайдов."
           align="center"
           className="mx-auto text-center"
         />
 
         <div className="grid gap-5 sm:gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {caseStudies.map((item, i) => (
-            <ScrollReveal key={item.id} delay={i * 0.08}>
+          {items.map((item, i) => (
+            <ScrollReveal key={item.id} delay={i * 0.05}>
               <GlassCard
                 hover={false}
                 className="flex h-full flex-col overflow-hidden !p-0"
@@ -33,7 +35,7 @@ export function CasesSection() {
                   <div className="relative">
                     <CaseCoverImage
                       src={item.image}
-                      alt={item.title}
+                      alt={item.imageAlt ?? item.title}
                       className="transition-transform duration-500 group-hover:scale-[1.02]"
                     />
                     <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1.5 sm:bottom-4 sm:left-4">
@@ -77,6 +79,23 @@ export function CasesSection() {
                       </p>
                     </div>
                   </div>
+
+                  {item.beforeAfter ? (
+                    <div className="mt-3 rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 text-xs leading-relaxed text-[#8BA4BC]">
+                      <p>
+                        <span className="text-white/80">Стыки: </span>
+                        {item.beforeAfter.jointsBefore}
+                        <span className="text-[#6ECFFF]"> → </span>
+                        {item.beforeAfter.jointsAfter}
+                      </p>
+                      <p className="mt-1">
+                        <span className="text-white/80">Сроки: </span>
+                        {item.beforeAfter.daysBefore}
+                        <span className="text-[#6ECFFF]"> → </span>
+                        {item.beforeAfter.daysAfter}
+                      </p>
+                    </div>
+                  ) : null}
 
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-[#8BA4BC] sm:mt-4">
                     {item.description}

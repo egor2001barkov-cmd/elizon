@@ -92,12 +92,16 @@ export function SpoolFallback({
   const glowId = realistic ? "fiberGlowR" : "fiberGlowD";
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div
+      className={`flex items-center justify-center ${className}`}
+      role="img"
+      aria-label="Катушка оптоволокна G.657.A2 — схематичное изображение"
+    >
       <div
-        className="spool-spin relative h-44 w-44 sm:h-48 sm:w-48"
+        className="spool-spin relative h-[min(58vw,280px)] w-[min(58vw,280px)] sm:h-56 sm:w-56 md:h-64 md:w-64"
         style={{ transformStyle: "preserve-3d" }}
       >
-        <svg viewBox="0 0 200 200" className="h-full w-full drop-shadow-[0_0_24px_rgba(0,212,255,0.15)]" aria-hidden>
+        <svg viewBox="0 0 200 200" className="h-full w-full drop-shadow-[0_0_40px_rgba(0,212,255,0.22)]" aria-hidden>
           <defs>
             <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={realistic ? "#8B1520" : "#0A2540"} />

@@ -12,10 +12,13 @@ export function ProductPhoto({ photo, priority = false, className = "" }: Produc
     <div className={`relative overflow-hidden ${className}`}>
       <Image
         src={photo.src}
-        alt={photo.alt}
+        alt={photo.alt || "Оптоволокно ELIZON"}
         fill
-        sizes="(max-width: 1024px) 100vw, 50vw"
-        className="object-cover"
+        sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 400px"
+        quality={70}
+        loading={priority ? undefined : "lazy"}
+        decoding="async"
+        className="object-cover object-center"
         priority={priority}
       />
     </div>

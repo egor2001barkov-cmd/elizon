@@ -7,7 +7,7 @@ import {
   buildCatalogItemListSchema,
   buildGraph,
   buildProductSchema,
-  buildReviewsSchema,
+
   buildWebPageSchema,
   absoluteUrl,
 } from "@/lib/seo/schema";
@@ -56,9 +56,7 @@ export function ProductPageJsonLd({ product, path, breadcrumbs }: ProductPageJso
     buildBreadcrumbSchema(breadcrumbs),
   ];
 
-  if (product.id === "g657a2-242") {
-    nodes.push(...buildReviewsSchema(product));
-  }
+  // Reviews schema не добавляем — только Product + WebPage + breadcrumbs
 
   return <JsonLd data={buildGraph(...nodes)} />;
 }

@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/Button";
 import { COMPANY } from "@/lib/constants";
 import { ProseBlock } from "@/components/content/ProseBlock";
 import { CtaBanner } from "@/components/content/CtaBanner";
+import { WarehouseGallery } from "@/components/content/WarehouseGallery";
+import { AccountingDocsBlock } from "@/components/content/AccountingDocsBlock";
 import { ROUTES } from "@/lib/seo/routes";
 
 const stats = [
@@ -98,10 +100,30 @@ export function AboutContent() {
           <ProseBlock
             title="География и логистика"
             paragraphs={[
-              `Офис и точка приёма заявок: ${COMPANY.address}. Отгружаем по всей России — Москва и МО, Санкт-Петербург, регионы. Транспортные компании (Деловые Линии, ПЭК), собственный транспорт для крупных заказов.`,
-              `Контакты: ${COMPANY.phone} · ${COMPANY.email}`,
+              `Офис и приём заявок: ${COMPANY.address}. Склад комплектации — ${COMPANY.warehouseCity}, около ${COMPANY.warehouseAreaSqm.toLocaleString("ru-RU")} м²: партии принимают, маркировку сверяют, грузят в ТК. Точный адрес склада для фуры говорим после подтверждения заказа — в открытый доступ не выкладываем.`,
+              `Отгрузки по России: Деловые Линии, ПЭК, при крупных объёмах — отдельные машины. Контакты: ${COMPANY.phone} · ${COMPANY.email}`,
             ]}
           />
+          <ProseBlock
+            title="Реквизиты"
+            paragraphs={[
+              `${COMPANY.legalName}.`,
+              COMPANY.inn
+                ? `ИНН ${COMPANY.inn}${COMPANY.ogrnip ? `, ОГРНИП ${COMPANY.ogrnip}` : ""}.`
+                : "ИНН и ОГРНИП указываем в счёте и по запросу (или задайте NEXT_PUBLIC_COMPANY_INN / OGRNIP в env).",
+              COMPANY.yandexMaps.url
+                ? `Карточка в Яндекс.Бизнес: ${COMPANY.yandexMaps.url}`
+                : "Карточку Яндекс.Бизнес подключим по ссылке организации — задайте NEXT_PUBLIC_YANDEX_BUSINESS_URL.",
+            ]}
+          />
+        </div>
+
+        <div className="mt-14">
+          <WarehouseGallery />
+        </div>
+
+        <div className="mt-14">
+          <AccountingDocsBlock />
         </div>
 
         <div className="mt-12 flex flex-wrap gap-4">

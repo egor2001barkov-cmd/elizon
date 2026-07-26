@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid slice" role="img" aria-label="БПЛА FPV">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#051525"/>
+      <stop offset="45%" stop-color="#0A2540"/>
+      <stop offset="100%" stop-color="#0E3558"/>
+    </linearGradient>
+    <linearGradient id="f1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FB7185" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00D4FF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="g" cx="50%" cy="48%" r="50%">
+      <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#g)"/>
+  <!-- drone left of center -->
+  <g transform="translate(280, 340)" opacity="0.5" fill="none" stroke="#6ECFFF" stroke-width="2.5">
+    <circle cx="0" cy="0" r="12" fill="#0D2D4A"/>
+    <line x1="-44" y1="-36" x2="44" y2="36"/>
+    <line x1="44" y1="-36" x2="-44" y2="36"/>
+    <circle cx="-44" cy="-36" r="14"/>
+    <circle cx="44" cy="-36" r="14"/>
+    <circle cx="-44" cy="36" r="14"/>
+    <circle cx="44" cy="36" r="14"/>
+  </g>
+  <path d="M300 340 C 400 380, 480 400, 540 390" fill="none" stroke="#00D4FF" stroke-width="2" opacity="0.55" stroke-dasharray="5 7"/>
+  <path d="M-20 400 C 200 300, 400 500, 600 380 S 1000 280, 1220 360" fill="none" stroke="url(#f1)" stroke-width="4"/>
+  <path d="M-20 440 C 220 340, 420 530, 620 420 S 1020 320, 1220 400" fill="none" stroke="#00D4FF" stroke-width="2" opacity="0.4"/>
+  <!-- FO cylinder centered -->
+  <g transform="translate(600, 360)">
+    <ellipse cx="0" cy="-90" rx="88" ry="30" fill="#4A5A6C"/>
+    <rect x="-88" y="-90" width="176" height="180" fill="#1A2A3C" stroke="#6ECFFF" stroke-width="1.5"/>
+    <ellipse cx="0" cy="90" rx="88" ry="30" fill="#2A3848"/>
+    <ellipse cx="0" cy="-90" rx="88" ry="30" fill="#5A6A7C"/>
+    <g fill="none" stroke="#00D4FF" stroke-width="3.5" opacity="0.85">
+      <ellipse cx="0" cy="-45" rx="50" ry="14"/>
+      <ellipse cx="0" cy="-5" rx="58" ry="15"/>
+      <ellipse cx="0" cy="35" rx="62" ry="15"/>
+      <ellipse cx="0" cy="70" rx="52" ry="13"/>
+    </g>
+  </g>
+</svg>

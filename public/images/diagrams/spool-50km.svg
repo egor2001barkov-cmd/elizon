@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Схема катушки оптоволокна 50 км">
+  <rect width="960" height="540" fill="#071e33"/>
+  <text x="48" y="56" fill="#6ECFFF" font-family="system-ui,sans-serif" font-size="28" font-weight="600">Катушка ~50 км</text>
+  <text x="48" y="90" fill="#8BA4BC" font-family="system-ui,sans-serif" font-size="16">Меньше промежуточных стыков на длинных участках</text>
+  <ellipse cx="320" cy="280" rx="160" ry="40" fill="#C8CCD4"/>
+  <rect x="160" y="200" width="320" height="160" fill="#8B1520"/>
+  <ellipse cx="320" cy="200" rx="160" ry="40" fill="#A8ADB8"/>
+  <ellipse cx="320" cy="360" rx="160" ry="40" fill="#9AA0AA"/>
+  <g fill="none" stroke="#E63946" stroke-width="3">
+    <ellipse cx="320" cy="220" rx="90" ry="22"/>
+    <ellipse cx="320" cy="250" rx="100" ry="24"/>
+    <ellipse cx="320" cy="280" rx="110" ry="26"/>
+    <ellipse cx="320" cy="310" rx="100" ry="24"/>
+    <ellipse cx="320" cy="340" rx="90" ry="22"/>
+  </g>
+  <text x="560" y="220" fill="#fff" font-size="20" font-family="system-ui,sans-serif">Длина на катушке</text>
+  <text x="560" y="255" fill="#6ECFFF" font-size="36" font-family="system-ui,sans-serif" font-weight="700">50,4 км</text>
+  <text x="560" y="300" fill="#8BA4BC" font-size="15" font-family="system-ui,sans-serif">G.657.A2 242 мкм · под заказ</text>
+  <text x="560" y="340" fill="#8BA4BC" font-size="15" font-family="system-ui,sans-serif">Типично 2–4 стыка вместо 6–8</text>
+  <text x="560" y="380" fill="#8BA4BC" font-size="15" font-family="system-ui,sans-serif">на трассе 35–40 км</text>
+</svg>

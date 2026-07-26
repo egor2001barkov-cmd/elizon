@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createPayment } from "@/lib/payment/provider";
 import { LIMITS } from "@/lib/security/constants";
 import { isValidPhone, sanitizeText } from "@/lib/security/validate";
+import { appendLead } from "@/lib/data/leads-store";
 
 export async function POST(request: Request) {
   const contentLength = request.headers.get("content-length");
@@ -17,6 +18,7 @@ export async function POST(request: Request) {
     const customerEmail = sanitizeText(raw.customerEmail, LIMITS.maxEmailLength);
     const returnUrl = sanitizeText(raw.returnUrl, 500);
     const amount = Math.min(Math.max(Number(raw.amount) || 0, 0), 99_999_999_999);
+    const description = sanitizeText(raw.description, 200) || undefined;
 
     if (!orderRef || !customerName || !customerPhone) {
       return NextResponse.json(
@@ -36,6 +38,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Некорректная сумма заказа" }, { status: 400 });
     }
 
+    // Store payment attempt for admin (PII only after auth)
+    try {
+      await appendLead({
+        kind: "payment",
+        name: customerName,
+        phone: customerPhone,
+        email: customerEmail || undefined,
+        total: amount,
+        orderRef,
+        comment: description,
+        paymentMethod: "online",
+      });
+    } catch {
+      console.error("[ELIZON Payment] leads store write failed");
+    }
+
     const result = await createPayment({
       orderRef,
       amount,
@@ -43,7 +61,7 @@ export async function POST(request: Request) {
       customerPhone,
       customerEmail: customerEmail || undefined,
       returnUrl: returnUrl || `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/catalog/cart/payment`,
-      description: sanitizeText(raw.description, 200) || undefined,
+      description,
     });
 
     if (!result.ok) {

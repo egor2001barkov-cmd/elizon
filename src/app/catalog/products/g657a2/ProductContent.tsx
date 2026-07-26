@@ -155,16 +155,6 @@ export function ProductContent() {
               </table>
             </div>
           </ScrollReveal>
-
-          <div className="mt-6">
-            <a
-              href="/api/spec"
-              download
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/8 px-6 py-3 text-sm font-medium text-white transition-all hover:border-[#00D4FF]/40 hover:bg-white/12"
-            >
-              Скачать спецификацию (PDF)
-            </a>
-          </div>
         </div>
       </section>
 
@@ -225,16 +215,23 @@ export function ProductContent() {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading title="Отзывы" />
           <div className="grid gap-6 md:grid-cols-3">
-            {reviews.map((r, i) => (
+            {reviews.slice(0, 3).map((r, i) => (
               <ScrollReveal key={r.name} delay={i * 0.1}>
                 <GlassCard hover={false}>
                   <div className="mb-4 flex items-center gap-3">
                     <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-[#6ECFFF]/30">
-                      <Image src={r.photo} alt={r.name} fill className="object-cover" />
+                      <Image
+                        src={r.photo}
+                        alt={`Фото ${r.name}, ${r.company}`}
+                        fill
+                        className="object-cover"
+                        sizes="48px"
+                      />
                     </div>
                     <div>
                       <p className="font-medium text-white">{r.name}</p>
                       <p className="text-xs text-[#8BA4BC]">{r.role}</p>
+                      <p className="text-xs text-[#6ECFFF]/80">{r.company}</p>
                     </div>
                   </div>
                   <p className="text-sm text-[#8BA4BC]">&ldquo;{r.text}&rdquo;</p>

@@ -7,14 +7,48 @@ import { getClientIp } from "@/lib/security/get-client-ip";
 import { applySecurityHeaders } from "@/lib/security/headers";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 
+function isAdminPath(pathname: string): boolean {
+  return (
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    pathname.startsWith("/api/admin/")
+  );
+}
+
+function sealAdmin(response: NextResponse): void {
+  response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+  response.headers.set("Cache-Control", "no-store, private, max-age=0");
+  response.headers.set("Pragma", "no-cache");
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const admin = isAdminPath(pathname);
 
   if (isBlockedPath(pathname)) {
     return new NextResponse(null, { status: 404 });
   }
 
   if (pathname.startsWith("/api/")) {
+    // Spec PDF + admin APIs that use session auth may allow GET
+    const allowGet =
+      pathname.startsWith("/api/spec") ||
+      pathname.startsWith("/api/admin/session") ||
+      pathname.startsWith("/api/admin/cases") ||
+      pathname.startsWith("/api/admin/leads");
+    if (
+      (request.method === "GET" || request.method === "HEAD") &&
+      !allowGet
+    ) {
+      const response = NextResponse.json(
+        { error: "Method not allowed" },
+        { status: 405 }
+      );
+      applySecurityHeaders(response, request);
+      if (admin) sealAdmin(response);
+      return response;
+    }
+
     const ip = getClientIp(request);
     const limit = checkRateLimit(ip, pathname);
 
@@ -25,10 +59,11 @@ export function middleware(request: NextRequest) {
       );
       response.headers.set("Retry-After", String(limit.retryAfter));
       applySecurityHeaders(response, request);
+      if (admin) sealAdmin(response);
       return response;
     }
 
-    if (request.method === "POST") {
+    if (request.method === "POST" || request.method === "PUT" || request.method === "PATCH") {
       const contentLength = request.headers.get("content-length");
       if (contentLength && parseInt(contentLength, 10) > LIMITS.maxBodyBytes) {
         const response = NextResponse.json(
@@ -36,6 +71,7 @@ export function middleware(request: NextRequest) {
           { status: 413 }
         );
         applySecurityHeaders(response, request);
+        if (admin) sealAdmin(response);
         return response;
       }
     }
@@ -52,6 +88,7 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
   applySecurityHeaders(response, request);
+  if (admin) sealAdmin(response);
   return response;
 }
 

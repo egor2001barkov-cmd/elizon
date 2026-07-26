@@ -12,27 +12,30 @@ export function ReviewsSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <SectionHeading
           title="Отзывы"
-          subtitle="Реальные слова от инженеров, руководителей проектов и закупок."
+          subtitle="Инженеры, закупки и прорабы — как было на объекте, без глянца."
           align="center"
           className="mx-auto text-center"
         />
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((review, i) => (
-            <ScrollReveal key={review.name} delay={i * 0.1}>
+            <ScrollReveal key={review.name} delay={i * 0.06}>
               <GlassCard className="h-full" hover={false}>
                 <div className="flex items-center gap-4">
-                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-[#6ECFFF]/30 shadow-[0_0_20px_rgba(110,207,255,0.2)]">
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-[#6ECFFF]/35 bg-[#0A2540] shadow-[0_0_20px_rgba(110,207,255,0.2)]">
                     <Image
                       src={review.photo}
-                      alt={review.name}
+                      alt={`${review.name}, ${review.role}, ${review.company}`}
                       fill
-                      className="object-cover"
+                      className="object-cover object-center"
+                      sizes="56px"
+                      quality={90}
                     />
                   </div>
                   <div>
                     <p className="font-medium text-white">{review.name}</p>
                     <p className="text-xs text-[#8BA4BC]">{review.role}</p>
+                    <p className="text-xs text-[#6ECFFF]/80">{review.company}</p>
                   </div>
                 </div>
                 <p className="mt-5 text-sm leading-relaxed text-[#8BA4BC]">

@@ -1,8 +1,15 @@
 # Put this on a RU VPS with Caddy installed.
 # Point A-records elizon.ru + www.elizon.ru to the VPS IP (reg.ru DNS).
 # Caddy auto-issues Let's Encrypt certs.
+#
+# Canonical host: elizon.ru (without www).
+# www always 301 → apex to avoid duplicate content.
 
-elizon.ru, www.elizon.ru {
+www.elizon.ru {
+	redir https://elizon.ru{uri} permanent
+}
+
+elizon.ru {
 	encode gzip zstd
 	reverse_proxy 127.0.0.1:3000
 	header {

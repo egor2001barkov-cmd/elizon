@@ -21,14 +21,17 @@ const SceneCanvas = dynamic(
   }
 );
 
-/** Desktop-only 3D: phones get SVG to avoid WebGL white-screen crashes. */
+/** 3D spool on desktop and mobile when WebGL is available. */
 function canUseHero3D(): boolean {
   if (typeof window === "undefined") return false;
   try {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const wide = window.matchMedia("(min-width: 1024px)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    return fine && wide && !reduced;
+    if (reduced) return false;
+    const canvas = document.createElement("canvas");
+    const gl =
+      canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: false }) ||
+      canvas.getContext("webgl", { failIfMajorPerformanceCaveat: false });
+    return Boolean(gl);
   } catch {
     return false;
   }
@@ -61,7 +64,7 @@ function HeroVisual({
         type="spool"
         spoolVariant="realistic"
         scrollUnwind={scrollUnwind}
-        force3D={false}
+        force3D
         autoRotate
         className="h-full w-full"
         height="100%"
@@ -87,16 +90,26 @@ export function HeroSection() {
       cancelIdleCallback?: (id: number) => void;
     };
 
-    // Defer WebGL until after first paint so LCP stays stable
+    // Mobile: show SVG fallback immediately, try 3D only after a short idle (CWV)
+    const isNarrow =
+      typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches;
+    if (isNarrow) {
+      const t = window.setTimeout(start, 1200);
+      return () => {
+        cancelled = true;
+        window.clearTimeout(t);
+      };
+    }
+
     if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(start, { timeout: 1500 });
+      const id = w.requestIdleCallback(start, { timeout: 500 });
       return () => {
         cancelled = true;
         w.cancelIdleCallback?.(id);
       };
     }
 
-    const t = window.setTimeout(start, 800);
+    const t = window.setTimeout(start, 150);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
@@ -166,9 +179,13 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-[4/3] w-full max-w-lg sm:aspect-auto sm:h-[400px] sm:max-w-none md:h-[480px] lg:h-[520px]">
-          <div className="absolute inset-0 rounded-2xl border border-[#6ECFFF]/12 bg-white/[0.02] shadow-[0_0_60px_rgba(110,207,255,0.08)] sm:rounded-3xl" />
-          <div className="relative h-full w-full">
+        <div className="relative mx-auto h-[min(56vh,380px)] min-h-[300px] w-full sm:h-[420px] md:h-[480px] lg:h-[520px]">
+          <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[#6ECFFF]/15 bg-gradient-to-b from-white/[0.04] to-transparent shadow-[0_0_80px_rgba(110,207,255,0.12)] sm:rounded-3xl" />
+          <div
+            className="relative h-full w-full"
+            role="img"
+            aria-label="3D-катушка оптоволокна G.657.A2 — визуализация продукта ELIZON"
+          >
             <HeroVisual enable3d={enable3d} scrollUnwind={scrollUnwind} />
           </div>
         </div>

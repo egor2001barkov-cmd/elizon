@@ -5,20 +5,23 @@ import type { FaqItem } from "@/lib/data/faq";
 import type { LandingPage } from "@/lib/data/landing-pages";
 import { flagshipProduct } from "@/lib/data/products";
 import { PAGE_SEO } from "@/lib/seo/metadata";
+// flagshipProduct used in ProductJsonLd
 import { ROUTES } from "@/lib/seo/routes";
+import { caseStudies } from "@/lib/data/cases";
 import {
   buildAboutPageSchema,
   buildArticleSchema,
   buildBlogArticleSchema,
   buildBreadcrumbSchema,
+  buildCasesItemListSchema,
   buildCatalogItemListSchema,
   buildContactPageSchema,
   buildFaqPageSchema,
   buildGraph,
+  buildHomeProductsItemListSchema,
   buildLocalBusinessSchema,
   buildOrganizationSchema,
   buildProductSchema,
-  buildReviewsSchema,
   buildWebPageSchema,
   buildWebSiteSchema,
 } from "@/lib/seo/schema";
@@ -41,13 +44,14 @@ export function OrganizationJsonLd() {
 }
 
 export function HomeJsonLd() {
+  // Product schema — только на карточке товара; на главной WebSite/WebPage + доп. ItemList
   return (
     <JsonLd
       data={buildGraph(
         buildWebSiteSchema(),
         buildWebPageSchema("/", PAGE_SEO.home.title, PAGE_SEO.home.description),
-        buildProductSchema(flagshipProduct),
-        ...buildReviewsSchema(flagshipProduct)
+        buildHomeProductsItemListSchema(),
+        buildCasesItemListSchema(caseStudies)
       )}
     />
   );
@@ -69,6 +73,7 @@ export function CatalogJsonLd() {
 }
 
 export function ProductJsonLd() {
+  // Сильный URL: Product + Offer + хлебные крошки (без отзывов-схемы)
   return (
     <JsonLd
       data={buildGraph(
@@ -84,8 +89,7 @@ export function ProductJsonLd() {
           { label: "Оптоволокно", href: "/optovolokno" },
           { label: "Волокно G.657", href: "/optovolokno/g657" },
           { label: "G.657.A2 242 мкм" },
-        ]),
-        ...buildReviewsSchema(flagshipProduct)
+        ])
       )}
     />
   );

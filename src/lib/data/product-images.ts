@@ -6,16 +6,35 @@ export interface ProductPhoto {
   caption: string;
 }
 
+/**
+ * Только проверенные jpg (644, читаются контейнером).
+ * Битые/600-permission warehouse-файлы в галерею не включаем.
+ */
 export const g657a2Photos: ProductPhoto[] = [
   {
     src: "/images/products/spool-warehouse.jpg",
     alt: "Катушки оптоволокна G.657.A2 242 мкм на складе ELIZON — готовы к отгрузке",
-    caption: "Катушки на складе — готовы к отгрузке под заказ",
+    caption: "Катушки на складе — готовы к отгрузке",
+  },
+  {
+    src: "/images/products/spool-stack-red-flange.jpg",
+    alt: "Партия катушек оптоволокна G.657.A2 с красными фланцами на складе ELIZON",
+    caption: "Партия на комплектации — красные фланцы",
   },
   {
     src: "/images/products/spool-packaging.jpg",
-    alt: "Упаковка катушек оптоволокна G.657.A2 для безопасной транспортировки по России",
-    caption: "Надёжная упаковка для безопасной доставки",
+    alt: "Упаковка катушек оптоволокна G.657.A2 для транспортировки по России",
+    caption: "Упаковка для безопасной доставки",
+  },
+  {
+    src: "/images/warehouse/batch-spools-2026-07.jpg",
+    alt: "Штабель катушек G.657.A2 ELIZON, партия 2026-07",
+    caption: "Партия на складе, 2026-07",
+  },
+  {
+    src: "/images/warehouse/batch-existing-warehouse.jpg",
+    alt: "Катушки оптоволокна ELIZON на комплектации перед отгрузкой",
+    caption: "Комплектация перед отгрузкой",
   },
 ];
 
@@ -95,10 +114,7 @@ function cacheCylinderPhotos(): void {
     if (!product.id.startsWith("fo-0-25-")) continue;
     const km = product.kmPerSpool;
     const modelCode = product.modelCode ?? product.id.toUpperCase();
-    productPhotoCache.set(
-      product.id,
-      buildCylinderPhoto(product.id, modelCode, km)
-    );
+    productPhotoCache.set(product.id, buildCylinderPhoto(product.id, modelCode, km));
   }
 }
 

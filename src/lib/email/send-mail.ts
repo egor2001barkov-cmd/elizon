@@ -22,7 +22,9 @@ export async function sendContactEmail({
   const pass = process.env.SMTP_PASS;
 
   if (!host || !user || !pass) {
-    console.warn("[ELIZON Email] SMTP не настроен — письмо не отправлено на", to);
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("[ELIZON Email] SMTP не настроен — письмо не отправлено");
+    }
     return false;
   }
 
@@ -46,8 +48,9 @@ export async function sendContactEmail({
     });
 
     return true;
-  } catch (err) {
-    console.error("[ELIZON Email]", err);
+  } catch {
+    // Do not log message body / recipient details
+    console.error("[ELIZON Email] send failed");
     return false;
   }
 }

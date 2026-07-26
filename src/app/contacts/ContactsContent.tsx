@@ -55,7 +55,7 @@ export function ContactsContent() {
                   rel="noopener noreferrer"
                   className="mt-2 block text-white hover:text-[#00D4FF]"
                 >
-                  @elizon_fiber
+                  @egorconsult
                 </a>
               </GlassCard>
 

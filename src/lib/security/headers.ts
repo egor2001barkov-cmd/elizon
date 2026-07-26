@@ -24,14 +24,16 @@ export function applySecurityHeaders(
     );
   }
 
+  // Analytics: Yandex.Metrika + Google (Search Console verification / gtag if added).
+  // Forms post only to same origin — no public lead store.
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com https://www.googletagmanager.com https://www.google-analytics.com",
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob:",
+    "img-src 'self' data: blob: https://mc.yandex.ru https://mc.yandex.com https://www.google-analytics.com https://www.googletagmanager.com",
     "font-src 'self'",
-    "frame-src https://yandex.ru https://*.yandex.ru",
-    "connect-src 'self'",
+    "frame-src https://yandex.ru https://*.yandex.ru https://metrika.yandex.ru https://*.metrika.yandex.ru",
+    "connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://www.google-analytics.com https://www.googletagmanager.com https://region1.google-analytics.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -44,7 +46,8 @@ export function applySecurityHeaders(
   response.headers.set("Content-Security-Policy", csp);
 
   if (request.nextUrl.pathname.startsWith("/api/")) {
-    response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
-    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    response.headers.set("Pragma", "no-cache");
   }
 }

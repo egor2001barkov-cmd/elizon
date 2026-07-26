@@ -8,6 +8,7 @@ import {
   getCategoryBySlug,
 } from "@/lib/data/catalog-tree";
 import { buildCategoryMetadata } from "@/lib/seo/catalog-metadata";
+import { loadCaseStudies } from "@/lib/data/cases";
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -30,6 +31,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) notFound();
 
   const breadcrumbs = buildCatalogBreadcrumbs(category);
+  const cases =
+    category.slug === "optovolokonnye-cilindry" ? await loadCaseStudies() : undefined;
 
   return (
     <>
@@ -39,7 +42,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         description={category.description}
         breadcrumbs={breadcrumbs}
       />
-      <CategoryContent category={category} />
+      <CategoryContent category={category} cases={cases} />
     </>
   );
 }

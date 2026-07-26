@@ -1,8 +1,8 @@
 export const RATE_LIMITS = {
-  contact: { windowMs: 60_000, max: 5 },
-  contactHourly: { windowMs: 3_600_000, max: 20 },
-  spec: { windowMs: 60_000, max: 30 },
-  global: { windowMs: 60_000, max: 200 },
+  contact: { windowMs: 60_000, max: 3 },
+  contactHourly: { windowMs: 3_600_000, max: 12 },
+  spec: { windowMs: 60_000, max: 20 },
+  global: { windowMs: 60_000, max: 120 },
 } as const;
 
 export const LIMITS = {

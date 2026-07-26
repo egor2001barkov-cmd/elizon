@@ -47,6 +47,8 @@ export function ContactForm({ id = "form", compact = false }: ContactFormProps) 
         throw new Error(data.error || "Ошибка отправки");
       }
 
+      const { trackGoal } = await import("@/lib/analytics");
+      trackGoal("form_submit");
       setStatus("success");
       setForm({ name: "", phone: "", email: "", quantity: "", comment: "" });
     } catch (err) {

@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CaseJsonLd } from "@/components/seo/JsonLd";
 import { CaseDetailContent } from "./CaseDetailContent";
-import { getCaseBySlug, getAllCaseSlugs } from "@/lib/data/cases";
+import {
+  getCaseBySlug,
+  getAllCaseSlugs,
+  loadCaseStudies,
+} from "@/lib/data/cases";
 import {
   formatDocumentTitle,
   resolveMetadataTitle,
@@ -10,17 +14,20 @@ import {
   SITE_URL,
 } from "@/lib/seo/metadata";
 
+export const dynamic = "force-dynamic";
+
 interface CasePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return getAllCaseSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllCaseSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: CasePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = getCaseBySlug(slug);
+  const caseStudy = await getCaseBySlug(slug);
 
   if (!caseStudy) {
     return { title: "Кейс не найден" };
@@ -56,16 +63,21 @@ export async function generateMetadata({ params }: CasePageProps): Promise<Metad
 
 export default async function CasePage({ params }: CasePageProps) {
   const { slug } = await params;
-  const caseStudy = getCaseBySlug(slug);
+  const [caseStudy, allCases] = await Promise.all([
+    getCaseBySlug(slug),
+    loadCaseStudies(),
+  ]);
 
   if (!caseStudy) {
     notFound();
   }
 
+  const otherCases = allCases.filter((c) => c.slug !== caseStudy.slug);
+
   return (
     <>
       <CaseJsonLd caseStudy={caseStudy} />
-      <CaseDetailContent caseStudy={caseStudy} />
+      <CaseDetailContent caseStudy={caseStudy} otherCases={otherCases} />
     </>
   );
 }

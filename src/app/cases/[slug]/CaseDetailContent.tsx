@@ -13,10 +13,12 @@ import { ROUTES } from "@/lib/seo/routes";
 
 interface CaseDetailContentProps {
   caseStudy: CaseStudy;
+  otherCases?: CaseStudy[];
 }
 
-export function CaseDetailContent({ caseStudy }: CaseDetailContentProps) {
-  const otherCases = caseStudies.filter((c) => c.slug !== caseStudy.slug);
+export function CaseDetailContent({ caseStudy, otherCases: otherProp }: CaseDetailContentProps) {
+  const otherCases =
+    otherProp ?? caseStudies.filter((c) => c.slug !== caseStudy.slug);
 
   return (
     <article className="pt-24 pb-14 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20">
@@ -29,14 +31,14 @@ export function CaseDetailContent({ caseStudy }: CaseDetailContentProps) {
           ]}
         />
 
-        <div className="relative mb-6 overflow-hidden rounded-2xl border border-white/10 sm:mb-8 md:mb-10">
+        <div className="relative mb-6 overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(110,207,255,0.06)] sm:mb-8 md:mb-10">
           <CaseCoverImage
             src={caseStudy.image}
-            alt={caseStudy.title}
+            alt={caseStudy.imageAlt ?? caseStudy.title}
             variant="hero"
             priority
           />
-          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-6">
+          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-6 md:pb-7">
             <div className="mb-2 flex flex-wrap gap-1.5 sm:mb-3 sm:gap-2">
               {caseStudy.tags.map((tag) => (
                 <span
@@ -47,6 +49,22 @@ export function CaseDetailContent({ caseStudy }: CaseDetailContentProps) {
                 </span>
               ))}
             </div>
+            {caseStudy.beforeAfter ? (
+              <div className="mb-3 grid max-w-lg grid-cols-2 gap-2 text-xs sm:mb-4 sm:text-sm">
+                <div className="rounded-lg border border-white/15 bg-[#071e33]/75 px-3 py-2 backdrop-blur-sm">
+                  <p className="text-[#8BA4BC]">Стыки / было→стало</p>
+                  <p className="mt-0.5 text-white">
+                    {caseStudy.beforeAfter.jointsBefore} → {caseStudy.beforeAfter.jointsAfter}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-white/15 bg-[#071e33]/75 px-3 py-2 backdrop-blur-sm">
+                  <p className="text-[#8BA4BC]">Сроки</p>
+                  <p className="mt-0.5 text-white">
+                    {caseStudy.beforeAfter.daysBefore} → {caseStudy.beforeAfter.daysAfter}
+                  </p>
+                </div>
+              </div>
+            ) : null}
             <h1 className="font-display text-xl font-medium leading-tight text-white sm:text-2xl md:text-4xl">
               {caseStudy.title}
             </h1>
@@ -150,7 +168,10 @@ export function CaseDetailContent({ caseStudy }: CaseDetailContentProps) {
                   href={`/cases/${item.slug}`}
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-[#6ECFFF]/30"
                 >
-                  <CaseCoverImage src={item.image} alt={item.title} />
+                  <CaseCoverImage
+                    src={item.image}
+                    alt={item.imageAlt || item.title}
+                  />
                   <div className="p-4 sm:p-5">
                     <p className="text-sm font-medium text-white group-hover:text-[#6ECFFF]">
                       {item.title}

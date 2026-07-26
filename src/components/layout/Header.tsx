@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/Button";
-import { LAYOUT_MAX_WIDTH, NAV_LINKS } from "@/lib/constants";
+import { COMPANY, LAYOUT_MAX_WIDTH, NAV_LINKS } from "@/lib/constants";
+import { trackGoal } from "@/lib/analytics";
 import { isNavLinkActive } from "@/lib/nav";
 import { CatalogMegaMenu } from "@/components/layout/CatalogMegaMenu";
 import { CompanyMegaMenu } from "@/components/layout/CompanyMegaMenu";
@@ -68,6 +69,11 @@ export function Header() {
     setMobileSection(null);
   };
 
+  // Не показываем публичную шапку в /admin
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <>
       <header
@@ -118,17 +124,62 @@ export function Header() {
           </nav>
 
           {/* Desktop actions */}
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden items-center gap-1.5 xl:gap-2 lg:flex">
             <CartButton />
-            <Button variant="ghost" onClick={() => setInvoiceOpen(true)} className="!min-h-[44px] !px-3">
+            <a
+              href={COMPANY.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackGoal("telegram_click")}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-transform hover:scale-105 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2AABEE]"
+              title="Telegram"
+              aria-label="Telegram"
+            >
+              <TelegramLogo className="h-9 w-9" />
+            </a>
+            <a
+              href={COMPANY.max}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackGoal("max_click")}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-transform hover:scale-105 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7B5CFF]"
+              title="MAX"
+              aria-label="MAX"
+            >
+              <MaxLogo className="h-9 w-9" />
+            </a>
+            <a
+              href={`tel:${COMPANY.phoneTel}`}
+              onClick={() => trackGoal("phone_click")}
+              className="hidden min-h-[44px] items-center px-1 text-sm text-[#8BA4BC] hover:text-white 2xl:inline-flex"
+            >
+              {COMPANY.phone}
+            </a>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                trackGoal("invoice_open");
+                setInvoiceOpen(true);
+              }}
+              className="!min-h-[44px] !px-3"
+            >
               <DocIcon className="h-4 w-4" />
-              <span className="hidden xl:inline">Выставить счёт</span>
+              <span className="hidden xl:inline">Скачать КП / счёт</span>
             </Button>
-            <Button variant="secondary" onClick={() => setCallbackOpen(true)} className="!min-h-[44px] !px-3">
-              <PhoneIcon className="h-4 w-4" />
-              <span className="hidden xl:inline">Перезвоните мне</span>
+            <Button
+              variant="secondary"
+              onClick={() => setCallbackOpen(true)}
+              className="!min-h-11 !h-11 !px-4 !py-0 text-sm whitespace-nowrap xl:!px-5"
+            >
+              <PhoneIcon className="h-4 w-4 shrink-0" />
+              Перезвоните
             </Button>
-            <Button href={`${ROUTES.contacts}#form`} variant="primary" className="!min-h-[44px] !px-4">
+            <Button
+              href={`${ROUTES.contacts}#form`}
+              variant="primary"
+              className="!min-h-11 !h-11 !px-4 !py-0 text-sm whitespace-nowrap xl:!px-5"
+              onClick={() => trackGoal("request_price_click")}
+            >
               Запросить цену
             </Button>
           </div>
@@ -352,19 +403,23 @@ export function Header() {
           >
             <Button
               variant="secondary"
-              className="w-full !min-h-[48px]"
+              className="w-full !min-h-12 !h-12"
               onClick={() => {
                 closeMobile();
                 setCallbackOpen(true);
               }}
             >
+              <PhoneIcon className="h-4 w-4 shrink-0" />
               Перезвоните мне
             </Button>
             <Button
               href={`${ROUTES.contacts}#form`}
               variant="primary"
-              className="w-full !min-h-[48px]"
-              onClick={closeMobile}
+              className="w-full !min-h-12 !h-12"
+              onClick={() => {
+                trackGoal("request_price_click");
+                closeMobile();
+              }}
             >
               Запросить цену
             </Button>
@@ -375,6 +430,41 @@ export function Header() {
       <CallbackModal open={callbackOpen} onClose={() => setCallbackOpen(false)} />
       <InvoiceModal open={invoiceOpen} onClose={() => setInvoiceOpen(false)} />
     </>
+  );
+}
+
+/** Telegram brand mark: cyan circle + white paper plane */
+function TelegramLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden>
+      <circle cx="24" cy="24" r="24" fill="#2AABEE" />
+      <path
+        fill="#fff"
+        d="M34.95 14.34 11.55 23.4c-1.6.63-1.58 1.5-.28 1.9l5.98 1.87 2.28 7.01c.3.83.15 1.16.99 1.16.65 0 .94-.3 1.3-.65l3.13-3.04 6.5 4.8c1.19.66 2.05.32 2.35-1.1l4.25-20.05c.43-1.74-.66-2.52-1.8-2.01zm-14.3 12.62-1.4-7.55 13.9-8.75-12.5 16.3z"
+      />
+    </svg>
+  );
+}
+
+/** MAX messenger brand mark: purple circle + white bubble glyph */
+function MaxLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden>
+      <defs>
+        <linearGradient id="maxLogoGrad" x1="12%" y1="0%" x2="88%" y2="100%">
+          <stop offset="0%" stopColor="#A878FF" />
+          <stop offset="45%" stopColor="#7B5CFF" />
+          <stop offset="100%" stopColor="#4F35E0" />
+        </linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="24" fill="url(#maxLogoGrad)" />
+      {/* Speech-bubble mark matching official MAX icon */}
+      <path
+        fill="#fff"
+        fillRule="evenodd"
+        d="M15.2 12.8c0-1.1.9-2 2-2h9.2c4.85 0 8.1 2.95 8.1 7.35 0 4.35-3.2 7.3-8 7.3h-4.85v6.75c0 1.15-.95 2.1-2.1 2.1h-.55c-1.1 0-2-.9-2-2V12.8zm5.9 3.2v6.35h3.55c2.35 0 3.75-1.3 3.75-3.25 0-1.9-1.35-3.1-3.75-3.1H21.1z"
+      />
+    </svg>
   );
 }
 

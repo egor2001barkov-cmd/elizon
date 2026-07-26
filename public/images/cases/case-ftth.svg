@@ -1,76 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid slice" role="img" aria-label="FTTH">
   <defs>
-    <linearGradient id="ft-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#061829"/>
-      <stop offset="1" stop-color="#0F3254"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#051525"/>
+      <stop offset="45%" stop-color="#0A2540"/>
+      <stop offset="100%" stop-color="#0E3558"/>
     </linearGradient>
-    <linearGradient id="ft-build" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#143552"/>
-      <stop offset="1" stop-color="#0A2540"/>
+    <linearGradient id="f1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4ADE80" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00D4FF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="ft-fiber" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="#00D4FF" stop-opacity="0.2"/>
-      <stop offset="0.5" stop-color="#6ECFFF"/>
-      <stop offset="1" stop-color="#00D4FF" stop-opacity="0.25"/>
-    </linearGradient>
-    <radialGradient id="ft-win" cx="50%" cy="50%" r="50%">
-      <stop stop-color="#6ECFFF" stop-opacity="0.9"/>
-      <stop offset="1" stop-color="#00D4FF" stop-opacity="0.2"/>
+    <radialGradient id="g" cx="50%" cy="48%" r="50%">
+      <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="800" height="450" fill="url(#ft-bg)"/>
-  <circle cx="680" cy="80" r="120" fill="#00D4FF" opacity="0.06"/>
-  <!-- buildings -->
-  <g>
-    <rect x="80" y="120" width="120" height="260" rx="6" fill="url(#ft-build)" stroke="#1e4a6f" stroke-width="1"/>
-    <rect x="220" y="90" width="140" height="290" rx="6" fill="url(#ft-build)" stroke="#1e4a6f" stroke-width="1"/>
-    <rect x="380" y="140" width="110" height="240" rx="6" fill="url(#ft-build)" stroke="#1e4a6f" stroke-width="1"/>
-    <rect x="510" y="100" width="130" height="280" rx="6" fill="url(#ft-build)" stroke="#1e4a6f" stroke-width="1"/>
-    <rect x="660" y="160" width="100" height="220" rx="6" fill="url(#ft-build)" stroke="#1e4a6f" stroke-width="1"/>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#g)"/>
+  <g opacity="0.35" transform="translate(200, 340)" fill="#0D2D4A" stroke="#6ECFFF" stroke-width="1.5">
+    <path d="M0 80 L40 30 L80 80 V160 H0 Z"/>
+    <path d="M100 90 L145 35 L190 90 V160 H100 Z"/>
+    <path d="M210 70 L265 10 L320 70 V160 H210 Z"/>
   </g>
-  <!-- windows -->
-  <g opacity="0.75">
-    <g fill="#6ECFFF">
-      <rect x="98" y="145" width="18" height="14" rx="2" opacity="0.35"/><rect x="128" y="145" width="18" height="14" rx="2" opacity="0.55"/>
-      <rect x="158" y="145" width="18" height="14" rx="2" opacity="0.4"/>
-      <rect x="98" y="175" width="18" height="14" rx="2" opacity="0.5"/><rect x="128" y="175" width="18" height="14" rx="2" opacity="0.7"/>
-      <rect x="158" y="175" width="18" height="14" rx="2" opacity="0.45"/>
-      <rect x="98" y="205" width="18" height="14" rx="2" opacity="0.3"/><rect x="128" y="205" width="18" height="14" rx="2" opacity="0.6"/>
-      <rect x="158" y="205" width="18" height="14" rx="2" opacity="0.5"/>
-      <rect x="98" y="235" width="18" height="14" rx="2" opacity="0.55"/><rect x="128" y="235" width="18" height="14" rx="2" opacity="0.35"/>
-      <rect x="158" y="235" width="18" height="14" rx="2" opacity="0.65"/>
-      <rect x="98" y="265" width="18" height="14" rx="2" opacity="0.4"/><rect x="128" y="265" width="18" height="14" rx="2" opacity="0.5"/>
-      <rect x="158" y="265" width="18" height="14" rx="2" opacity="0.35"/>
-      <rect x="98" y="295" width="18" height="14" rx="2" opacity="0.6"/><rect x="128" y="295" width="18" height="14" rx="2" opacity="0.45"/>
-      <rect x="158" y="295" width="18" height="14" rx="2" opacity="0.55"/>
-    </g>
-    <g fill="#6ECFFF">
-      <rect x="245" y="115" width="20" height="16" rx="2" opacity="0.5"/><rect x="280" y="115" width="20" height="16" rx="2" opacity="0.7"/><rect x="315" y="115" width="20" height="16" rx="2" opacity="0.4"/>
-      <rect x="245" y="150" width="20" height="16" rx="2" opacity="0.6"/><rect x="280" y="150" width="20" height="16" rx="2" opacity="0.45"/><rect x="315" y="150" width="20" height="16" rx="2" opacity="0.65"/>
-      <rect x="245" y="185" width="20" height="16" rx="2" opacity="0.35"/><rect x="280" y="185" width="20" height="16" rx="2" opacity="0.55"/><rect x="315" y="185" width="20" height="16" rx="2" opacity="0.5"/>
-      <rect x="245" y="220" width="20" height="16" rx="2" opacity="0.7"/><rect x="280" y="220" width="20" height="16" rx="2" opacity="0.4"/><rect x="315" y="220" width="20" height="16" rx="2" opacity="0.6"/>
-      <rect x="245" y="255" width="20" height="16" rx="2" opacity="0.45"/><rect x="280" y="255" width="20" height="16" rx="2" opacity="0.65"/><rect x="315" y="255" width="20" height="16" rx="2" opacity="0.35"/>
-      <rect x="245" y="290" width="20" height="16" rx="2" opacity="0.55"/><rect x="280" y="290" width="20" height="16" rx="2" opacity="0.5"/><rect x="315" y="290" width="20" height="16" rx="2" opacity="0.7"/>
-    </g>
-    <g fill="#00D4FF">
-      <rect x="400" y="165" width="18" height="14" rx="2" opacity="0.45"/><rect x="430" y="165" width="18" height="14" rx="2" opacity="0.6"/>
-      <rect x="460" y="165" width="18" height="14" rx="2" opacity="0.4"/>
-      <rect x="400" y="200" width="18" height="14" rx="2" opacity="0.55"/><rect x="430" y="200" width="18" height="14" rx="2" opacity="0.35"/>
-      <rect x="460" y="200" width="18" height="14" rx="2" opacity="0.65"/>
-      <rect x="400" y="235" width="18" height="14" rx="2" opacity="0.4"/><rect x="430" y="235" width="18" height="14" rx="2" opacity="0.7"/>
-      <rect x="460" y="235" width="18" height="14" rx="2" opacity="0.5"/>
-      <rect x="400" y="270" width="18" height="14" rx="2" opacity="0.6"/><rect x="430" y="270" width="18" height="14" rx="2" opacity="0.45"/>
-      <rect x="460" y="270" width="18" height="14" rx="2" opacity="0.35"/>
-      <rect x="400" y="305" width="18" height="14" rx="2" opacity="0.5"/><rect x="430" y="305" width="18" height="14" rx="2" opacity="0.55"/>
-      <rect x="460" y="305" width="18" height="14" rx="2" opacity="0.65"/>
+  <path d="M-20 400 C 200 300, 400 500, 600 380 S 1000 280, 1220 360" fill="none" stroke="url(#f1)" stroke-width="4"/>
+  <path d="M-20 440 C 220 340, 420 530, 620 420 S 1020 320, 1220 400" fill="none" stroke="#00D4FF" stroke-width="2" opacity="0.4"/>
+  <g transform="translate(600, 360)">
+    <ellipse cx="0" cy="-78" rx="118" ry="34" fill="#C5CAD4"/>
+    <rect x="-118" y="-78" width="236" height="156" fill="#8B1520"/>
+    <ellipse cx="0" cy="78" rx="118" ry="34" fill="#A0A6B2"/>
+    <ellipse cx="0" cy="-78" rx="118" ry="34" fill="#D8DCE4"/>
+    <g fill="none" stroke="#FF4D5A" stroke-width="5">
+      <ellipse cx="0" cy="-42" rx="68" ry="17"/>
+      <ellipse cx="0" cy="-8" rx="80" ry="19"/>
+      <ellipse cx="0" cy="28" rx="86" ry="19"/>
+      <ellipse cx="0" cy="58" rx="72" ry="16"/>
     </g>
   </g>
-  <!-- fiber network -->
-  <path d="M40 400 C160 370 280 410 400 380 C520 350 640 390 760 360" stroke="url(#ft-fiber)" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M140 400 V300 M290 400 V280 M435 400 V300 M575 400 V270 M710 400 V300" stroke="#00D4FF" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
-  <circle cx="140" cy="300" r="4" fill="#6ECFFF"/><circle cx="290" cy="280" r="4" fill="#6ECFFF"/>
-  <circle cx="435" cy="300" r="4" fill="#6ECFFF"/><circle cx="575" cy="270" r="4" fill="#B8F0FF"/>
-  <circle cx="710" cy="300" r="4" fill="#6ECFFF"/>
-  <rect x="28" y="28" width="250" height="36" rx="18" fill="#00D4FF" fill-opacity="0.12" stroke="#6ECFFF" stroke-opacity="0.35"/>
-  <text x="48" y="51" fill="#6ECFFF" font-family="system-ui,sans-serif" font-size="15" font-weight="600">FTTH · район · −18% стыков</text>
 </svg>

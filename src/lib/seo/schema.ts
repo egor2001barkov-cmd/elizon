@@ -20,6 +20,13 @@ export function absoluteUrl(path: string): string {
 }
 
 export function buildOrganizationSchema() {
+  const sameAs = [
+    COMPANY.telegram,
+    COMPANY.whatsapp,
+    COMPANY.max,
+    COMPANY.yandexMaps.url || undefined,
+  ].filter(Boolean);
+
   return {
     "@type": "Organization",
     "@id": ORG_ID,
@@ -39,7 +46,25 @@ export function buildOrganizationSchema() {
       addressCountry: "RU",
       streetAddress: COMPANY.address,
     },
-    sameAs: [COMPANY.telegram],
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: COMPANY.coordinates.lat,
+      longitude: COMPANY.coordinates.lon,
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Russia",
+    },
+    knowsAbout: [
+      "G.657.A2",
+      "G.652.D",
+      "оптоволокно",
+      "FO-цилиндры",
+      "FTTH",
+      "телекоммуникации",
+    ],
+    slogan: "Прямые поставки оптоволокна G.657.A2 по России",
+    sameAs,
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -70,6 +95,59 @@ export function buildWebSiteSchema() {
     description: PAGE_SEO.home.description,
     inLanguage: "ru-RU",
     publisher: { "@id": ORG_ID },
+    // Каталог как основная «точка входа» для rich results / sitelinks
+    potentialAction: {
+      "@type": "ReadAction",
+      target: [
+        absoluteUrl("/"),
+        absoluteUrl(ROUTES.catalog),
+        absoluteUrl("/optovolokno/g657/g657a2"),
+        absoluteUrl(ROUTES.contacts),
+      ],
+    },
+  };
+}
+
+/** ItemList кейсов — доп. разметка, не заменяет Article на страницах кейсов */
+export function buildCasesItemListSchema(cases: CaseStudy[]) {
+  return {
+    "@type": "ItemList",
+    "@id": `${SITE_URL}/#cases-list`,
+    name: "Кейсы поставок ELIZON",
+    numberOfItems: cases.length,
+    itemListElement: cases.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: absoluteUrl(`/cases/${c.slug}`),
+      name: c.title,
+      description: c.description,
+    })),
+  };
+}
+
+/** Топ-продукты на главной — доп. ItemList */
+export function buildHomeProductsItemListSchema() {
+  const top = catalogProducts.slice(0, 8);
+  return {
+    "@type": "ItemList",
+    "@id": `${SITE_URL}/#featured-products`,
+    name: "Популярные позиции каталога ELIZON",
+    numberOfItems: top.length,
+    itemListElement: top.map((product, i) => {
+      const url = getProductCatalogPath(product);
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        url: absoluteUrl(url),
+        name: product.name,
+        item: {
+          "@type": "Product",
+          name: product.name,
+          url: absoluteUrl(url),
+          ...(product.price > 0 ? { offers: productOffer(product) } : {}),
+        },
+      };
+    }),
   };
 }
 
@@ -135,7 +213,7 @@ export function buildProductSchema(product: Product = flagshipProduct) {
     category: "Оптоволокно",
     image: images,
     brand: { "@type": "Brand", name: SITE_NAME },
-    manufacturer: { "@id": ORG_ID },
+    // Дистрибьютор/поставщик — не завод-изготовитель
     offers: productOffer(product),
     additionalProperty: product.specs.map((spec) => ({
       "@type": "PropertyValue",
@@ -170,10 +248,26 @@ export function buildCatalogItemListSchema() {
 export function buildReviewsSchema(product: Product = flagshipProduct) {
   return reviews.map((review) => ({
     "@type": "Review",
-    author: { "@type": "Person", name: review.name },
+    author: {
+      "@type": "Person",
+      name: review.name,
+      jobTitle: review.role,
+      worksFor: {
+        "@type": "Organization",
+        name: review.company,
+      },
+    },
     reviewBody: review.text,
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: review.rating,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    datePublished: review.datePublished,
     itemReviewed: {
       "@type": "Product",
+      "@id": `${absoluteUrl(getProductCatalogPath(product))}#product`,
       name: product.name,
       url: absoluteUrl(getProductCatalogPath(product)),
     },
@@ -211,6 +305,9 @@ export function buildArticleSchema(caseStudy: CaseStudy) {
     keywords: caseStudy.tags.join(", "),
     inLanguage: "ru-RU",
     mainEntityOfPage: { "@id": `${absoluteUrl(url)}#webpage` },
+    // доп. поля Article без смены текста
+    articleSection: "Кейсы",
+    genre: "case study",
   };
 }
 
@@ -306,12 +403,6 @@ export function buildLocalBusinessSchema(landing: LandingPage, path: string) {
     parentOrganization: { "@id": ORG_ID },
     areaServed: landing.region,
     priceRange: "₽₽₽",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: COMPANY.yandexMaps.rating,
-      bestRating: COMPANY.yandexMaps.maxRating,
-      ratingCount: 12,
-    },
   };
 }
 

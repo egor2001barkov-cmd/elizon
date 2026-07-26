@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Схема радиуса изгиба G.657.A2 7,5 мм">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#071e33"/><stop offset="100%" stop-color="#0A2540"/></linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <text x="48" y="56" fill="#6ECFFF" font-family="system-ui,sans-serif" font-size="28" font-weight="600">Радиус изгиба G.657.A2</text>
+  <text x="48" y="92" fill="#8BA4BC" font-family="system-ui,sans-serif" font-size="16">Минимальный радиус 7,5 мм — плотная прокладка без критических потерь</text>
+  <path d="M140 360 Q 220 360 260 300 Q 300 240 360 260 Q 420 280 480 340 Q 540 400 640 390 Q 740 380 820 300" fill="none" stroke="#00D4FF" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="300" cy="260" r="36" fill="none" stroke="#6ECFFF" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="300" y1="260" x2="336" y2="260" stroke="#fff" stroke-width="2"/>
+  <text x="310" y="248" fill="#fff" font-family="system-ui,sans-serif" font-size="14">7,5 мм</text>
+  <rect x="48" y="430" width="260" height="70" rx="12" fill="#0D2D4A" stroke="#6ECFFF33"/>
+  <text x="68" y="460" fill="#8BA4BC" font-size="13" font-family="system-ui,sans-serif">G.652.D типично</text>
+  <text x="68" y="484" fill="#fff" font-size="18" font-family="system-ui,sans-serif">~30 мм</text>
+  <rect x="340" y="430" width="260" height="70" rx="12" fill="#0D2D4A" stroke="#00D4FF66"/>
+  <text x="360" y="460" fill="#8BA4BC" font-size="13" font-family="system-ui,sans-serif">G.657.A2 ELIZON</text>
+  <text x="360" y="484" fill="#6ECFFF" font-size="18" font-family="system-ui,sans-serif">7,5 мм</text>
+</svg>
