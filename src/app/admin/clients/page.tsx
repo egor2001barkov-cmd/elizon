@@ -9,6 +9,7 @@ import {
   type Lead,
 } from "@/lib/data/leads-store";
 import { AdminShell } from "../AdminShell";
+import { DeleteLeadButton } from "../DeleteLeadButton";
 
 export const dynamic = "force-dynamic";
 
@@ -51,17 +52,27 @@ function ClientCard({
             <p className="mt-1 text-sm text-white/80">ИНН {client.inn}</p>
           ) : null}
         </div>
-        <div className="text-right text-sm">
-          <p className="text-white">
-            Обращений: <span className="font-medium">{client.submissionsCount}</span>
-          </p>
-          <p className="mt-0.5 text-[#8BA4BC]">
-            Заказов: {client.ordersCount}
-            {client.totalSpent ? ` · ${client.totalSpent.toLocaleString("ru-RU")} ₽` : ""}
-          </p>
-          <p className="mt-1 text-xs text-[#8BA4BC]">
-            {formatDate(client.firstSeen)} → {formatDate(client.lastSeen)}
-          </p>
+        <div className="flex flex-col items-end gap-2 text-right text-sm">
+          <div className="flex items-start gap-2">
+            <div>
+              <p className="text-white">
+                Обращений: <span className="font-medium">{client.submissionsCount}</span>
+              </p>
+              <p className="mt-0.5 text-[#8BA4BC]">
+                Заказов: {client.ordersCount}
+                {client.totalSpent ? ` · ${client.totalSpent.toLocaleString("ru-RU")} ₽` : ""}
+              </p>
+              <p className="mt-1 text-xs text-[#8BA4BC]">
+                {formatDate(client.firstSeen)} → {formatDate(client.lastSeen)}
+              </p>
+            </div>
+            <DeleteLeadButton
+              mode="many"
+              ids={client.leadIds}
+              compact
+              label="Удалить клиента и все обращения"
+            />
+          </div>
         </div>
       </div>
 

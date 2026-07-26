@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/admin/auth";
-import { loadLeads, markAllLeadsRead } from "@/lib/data/leads-store";
+import {
+  loadLeads,
+  markAllLeadsRead,
+  deleteLeadsByIds,
+} from "@/lib/data/leads-store";
 import { isAllowedOrigin } from "@/lib/security/origin";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +42,18 @@ export async function POST(request: Request) {
     const body = await request.json();
     if (body.action === "mark_all_read") {
       const count = await markAllLeadsRead();
+      return NextResponse.json({ success: true, count });
+    }
+    if (body.action === "delete_many") {
+      const raw = Array.isArray(body.ids) ? body.ids : [];
+      const ids = raw
+        .filter((x: unknown): x is string => typeof x === "string")
+        .map((x: string) => x.slice(0, 80))
+        .slice(0, 500);
+      if (!ids.length) {
+        return NextResponse.json({ error: "Нет id" }, { status: 400 });
+      }
+      const count = await deleteLeadsByIds(ids);
       return NextResponse.json({ success: true, count });
     }
     return NextResponse.json({ error: "Unknown action" }, { status: 400 });

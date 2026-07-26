@@ -67,9 +67,75 @@ body {
   animation: spool-spin 14s linear infinite;
 }
 
+@keyframes spool-star-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes spool-star-sparkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.spool-star-twinkle {
+  animation: spool-star-twinkle 2.4s ease-in-out infinite;
+}
+
+.spool-star-sparkle {
+  animation: spool-star-sparkle 2.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Warm sun light on hover — 3D canvas shell + SVG fallback */
+.spool-sun-glow {
+  background:
+    radial-gradient(circle at 40% 40%, rgba(255, 236, 140, 0.85) 0%, rgba(255, 180, 70, 0.35) 42%, transparent 72%);
+  filter: blur(2px);
+  box-shadow:
+    0 0 40px 12px rgba(255, 210, 100, 0.35),
+    0 0 80px 24px rgba(255, 170, 60, 0.18);
+}
+
+.spool-sun-lit::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 55% 50% at 78% 18%, rgba(255, 230, 140, 0.28) 0%, transparent 62%),
+    radial-gradient(ellipse 70% 60% at 70% 30%, rgba(255, 180, 80, 0.1) 0%, transparent 70%);
+  transition: opacity 0.45s ease;
+  z-index: 1;
+}
+
+.spool-fallback-root:hover .spool-spin svg {
+  filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.22)) drop-shadow(0 0 28px rgba(255, 190, 80, 0.35));
+  transition: filter 0.45s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .spool-spin {
     animation: none !important;
+  }
+  .spool-star-twinkle,
+  .spool-star-sparkle {
+    animation: none !important;
+    opacity: 0.7;
+  }
+  .spool-sun-glow {
+    transition: none;
   }
 }
 

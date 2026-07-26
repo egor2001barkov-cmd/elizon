@@ -4,6 +4,7 @@ import {
   loadLeads,
   markLeadRead,
   updateLeadStatus,
+  deleteLead,
   type LeadStatus,
 } from "@/lib/data/leads-store";
 import { isAllowedOrigin } from "@/lib/security/origin";
@@ -79,6 +80,37 @@ export async function PATCH(request: Request, ctx: Ctx) {
     }
 
     return NextResponse.json({ error: "Нет изменений" }, { status: 400 });
+  } catch {
+    return NextResponse.json({ error: "Ошибка" }, { status: 500 });
+  }
+}
+
+/** Soft-confirm delete is done on the client; this permanently removes the lead. */
+export async function DELETE(request: Request, ctx: Ctx) {
+  const session = await getAdminSession();
+  if (!session) return unauthorized();
+
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const { id } = await ctx.params;
+  if (!id || id.length > 80) {
+    return NextResponse.json({ error: "Не найден" }, { status: 404 });
+  }
+
+  try {
+    const ok = await deleteLead(id);
+    if (!ok) return NextResponse.json({ error: "Не найден" }, { status: 404 });
+    return NextResponse.json(
+      { success: true },
+      {
+        headers: {
+          "Cache-Control": "no-store, private",
+          "X-Robots-Tag": "noindex, nofollow, noarchive",
+        },
+      }
+    );
   } catch {
     return NextResponse.json({ error: "Ошибка" }, { status: 500 });
   }

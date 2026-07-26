@@ -9,6 +9,7 @@ import {
 } from "@/lib/data/leads-store";
 import { AdminShell } from "../AdminShell";
 import { MarkReadButton } from "./MarkReadButton";
+import { DeleteLeadButton } from "../DeleteLeadButton";
 import { PAYMENT_LABELS } from "@/lib/data/order-form";
 
 export const dynamic = "force-dynamic";
@@ -121,9 +122,12 @@ function MessageCard({ msg }: { msg: Lead }) {
           </p>
         </div>
         <div className="flex flex-col items-end gap-2">
-          {msg.total != null && msg.total > 0 ? (
-            <p className="text-lg font-medium text-[#6ECFFF]">{formatMoney(msg.total)}</p>
-          ) : null}
+          <div className="flex items-start gap-2">
+            {msg.total != null && msg.total > 0 ? (
+              <p className="text-lg font-medium text-[#6ECFFF]">{formatMoney(msg.total)}</p>
+            ) : null}
+            <DeleteLeadButton mode="single" id={msg.id} compact label="Удалить письмо" />
+          </div>
           <MarkReadButton id={msg.id} read={msg.read} />
           {msg.kind === "order" || msg.kind === "invoice" || msg.kind === "payment" ? (
             <Link href="/admin/orders" className="text-xs text-[#8BA4BC] hover:text-[#6ECFFF]">

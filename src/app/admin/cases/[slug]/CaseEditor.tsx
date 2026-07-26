@@ -49,6 +49,24 @@ export function CaseEditor({ initial }: { initial: CaseStudy }) {
     }));
   };
 
+  const removeSection = (sIdx: number) => {
+    setData((d) => {
+      if (d.sections.length <= 1) return d;
+      return { ...d, sections: d.sections.filter((_, i) => i !== sIdx) };
+    });
+  };
+
+  const removeParagraph = (sIdx: number, pIdx: number) => {
+    setData((d) => {
+      const sections = d.sections.map((s, i) => {
+        if (i !== sIdx) return s;
+        if (s.paragraphs.length <= 1) return { ...s, paragraphs: [""] };
+        return { ...s, paragraphs: s.paragraphs.filter((_, j) => j !== pIdx) };
+      });
+      return { ...d, sections };
+    });
+  };
+
   const save = async () => {
     setStatus("saving");
     setError("");
@@ -256,24 +274,65 @@ export function CaseEditor({ initial }: { initial: CaseStudy }) {
             </button>
           </div>
           {data.sections.map((sec, sIdx) => (
-            <div key={sIdx} className="rounded-2xl border border-white/10 p-4">
-              <label className={label}>
-                Заголовок раздела
-                <input
-                  className={input}
-                  value={sec.title}
-                  onChange={(e) => setSection(sIdx, { title: e.target.value })}
-                />
-              </label>
-              {sec.paragraphs.map((p, pIdx) => (
-                <label key={pIdx} className={`${label} mt-3`}>
-                  Абзац {pIdx + 1}
-                  <textarea
-                    className={`${input} min-h-[100px]`}
-                    value={p}
-                    onChange={(e) => setParagraph(sIdx, pIdx, e.target.value)}
+            <div key={sIdx} className="relative rounded-2xl border border-white/10 p-4">
+              <div className="mb-2 flex items-start justify-between gap-2">
+                <label className={`${label} min-w-0 flex-1`}>
+                  Заголовок раздела
+                  <input
+                    className={input}
+                    value={sec.title}
+                    onChange={(e) => setSection(sIdx, { title: e.target.value })}
                   />
                 </label>
+                <button
+                  type="button"
+                  onClick={() => removeSection(sIdx)}
+                  disabled={data.sections.length <= 1}
+                  title={
+                    data.sections.length <= 1
+                      ? "Нельзя удалить единственный раздел"
+                      : "Удалить раздел"
+                  }
+                  aria-label="Удалить раздел"
+                  className="mt-6 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 text-[#8BA4BC] transition-colors hover:border-[#ff8a8a]/50 hover:bg-[#ff4d4d]/10 hover:text-[#ff8a8a] disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                    <path
+                      d="M3 3l8 8M11 3L3 11"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {sec.paragraphs.map((p, pIdx) => (
+                <div key={pIdx} className="mt-3 flex items-start gap-2">
+                  <label className={`${label} min-w-0 flex-1`}>
+                    Абзац {pIdx + 1}
+                    <textarea
+                      className={`${input} min-h-[100px]`}
+                      value={p}
+                      onChange={(e) => setParagraph(sIdx, pIdx, e.target.value)}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => removeParagraph(sIdx, pIdx)}
+                    title="Удалить абзац"
+                    aria-label={`Удалить абзац ${pIdx + 1}`}
+                    className="mt-6 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 text-[#8BA4BC] transition-colors hover:border-[#ff8a8a]/50 hover:bg-[#ff4d4d]/10 hover:text-[#ff8a8a]"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                      <path
+                        d="M3 3l8 8M11 3L3 11"
+                        stroke="currentColor"
+                        strokeWidth="1.75"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
               ))}
               <button
                 type="button"

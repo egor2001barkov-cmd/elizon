@@ -9,6 +9,7 @@ import {
 } from "@/lib/data/leads-store";
 import { AdminShell } from "../AdminShell";
 import { OrderStatusSelect } from "./OrderStatusSelect";
+import { DeleteLeadButton } from "../DeleteLeadButton";
 import { PAYMENT_LABELS } from "@/lib/data/order-form";
 
 export const dynamic = "force-dynamic";
@@ -102,9 +103,12 @@ function OrderCard({ order }: { order: Lead }) {
             {order.name}
           </p>
         </div>
-        <div className="text-right">
-          <p className="text-xl font-medium text-[#6ECFFF]">{formatMoney(order.total)}</p>
-          <div className="mt-2">
+        <div className="flex flex-col items-end gap-2 text-right">
+          <div className="flex items-start gap-2">
+            <p className="text-xl font-medium text-[#6ECFFF]">{formatMoney(order.total)}</p>
+            <DeleteLeadButton mode="single" id={order.id} compact label="Удалить заказ" />
+          </div>
+          <div className="mt-1">
             <OrderStatusSelect id={order.id} status={order.status} />
           </div>
         </div>

@@ -42,7 +42,6 @@ export function Footer() {
               Поставки оптоволокна G.657.A2 и FO-цилиндров. Под заказ, 14–21 день. Склад
               комплектации — Лобня.
             </p>
-            <p className="mt-3 text-xs text-[#8BA4BC]/80">{COMPANY.legalName}</p>
 
             <div className="mt-5 flex flex-wrap gap-2">
               <a
@@ -223,7 +222,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 text-sm text-[#8BA4BC] md:flex-row">
           <p>
-            © {new Date().getFullYear()} {COMPANY.legalName}. Все права защищены.
+            © {new Date().getFullYear()} ELIZON. Все права защищены.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             {FOOTER_LINKS.legal.map((link) => (

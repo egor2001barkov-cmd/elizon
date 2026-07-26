@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useState, useEffect, useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useState, useEffect, useMemo, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import * as THREE from "three";
 import { FiberSpool, type SpoolVariant } from "./FiberSpool";
 import { TelecomTower } from "./TelecomTower";
 import { FiberBend } from "./FiberBend";
@@ -25,7 +26,84 @@ interface SceneCanvasProps {
   spoolVariant?: SpoolVariant;
 }
 
-function SceneLights() {
+/** Warm sun that ramps in on hover — key light + fill + soft glow disc. */
+function SunHoverLight({ active }: { active: boolean }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const dirRef = useRef<THREE.DirectionalLight>(null);
+  const fillRef = useRef<THREE.PointLight>(null);
+  const glowRef = useRef<THREE.Mesh>(null);
+  const coronaRef = useRef<THREE.Mesh>(null);
+  const intensity = useRef(0);
+
+  useFrame((state, delta) => {
+    const target = active ? 1 : 0;
+    intensity.current = THREE.MathUtils.damp(intensity.current, target, 6, delta);
+    const k = intensity.current;
+
+    if (dirRef.current) {
+      dirRef.current.intensity = k * 2.6;
+      dirRef.current.color.setRGB(1, 0.92 + k * 0.06, 0.72 + k * 0.1);
+      // Aim at spool center
+      dirRef.current.target.position.set(0, 0, 0);
+      dirRef.current.target.updateMatrixWorld();
+    }
+    if (fillRef.current) {
+      fillRef.current.intensity = k * 1.8;
+    }
+    if (glowRef.current) {
+      glowRef.current.scale.setScalar(0.6 + k * 0.95);
+      const mat = glowRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity = k * 0.65;
+      glowRef.current.visible = k > 0.02;
+      glowRef.current.lookAt(state.camera.position);
+    }
+    if (coronaRef.current) {
+      coronaRef.current.scale.setScalar(1.1 + k * 1.5);
+      const mat = coronaRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity = k * 0.28;
+      coronaRef.current.visible = k > 0.02;
+      coronaRef.current.lookAt(state.camera.position);
+      coronaRef.current.rotateZ(state.clock.elapsedTime * 0.2);
+    }
+    // Subtle bob while lit
+    if (groupRef.current) {
+      groupRef.current.position.y = 3.2 + Math.sin(state.clock.elapsedTime * 0.8) * 0.06 * k;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={[3.8, 3.2, 2.4]}>
+      <directionalLight ref={dirRef} intensity={0} color="#FFE7A8" />
+      <pointLight ref={fillRef} intensity={0} color="#FFD27A" distance={14} decay={2} />
+      {/* Sun disc */}
+      <mesh ref={glowRef} visible={false}>
+        <circleGeometry args={[0.55, 32]} />
+        <meshBasicMaterial
+          color="#FFE566"
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+      {/* Soft corona */}
+      <mesh ref={coronaRef} visible={false}>
+        <circleGeometry args={[0.95, 32]} />
+        <meshBasicMaterial
+          color="#FFB347"
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function SceneLights({ sunActive }: { sunActive: boolean }) {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -33,6 +111,7 @@ function SceneLights() {
       <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
       <directionalLight position={[-3, 2, -2]} intensity={0.55} color="#00D4FF" />
       <pointLight position={[0, 2, 3]} intensity={0.85} color="#00D4FF" />
+      <SunHoverLight active={sunActive} />
     </>
   );
 }
@@ -160,7 +239,7 @@ export function SceneCanvas({
       onError={() => setWebglFailed(true)}
     >
       <div
-        className={`relative touch-pan-y ${className}`}
+        className={`relative touch-pan-y ${className} ${hovered && type === "spool" ? "spool-sun-lit" : ""}`}
         style={shellStyle}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -188,7 +267,7 @@ export function SceneCanvas({
             position={isNarrow ? [0, 1.2, 4.2] : [0, 1.5, 5]}
             fov={isNarrow ? 42 : 40}
           />
-          <SceneLights />
+          <SceneLights sunActive={hovered && type === "spool"} />
           {type !== "bend" && <ParticleGrid />}
 
           <Suspense fallback={null}>

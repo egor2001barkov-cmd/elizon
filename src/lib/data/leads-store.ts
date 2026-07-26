@@ -256,6 +256,26 @@ export async function markAllLeadsRead(): Promise<number> {
   return n;
 }
 
+/** Permanently remove one lead by id. Returns true if something was deleted. */
+export async function deleteLead(id: string): Promise<boolean> {
+  const all = await loadLeads();
+  const next = all.filter((l) => l.id !== id);
+  if (next.length === all.length) return false;
+  await saveLeads(next);
+  return true;
+}
+
+/** Permanently remove many leads (e.g. all submissions of one client). */
+export async function deleteLeadsByIds(ids: string[]): Promise<number> {
+  if (!ids.length) return 0;
+  const set = new Set(ids);
+  const all = await loadLeads();
+  const next = all.filter((l) => !set.has(l.id));
+  const removed = all.length - next.length;
+  if (removed) await saveLeads(next);
+  return removed;
+}
+
 export function isOrderLead(lead: Lead): boolean {
   return (
     lead.kind === "order" ||
