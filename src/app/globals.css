@@ -77,24 +77,8 @@ body {
   }
 }
 
-@keyframes spool-star-sparkle {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
 .spool-star-twinkle {
   animation: spool-star-twinkle 2.4s ease-in-out infinite;
-}
-
-.spool-star-sparkle {
-  animation: spool-star-sparkle 2.8s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
 }
 
 /* Warm sun light on hover — 3D canvas shell + SVG fallback */
@@ -129,8 +113,7 @@ body {
   .spool-spin {
     animation: none !important;
   }
-  .spool-star-twinkle,
-  .spool-star-sparkle {
+  .spool-star-twinkle {
     animation: none !important;
     opacity: 0.7;
   }

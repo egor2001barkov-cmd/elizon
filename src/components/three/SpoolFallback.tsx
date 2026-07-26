@@ -105,15 +105,6 @@ export function SpoolFallback({
     [190, 95, 0.9, 3.6],
   ] as const;
 
-  const sparkles = [
-    [30, 42, 0],
-    [160, 38, 0.7],
-    [36, 150, 1.4],
-    [158, 156, 2.1],
-    [100, 18, 2.8],
-    [100, 182, 3.5],
-  ] as const;
-
   return (
     <div
       className={`spool-fallback-root group flex items-center justify-center ${className}`}
@@ -129,7 +120,7 @@ export function SpoolFallback({
           className="spool-sun-glow pointer-events-none absolute -right-4 -top-6 h-28 w-28 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:h-36 sm:w-36"
           aria-hidden
         />
-        {/* Background stars (do not spin with spool) */}
+        {/* Background stars — dots only, no cross sparkles */}
         <svg
           viewBox="0 0 200 200"
           className="pointer-events-none absolute inset-0 h-full w-full"
@@ -145,33 +136,6 @@ export function SpoolFallback({
               fill={i % 2 === 0 ? "#00D4FF" : "#E8F7FF"}
               style={{ animationDelay: `${delay}s` }}
             />
-          ))}
-          {sparkles.map(([cx, cy, delay], i) => (
-            <g
-              key={`spark-${i}`}
-              className="spool-star-sparkle"
-              style={{ animationDelay: `${delay}s` }}
-            >
-              <line
-                x1={cx - 5}
-                y1={cy}
-                x2={cx + 5}
-                y2={cy}
-                stroke="#00D4FF"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-              />
-              <line
-                x1={cx}
-                y1={cy - 5}
-                x2={cx}
-                y2={cy + 5}
-                stroke="#E8F7FF"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-              />
-              <circle cx={cx} cy={cy} r="1.2" fill="#FFFFFF" />
-            </g>
           ))}
         </svg>
 
