@@ -94,6 +94,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon\\.ico|favicon\\.svg|favicon-.*\\.png|apple-touch-icon\\.png|android-chrome-.*\\.png|logo\\.png|og-image\\.(svg|png)|images|site\\.webmanifest|robots\\.txt|sitemap\\.xml|yandex_.*\\.html).*)",
+    // Static SEO assets must bypass middleware (no capturing groups — Next rejects them).
+    "/((?!_next/static|_next/image|favicon|apple-touch-icon|android-chrome|logo\\.png|og-image|images/|site\\.webmanifest|robots\\.txt|sitemap\\.xml|yandex_).*)",
   ],
 };
