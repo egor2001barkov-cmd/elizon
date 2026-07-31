@@ -35,9 +35,15 @@ export function buildOrganizationSchema() {
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
-      url: absoluteUrl("/favicon.svg"),
+      url: absoluteUrl("/logo.png"),
+      width: 512,
+      height: 512,
     },
-    image: absoluteUrl(g657a2MainPhoto.src),
+    image: [
+      absoluteUrl("/logo.png"),
+      absoluteUrl(g657a2MainPhoto.src),
+      absoluteUrl("/og-image.png"),
+    ],
     email: COMPANY.email,
     telephone: COMPANY.phoneTel,
     address: {
@@ -296,7 +302,12 @@ export function buildArticleSchema(caseStudy: CaseStudy) {
       "@type": "Organization",
       "@id": ORG_ID,
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: absoluteUrl("/favicon.svg") },
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/logo.png"),
+        width: 512,
+        height: 512,
+      },
     },
     about: {
       "@type": "Product",
@@ -376,7 +387,12 @@ export function buildBlogArticleSchema(article: BlogArticle) {
       "@type": "Organization",
       "@id": ORG_ID,
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: absoluteUrl("/favicon.svg") },
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/logo.png"),
+        width: 512,
+        height: 512,
+      },
     },
     keywords: [article.primaryKeyword, ...article.secondaryKeywords].join(", "),
     inLanguage: "ru-RU",
