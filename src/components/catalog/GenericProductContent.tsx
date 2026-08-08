@@ -15,15 +15,24 @@ import { ROUTES } from "@/lib/seo/routes";
 import {
   formatProductPrice,
   getAvailabilityLabel,
+  getProductDetailHref,
   isPriceOnRequest,
   type Product,
 } from "@/lib/data/products";
 import { PRODUCTS_BASE } from "@/lib/constants";
 import { CATALOG_HUB_PATH } from "@/lib/data/catalog-tree";
+import { SeoInterlinks } from "@/components/seo/SeoInterlinks";
+import type { InterlinkPreset } from "@/lib/seo/interlinks";
 
 interface GenericProductContentProps {
   product: Product;
   breadcrumbs: BreadcrumbItem[];
+}
+
+function productInterlinkPreset(productId: string): InterlinkPreset {
+  if (productId === "g657a1-242") return "product-a1";
+  if (productId === "g657a2-242") return "product-a2";
+  return "keyword";
 }
 
 export function GenericProductContent({ product, breadcrumbs }: GenericProductContentProps) {
@@ -143,6 +152,25 @@ export function GenericProductContent({ product, breadcrumbs }: GenericProductCo
               </table>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      <section className="py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
+          <SeoInterlinks
+            preset={productInterlinkPreset(product.id)}
+            currentHref={getProductDetailHref(product)}
+            title={
+              product.id === "g657a1-242"
+                ? "G.657.A1 — посадочные, сравнения и сферы"
+                : "Связанные товары и разделы"
+            }
+            subtitle={
+              product.id === "g657a1-242"
+                ? "Посадочные /g657a1-kupit и /optovolokno-g657a1, сравнение с A2, доставка и FAQ."
+                : "Внутренняя перелинковка для быстрого перехода к нужной странице."
+            }
+          />
         </div>
       </section>
 

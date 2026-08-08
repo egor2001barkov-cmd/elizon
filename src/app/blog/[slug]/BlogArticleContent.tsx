@@ -74,8 +74,16 @@ export function BlogArticleContent({ article }: BlogArticleContentProps) {
       )}
 
       <p className="text-sm text-[#8BA4BC]">
+        <Link href="/optovolokno/g657/g657a1" className="text-[#6ECFFF] hover:underline">
+          G.657.A1 от 120 000 ₽
+        </Link>
+        {" · "}
         <Link href="/optovolokno/g657/g657a2" className="text-[#6ECFFF] hover:underline">
           G.657.A2 в каталоге
+        </Link>
+        {" · "}
+        <Link href="/g657a1-kupit" className="text-[#6ECFFF] hover:underline">
+          G.657.A1 купить
         </Link>
         {" · "}
         <Link href="/faq" className="text-[#6ECFFF] hover:underline">

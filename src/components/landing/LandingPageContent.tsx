@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { LandingPage } from "@/lib/data/landing-pages";
 import { applicationLandings } from "@/lib/data/application-landings";
@@ -12,8 +13,11 @@ import { WarehouseTrustSection } from "@/components/landing/WarehouseTrustSectio
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Button } from "@/components/ui/Button";
+import { SeoInterlinks } from "@/components/seo/SeoInterlinks";
 import type { BreadcrumbItem } from "@/components/layout/Breadcrumbs";
 import { applicationPath, ROUTES } from "@/lib/seo/routes";
+import { interlinkPresetForLanding } from "@/lib/seo/interlinks";
+import { catalogItemPath } from "@/lib/seo/catalog-routes";
 
 interface LandingPageContentProps {
   landing: LandingPage;
@@ -21,6 +25,12 @@ interface LandingPageContentProps {
 }
 
 export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentProps) {
+  const priceLabel = landing.priceLabel ?? "G.657.A2";
+  const priceValue = landing.priceValue ?? "от 150 000 ₽ / 50 км";
+  const priceNote = landing.priceNote ?? "Прямые поставки ELIZON";
+  const interlinkPreset = interlinkPresetForLanding(landing.slug, landing.type);
+  const currentHref = `/${landing.slug}`;
+
   return (
     <ContentPageShell
       breadcrumbItems={breadcrumbs}
@@ -28,6 +38,26 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
       subtitle={landing.description}
     >
       <ProseBlock paragraphs={[landing.intro]} />
+
+      {landing.heroImage ? (
+        <ScrollReveal delay={0.03}>
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0A2540]/40">
+            <div className="relative aspect-[16/9] max-h-[360px] w-full sm:aspect-[21/9]">
+              <Image
+                src={landing.heroImage}
+                alt={landing.heroImageAlt ?? landing.h1}
+                fill
+                className="object-contain object-center p-4 sm:p-6"
+                sizes="(max-width: 768px) 100vw, 960px"
+                priority
+              />
+            </div>
+            <div className="border-t border-white/8 bg-black/20 px-4 py-3 text-center text-xs text-[#8BA4BC] sm:text-sm">
+              {landing.heroImageAlt ?? "Катушки оптоволокна ELIZON"}
+            </div>
+          </div>
+        </ScrollReveal>
+      ) : null}
 
       <ScrollReveal delay={0.05}>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -42,9 +72,9 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
             <p className="mt-2 text-sm text-[#8BA4BC]">{landing.deliveryNote}</p>
           </GlassCard>
           <GlassCard hover={false}>
-            <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">G.657.A2</p>
-            <p className="mt-2 text-lg font-medium text-white">от 150 000 ₽ / 50 км</p>
-            <p className="mt-2 text-sm text-[#8BA4BC]">Прямые поставки ELIZON</p>
+            <p className="text-xs uppercase tracking-wider text-[#6ECFFF]">{priceLabel}</p>
+            <p className="mt-2 text-lg font-medium text-white">{priceValue}</p>
+            <p className="mt-2 text-sm text-[#8BA4BC]">{priceNote}</p>
           </GlassCard>
         </div>
       </ScrollReveal>
@@ -75,6 +105,7 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
               <li className="rounded-full border border-white/10 px-3 py-1">
                 оптоволокно {landing.cityName}
               </li>
+              <li className="rounded-full border border-white/10 px-3 py-1">G.657.A1</li>
               <li className="rounded-full border border-white/10 px-3 py-1">G.657.A2</li>
               <li className="rounded-full border border-white/10 px-3 py-1">
                 доставка {landing.cityIn}
@@ -110,19 +141,6 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
         </ScrollReveal>
       )}
 
-      {landing.type === "keyword" && (
-        <ProseBlock
-          title="Связанные разделы"
-          list={[
-            "Каталог оптоволокна — все типы волокна",
-            "Доставка и оплата — способы и сроки",
-            "Частые вопросы — ответы на частые вопросы",
-            "Блог — сравнения G.657.A2 и G.652.D",
-          ]}
-          paragraphs={[]}
-        />
-      )}
-
       {landing.type === "application" && (
         <>
           <ProseBlock
@@ -148,16 +166,6 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
                 ))}
             </ul>
           </ScrollReveal>
-          <ProseBlock
-            title="Связанные разделы"
-            list={[
-              "Все сферы применения — обзор на одной странице",
-              "Каталог G.657.A2 — флагман для плотной прокладки",
-              "Кейсы поставок — цифры с реальных объектов",
-              "Частые вопросы — выбор волокна под задачу",
-            ]}
-            paragraphs={[]}
-          />
         </>
       )}
 
@@ -186,6 +194,90 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
           </ScrollReveal>
         </>
       )}
+
+      <SeoInterlinks
+        preset={interlinkPreset}
+        currentHref={currentHref}
+        title={
+          interlinkPreset === "g657a1"
+            ? "G.657.A1 — связанные страницы"
+            : interlinkPreset === "g657a2"
+              ? "G.657.A2 и соседние типы"
+              : interlinkPreset === "city"
+                ? "Волокно, цены и другие города"
+                : "Каталог, цены и сравнения"
+        }
+        subtitle={
+          interlinkPreset === "g657a1"
+            ? "Перейдите в каталог, сравните с A2 и G.652.D, посмотрите сферы и условия доставки."
+            : "Внутренние ссылки помогают быстрее выбрать тип волокна и оформить заказ."
+        }
+      />
+
+      {/* Доп. анкорные ссылки для краулеров */}
+      <ScrollReveal>
+        <nav
+          aria-label="Дополнительные SEO-ссылки"
+          className="rounded-2xl border border-white/6 bg-white/[0.015] px-4 py-4 sm:px-6"
+        >
+          <p className="mb-2 text-xs uppercase tracking-wider text-[#8BA4BC]/80">
+            Быстрые ссылки
+          </p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            <li>
+              <Link
+                href={catalogItemPath("optovolokno", "g657", "g657a1")}
+                className="text-[#6ECFFF] hover:underline"
+              >
+                G.657.A1 120 000 ₽/50 км
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={catalogItemPath("optovolokno", "g657", "g657a2")}
+                className="text-[#6ECFFF] hover:underline"
+              >
+                G.657.A2 150 000 ₽/50 км
+              </Link>
+            </li>
+            <li>
+              <Link href="/g657a1-kupit" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                G.657.A1 купить
+              </Link>
+            </li>
+            <li>
+              <Link href="/optovolokno-g657a1" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                оптоволокно G.657.A1
+              </Link>
+            </li>
+            <li>
+              <Link href="/g657a2-kupit" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                G.657.A2 купить
+              </Link>
+            </li>
+            <li>
+              <Link href="/cena-optovolokna" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                цена оптоволокна
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog/g657a1-vs-g657a2" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                A1 vs A2
+              </Link>
+            </li>
+            <li>
+              <Link href={ROUTES.catalog} className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                каталог
+              </Link>
+            </li>
+            <li>
+              <Link href={ROUTES.contacts} className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                запросить счёт
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </ScrollReveal>
 
       <CtaBanner title={landing.ctaTitle} />
     </ContentPageShell>

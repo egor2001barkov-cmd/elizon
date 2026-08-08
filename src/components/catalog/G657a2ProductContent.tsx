@@ -13,11 +13,16 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { CatalogTreeNav } from "@/components/catalog/CatalogTreeNav";
 import type { BreadcrumbItem } from "@/components/layout/Breadcrumbs";
 import { PageBreadcrumbs } from "@/components/layout/PageBreadcrumbs";
-import { flagshipProduct, getAvailabilityLabel } from "@/lib/data/products";
+import {
+  flagshipProduct,
+  getAvailabilityLabel,
+  getProductDetailHref,
+} from "@/lib/data/products";
 import { LEAD_TIME_LABEL } from "@/lib/constants";
 import { reviews } from "@/lib/data/applications";
 import { useCart, productToCartItem } from "@/context/CartContext";
 import { ROUTES } from "@/lib/seo/routes";
+import { SeoInterlinks } from "@/components/seo/SeoInterlinks";
 
 const SceneCanvas = dynamic(
   () => import("@/components/three/SceneCanvas").then((m) => m.SceneCanvas),
@@ -254,6 +259,17 @@ export function G657a2ProductContent({ breadcrumbs }: G657a2ProductContentProps)
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <SeoInterlinks
+            preset="product-a2"
+            currentHref={getProductDetailHref(product)}
+            title="G.657.A2 — связанные страницы и G.657.A1"
+            subtitle="Сравните с A1 (от 120 000 ₽/50 км), посмотрите посадочные, сферы FTTH/дроны и условия поставки."
+          />
         </div>
       </section>
 

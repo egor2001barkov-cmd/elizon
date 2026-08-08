@@ -180,6 +180,20 @@ export function Footer() {
                 </Link>
               </li>
               <li>От 150 000 ₽ / 50 км</li>
+              <li className="pt-1">
+                <Link
+                  href={catalogItemPath("optovolokno", "g657", "g657a1")}
+                  className="text-[#6ECFFF] hover:underline"
+                >
+                  G.657.A1 242 мкм
+                </Link>
+              </li>
+              <li>От 120 000 ₽ / 50 км</li>
+              <li className="pt-1">
+                <Link href="/g657a1-kupit" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                  G.657.A1 купить
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

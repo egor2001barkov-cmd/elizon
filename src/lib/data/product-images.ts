@@ -40,6 +40,25 @@ export const g657a2Photos: ProductPhoto[] = [
 
 export const g657a2MainPhoto = g657a2Photos[0];
 
+/** Фото для посадочной и карточки G.657.A1 */
+export const g657a1Photos: ProductPhoto[] = [
+  {
+    src: "/images/products/g657a1-spools.jpg",
+    alt: "Катушки оптоволокна G.657.A1 242 мкм на 50 км — заводская намотка ELIZON",
+    caption: "G.657.A1 — катушка 50 км от 120 000 ₽",
+  },
+  {
+    src: "/images/products/spool-warehouse.jpg",
+    alt: "Катушки оптоволокна G.657.A1 на складе комплектации ELIZON в Лобне",
+    caption: "Комплектация на складе в Лобне",
+  },
+  {
+    src: "/images/products/spool-packaging.jpg",
+    alt: "Упаковка катушек G.657.A1 для доставки по России",
+    caption: "Упаковка для безопасной доставки",
+  },
+];
+
 const CYLINDER_IMAGE_VARIANTS = [
   {
     src: "/images/products/cylinders/fo-cylinder-cad.jpg",
@@ -86,9 +105,9 @@ const STATIC_PRODUCT_PHOTOS: Record<string, ProductPhoto> = {
     caption: "G.652.D для магистральных и городских сетей",
   },
   "g657a1-242": {
-    src: "/images/products/spool-packaging.jpg",
-    alt: "Катушка оптоволокна G.657.A1 242 мкм, 50 км — гибкое волокно для абонентского доступа от ELIZON",
-    caption: "G.657.A1 — улучшенная гибкость для сетей доступа",
+    src: "/images/products/g657a1-spools.jpg",
+    alt: "Катушки оптоволокна G.657.A1 242 мкм, 50 км — заводские бухты ELIZON",
+    caption: "G.657.A1 — катушки 50 км, от 120 000 ₽",
   },
   "g655-242": {
     src: "/images/products/spool-warehouse.jpg",
@@ -132,6 +151,10 @@ export function getProductPhotos(product: Product | string): ProductPhoto[] {
 
   if (productId === "g657a2-242") {
     return g657a2Photos;
+  }
+
+  if (productId === "g657a1-242") {
+    return g657a1Photos;
   }
 
   const main = getProductMainPhoto(productId);
