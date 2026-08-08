@@ -14,6 +14,8 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Button } from "@/components/ui/Button";
 import { SeoInterlinks } from "@/components/seo/SeoInterlinks";
+import { LandingProductCards } from "@/components/landing/LandingProductCards";
+import { FaqAccordion } from "@/components/content/FaqAccordion";
 import type { BreadcrumbItem } from "@/components/layout/Breadcrumbs";
 import { applicationPath, ROUTES } from "@/lib/seo/routes";
 import { interlinkPresetForLanding } from "@/lib/seo/interlinks";
@@ -87,6 +89,33 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
           delay={0.1 + i * 0.05}
         />
       ))}
+
+      {landing.relatedProductIds && landing.relatedProductIds.length > 0 ? (
+        <LandingProductCards
+          productIds={landing.relatedProductIds}
+          title="Товары по этому запросу"
+          subtitle="Цены и характеристики из каталога ELIZON — перейдите в карточку, чтобы оформить заказ или запросить счёт."
+        />
+      ) : null}
+
+      {landing.faqItems && landing.faqItems.length > 0 ? (
+        <ScrollReveal>
+          <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5 sm:p-7">
+            <h2 className="font-display text-xl font-medium text-white md:text-2xl">
+              Частые вопросы
+            </h2>
+            <div className="mt-4">
+              <FaqAccordion
+                items={landing.faqItems.map((f, i) => ({
+                  id: `${landing.slug}-faq-${i}`,
+                  question: f.question,
+                  answer: f.answer,
+                }))}
+              />
+            </div>
+          </div>
+        </ScrollReveal>
+      ) : null}
 
       <WarehouseTrustSection />
 
@@ -258,6 +287,26 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
             <li>
               <Link href="/cena-optovolokna" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
                 цена оптоволокна
+              </Link>
+            </li>
+            <li>
+              <Link href="/opticheskoe-volokno" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                оптическое волокно
+              </Link>
+            </li>
+            <li>
+              <Link href="/optovolokno-internet" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                оптоволокно интернет
+              </Link>
+            </li>
+            <li>
+              <Link href="/katushka-optovolokna" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                катушка оптоволокна
+              </Link>
+            </li>
+            <li>
+              <Link href="/opticheskoe-volokno-g652" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                оптическое волокно G.652
               </Link>
             </li>
             <li>

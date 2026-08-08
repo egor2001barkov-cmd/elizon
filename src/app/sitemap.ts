@@ -10,7 +10,11 @@ import { catalogProducts } from "@/lib/data/products";
 import { getAllCaseSlugs, loadCaseStudies } from "@/lib/data/cases";
 import { applicationLandingSlugs } from "@/lib/data/application-landings";
 import { cylinderLandingSlugs } from "@/lib/data/cylinder-landings";
-import { dynamicLandingSlugs, keywordLandingSlugs } from "@/lib/data/landing-pages";
+import {
+  dynamicLandingSlugs,
+  getLandingBySlug,
+  keywordLandingSlugs,
+} from "@/lib/data/landing-pages";
 import { catalogItemPath } from "@/lib/seo/catalog-routes";
 import { applicationPath, ROUTES } from "@/lib/seo/routes";
 import { getProductPhotos } from "@/lib/data/product-images";
@@ -128,6 +132,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       entry.images = productImageMap.get(route);
     } else if (caseImageMap.has(route)) {
       entry.images = caseImageMap.get(route);
+    } else if (route.startsWith("/") && route.split("/").length === 2) {
+      const landing = getLandingBySlug(route.slice(1));
+      if (landing?.heroImage) {
+        entry.images = [
+          `${BASE}${landing.heroImage.startsWith("/") ? landing.heroImage : `/${landing.heroImage}`}`,
+        ];
+      }
     }
 
     return entry;

@@ -30,12 +30,16 @@ export async function generateMetadata({ params }: LandingRouteProps): Promise<M
 
   const path = `/${slug}`;
   const docTitle = formatDocumentTitle(landing.title);
+  const ogImage = landing.heroImage
+    ? { url: landing.heroImage, alt: landing.heroImageAlt ?? landing.h1 }
+    : { url: DEFAULT_OG_IMAGE, alt: landing.h1 };
 
   return {
     title: resolveMetadataTitle(landing.title),
     description: landing.description,
-    keywords: [...landing.keywords, "ELIZON", "оптоволокно"],
+    keywords: [...landing.keywords, "ELIZON", "оптоволокно", "оптическое волокно"],
     alternates: { canonical: path },
+    robots: { index: true, follow: true },
     openGraph: {
       title: docTitle,
       description: landing.description,
@@ -43,13 +47,13 @@ export async function generateMetadata({ params }: LandingRouteProps): Promise<M
       siteName: SITE_NAME,
       locale: "ru_RU",
       type: "website",
-      images: [{ url: DEFAULT_OG_IMAGE, alt: landing.h1 }],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: docTitle,
       description: landing.description,
-      images: [DEFAULT_OG_IMAGE],
+      images: [ogImage.url],
     },
   };
 }

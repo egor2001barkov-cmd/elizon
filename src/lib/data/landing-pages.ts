@@ -11,9 +11,11 @@ import {
   cylinderLandingSlugs,
   getFooterCylinders,
 } from "./cylinder-landings";
+import { demandKeywordLandings } from "./demand-keyword-landings";
 
 export { applicationLandings, applicationLandingSlugs, getFooterApplications };
 export { cylinderLandings, cylinderLandingSlugs, getFooterCylinders };
+export { demandKeywordLandings };
 
 export type LandingType = "city" | "keyword" | "application" | "cylinder";
 
@@ -53,6 +55,10 @@ export interface LandingPage {
   /** Hero-изображение (public path) */
   heroImage?: string;
   heroImageAlt?: string;
+  /** ID товаров каталога для карточек и schema Product */
+  relatedProductIds?: string[];
+  /** FAQ на посадочной (schema FAQPage) */
+  faqItems?: { question: string; answer: string }[];
 }
 
 const CATALOG_G657 = catalogItemPath("optovolokno", "g657", "g657a2");
@@ -717,6 +723,7 @@ export const keywordLandings: LandingPage[] = [
       },
     ]
   ),
+  ...demandKeywordLandings,
 ];
 
 export const allLandings: LandingPage[] = [

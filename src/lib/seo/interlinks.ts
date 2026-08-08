@@ -311,11 +311,31 @@ export const keywordCluster: SeoLinkGroup[] = [
     title: "Популярные запросы",
     links: [
       { href: "/kupit-optovolokno", label: "Купить оптоволокно", description: "Прямые поставки" },
-      { href: "/optovolokno-optom", label: "Оптоволокно оптом", description: "Фиксация цены" },
+      { href: "/opticheskoe-volokno", label: "Оптическое волокно", description: "G.657 и G.652" },
+      { href: "/optovolokno-internet", label: "Оптоволокно интернет", description: "Сети доступа" },
+      { href: "/optovolokno-kabel", label: "Оптоволокно кабель", description: "Волокно vs кабель" },
+      { href: "/katushka-optovolokna", label: "Катушка оптоволокна", description: "50 км от 120 000 ₽" },
+      { href: "/opticheskoe-volokno-g652", label: "Оптическое волокно G.652", description: "от 120 000 ₽" },
+    ],
+  },
+  {
+    id: "more",
+    title: "Ещё посадочные",
+    links: [
+      { href: "/optovolokno-wifi", label: "Оптоволокно Wi‑Fi", description: "Оптика до узла" },
+      {
+        href: "/kabel-optovolokno-dlya-interneta",
+        label: "Кабель для интернета",
+        description: "ВОЛС и доступ",
+      },
+      {
+        href: "/opticheskoe-volokno-kabel",
+        label: "Оптическое волокно кабель",
+        description: "Сырьё для ВОЛС",
+      },
       { href: "/g657a1-kupit", label: "G.657.A1 купить", description: "от 120 000 ₽/50 км" },
       { href: "/g657a2-kupit", label: "G.657.A2 купить", description: "от 150 000 ₽/50 км" },
       { href: "/cena-optovolokna", label: "Цена оптоволокна", description: "Прайс 2026" },
-      { href: "/katushka-optovolokna-50-km", label: "Катушка 50 км", description: "Меньше сварок" },
     ],
   },
   {
@@ -326,6 +346,7 @@ export const keywordCluster: SeoLinkGroup[] = [
       { href: ROUTES.applications, label: "Сферы применения", description: "Под вашу задачу" },
       { href: ROUTES.blog, label: "Блог", description: "Сравнения и гайды" },
       { href: ROUTES.faq, label: "FAQ", description: "Ответы на вопросы" },
+      { href: ROUTES.sitemapPage, label: "Карта сайта", description: "Все посадочные" },
       { href: ROUTES.contacts, label: "Контакты", description: "Счёт за 15 минут" },
     ],
   },

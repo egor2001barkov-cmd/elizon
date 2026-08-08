@@ -127,7 +127,7 @@ export const sitemapTree: SitemapNode[] = [
     })),
   },
   {
-    label: "Популярные запросы",
+    label: "SEO-посадочные (популярные запросы)",
     children: keywordLandings.map((page) => ({
       label: page.primaryKeyword ?? page.h1,
       href: `/${page.slug}`,
