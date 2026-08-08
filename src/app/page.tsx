@@ -16,13 +16,14 @@ import { SpoolCalculator } from "@/components/catalog/SpoolCalculator";
 import { AccountingDocsBlock } from "@/components/content/AccountingDocsBlock";
 import { WarehouseGallery } from "@/components/content/WarehouseGallery";
 import { CylindersPreview } from "@/components/sections/CylindersPreview";
-import { loadCaseStudies } from "@/lib/data/cases";
+import { defaultCaseStudies } from "@/lib/data/cases-defaults";
 
 export const metadata: Metadata = createPageMetadata("home");
-export const dynamic = "force-dynamic";
+/** SSG + ISR: главная кэшируется, кейсы из defaults (админ-кейсы — на /cases). */
+export const revalidate = 3600;
 
-export default async function HomePage() {
-  const cases = await loadCaseStudies();
+export default function HomePage() {
+  const cases = defaultCaseStudies;
 
   return (
     <>

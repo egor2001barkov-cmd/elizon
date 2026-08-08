@@ -21,60 +21,23 @@ const SceneCanvas = dynamic(
   }
 );
 
-/** 3D spool on desktop and mobile when WebGL is available. */
+/** 3D only on desktop, WebGL ok, no reduced-motion — keeps LCP light. */
 function canUseHero3D(): boolean {
   if (typeof window === "undefined") return false;
   try {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return false;
+    if (window.matchMedia("(max-width: 1023px)").matches) return false;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
     const canvas = document.createElement("canvas");
     const gl =
-      canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: false }) ||
-      canvas.getContext("webgl", { failIfMajorPerformanceCaveat: false });
+      canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: true }) ||
+      canvas.getContext("webgl", { failIfMajorPerformanceCaveat: true });
     return Boolean(gl);
   } catch {
     return false;
   }
 }
 
-function HeroVisual({
-  enable3d,
-  scrollUnwind,
-}: {
-  enable3d: boolean;
-  scrollUnwind: number;
-}) {
-  if (!enable3d) {
-    return (
-      <SpoolFallback
-        type="spool"
-        variant="realistic"
-        className="h-full w-full"
-      />
-    );
-  }
-
-  return (
-    <ErrorBoundary
-      fallback={
-        <SpoolFallback type="spool" variant="realistic" className="h-full w-full" />
-      }
-    >
-      <SceneCanvas
-        type="spool"
-        spoolVariant="realistic"
-        scrollUnwind={scrollUnwind}
-        force3D
-        autoRotate
-        className="h-full w-full"
-        height="100%"
-      />
-    </ErrorBoundary>
-  );
-}
-
 export function HeroSection() {
-  const [scrollUnwind, setScrollUnwind] = useState(0);
   const [enable3d, setEnable3d] = useState(false);
 
   useEffect(() => {
@@ -90,80 +53,45 @@ export function HeroSection() {
       cancelIdleCallback?: (id: number) => void;
     };
 
-    // Mobile: show SVG fallback immediately, try 3D only after a short idle (CWV)
-    const isNarrow =
-      typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches;
-    if (isNarrow) {
-      const t = window.setTimeout(start, 1200);
-      return () => {
-        cancelled = true;
-        window.clearTimeout(t);
-      };
-    }
-
+    // Defer 3D until after first paint / idle (CWV)
     if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(start, { timeout: 500 });
+      const id = w.requestIdleCallback(start, { timeout: 2500 });
       return () => {
         cancelled = true;
         w.cancelIdleCallback?.(id);
       };
     }
 
-    const t = window.setTimeout(start, 150);
+    const t = window.setTimeout(start, 1800);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
     };
   }, []);
 
-  useEffect(() => {
-    if (!enable3d) return;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrollUnwind(Math.min(y / 800, 1));
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [enable3d]);
-
   return (
-    <section className="relative min-h-[100dvh] overflow-hidden pt-20 sm:pt-24 md:pt-28">
-      {/* Lightweight mobile glows — no 100px CSS blur (crashes some iOS GPUs) */}
+    <section className="relative overflow-hidden pt-20 sm:pt-24 md:pt-28">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="absolute -right-20 top-16 h-[220px] w-[220px] rounded-full bg-[#6ECFFF]/[0.12] sm:hidden" />
-        <div className="absolute -left-16 bottom-8 h-[180px] w-[180px] rounded-full bg-[#0A2540]/80 sm:hidden" />
-        <div className="absolute -right-32 top-20 hidden h-[500px] w-[500px] rounded-full bg-[#6ECFFF]/10 blur-[120px] sm:block" />
-        <div className="absolute -left-20 bottom-0 hidden h-[400px] w-[400px] rounded-full bg-[#0A2540]/60 blur-[80px] sm:block" />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#6ECFFF 1px, transparent 1px), linear-gradient(90deg, #6ECFFF 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
+        <div className="absolute -right-16 top-12 h-[160px] w-[160px] rounded-full bg-[#6ECFFF]/[0.1] sm:hidden" />
+        <div className="absolute -right-24 top-16 hidden h-[320px] w-[320px] rounded-full bg-[#6ECFFF]/[0.08] blur-[80px] sm:block" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-12 md:px-8 lg:grid-cols-2 lg:gap-12 lg:py-20">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-12 md:px-8 lg:grid-cols-2 lg:gap-10 lg:py-16">
         <div>
           <p className="mb-3 inline-block rounded-full border border-[#6ECFFF]/25 bg-[#6ECFFF]/8 px-3 py-1.5 text-xs text-[#6ECFFF] sm:mb-4 sm:px-4 sm:text-sm">
             Прямой поставщик · Под заказ · {LEAD_TIME_LABEL}
           </p>
 
-          <h1 className="font-display text-[1.75rem] font-medium leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem]">
+          <h1 className="font-display text-[1.75rem] font-medium leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
             Оптоволокно G.657.A2 —{" "}
             <span className="bg-gradient-to-r from-[#6ECFFF] to-[#99E8FF] bg-clip-text text-transparent">
               радиус изгиба 7,5&nbsp;мм
             </span>
           </h1>
 
-          <p className="mt-4 max-w-lg text-base leading-relaxed text-[#8BA4BC] sm:mt-6 sm:text-lg">
-            Поставляем G.657.A2 напрямую — без посредников и без цен «по запросу через три недели».
-            Катушки по 50 км под заказ, срок {LEAD_TIME_LABEL}. Для магистралей, абонентского доступа и городских сетей.
-          </p>
-
-          <p className="mt-3 text-sm text-[#6ECFFF]/80 sm:mt-4">
-            Лучшие цены с завода, радиус изгиба 7,5 мм, 50 км в катушке.
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-[#8BA4BC] sm:mt-5 sm:text-lg">
+            Катушки 50 км под заказ, срок {LEAD_TIME_LABEL}. G.657.A2 от 150 000 ₽, G.657.A1 от
+            120 000 ₽. Для магистралей, доступа и городских сетей.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
@@ -179,14 +107,31 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative mx-auto h-[min(56vh,380px)] min-h-[300px] w-full sm:h-[420px] md:h-[480px] lg:h-[520px]">
-          <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[#6ECFFF]/15 bg-gradient-to-b from-white/[0.04] to-transparent shadow-[0_0_80px_rgba(110,207,255,0.12)] sm:rounded-3xl" />
+        <div className="relative mx-auto h-[min(42vh,300px)] min-h-[240px] w-full sm:h-[360px] md:h-[400px] lg:h-[440px]">
+          <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[#6ECFFF]/15 bg-gradient-to-b from-white/[0.04] to-transparent sm:rounded-3xl" />
           <div
             className="relative h-full w-full"
             role="img"
-            aria-label="3D-катушка оптоволокна G.657.A2 — визуализация продукта ELIZON"
+            aria-label="Катушка оптоволокна G.657.A2 ELIZON"
           >
-            <HeroVisual enable3d={enable3d} scrollUnwind={scrollUnwind} />
+            {enable3d ? (
+              <ErrorBoundary
+                fallback={
+                  <SpoolFallback type="spool" variant="realistic" className="h-full w-full" />
+                }
+              >
+                <SceneCanvas
+                  type="spool"
+                  spoolVariant="realistic"
+                  force3D
+                  autoRotate
+                  className="h-full w-full"
+                  height="100%"
+                />
+              </ErrorBoundary>
+            ) : (
+              <SpoolFallback type="spool" variant="realistic" className="h-full w-full" />
+            )}
           </div>
         </div>
       </div>

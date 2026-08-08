@@ -54,21 +54,27 @@ export function titleContainsBrand(title: string): boolean {
   return /\bELIZON\b/i.test(title);
 }
 
-/** Document title for <title> and OG (no double brand). */
-export function formatDocumentTitle(title: string, forceAbsolute = false): string {
-  if (forceAbsolute || titleContainsBrand(title)) return title;
-  return `${title} | ${SITE_NAME}`;
+/** Strip trailing " | ELIZON" so template/format never doubles the brand. */
+export function stripTrailingBrand(title: string): string {
+  return title.replace(/\s*\|\s*ELIZON\s*$/i, "").trim();
 }
 
-/** Next.js metadata title field — absolute when brand already present. */
+/** Final <title> / OG title — never "… ELIZON | ELIZON". */
+export function formatDocumentTitle(title: string, forceAbsolute = false): string {
+  const base = stripTrailingBrand(title);
+  if (forceAbsolute || titleContainsBrand(base)) return base;
+  return `${base} | ${SITE_NAME}`;
+}
+
+/**
+ * Next.js metadata title — always absolute so root `template: "%s | ELIZON"`
+ * cannot append a second brand when the string already ends with ELIZON.
+ */
 export function resolveMetadataTitle(
   title: string,
   forceAbsolute = false
 ): NonNullable<Metadata["title"]> {
-  if (forceAbsolute || titleContainsBrand(title)) {
-    return { absolute: title };
-  }
-  return title;
+  return { absolute: formatDocumentTitle(title, forceAbsolute) };
 }
 
 export const PAGE_SEO: Record<PageKey, PageSeo> = {

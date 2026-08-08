@@ -3,12 +3,12 @@ import Link from "next/link";
 import { ContentPageShell } from "@/components/content/ContentPageShell";
 import { StaticPageJsonLd } from "@/components/seo/JsonLd";
 import { getPublicSitemapGroups } from "@/lib/data/public-sitemap";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createPageMetadata, resolveMetadataTitle } from "@/lib/seo/metadata";
 import { ROUTES } from "@/lib/seo/routes";
 
 export const metadata: Metadata = {
   ...createPageMetadata("sitemapPage"),
-  title: "Карта сайта ELIZON",
+  title: resolveMetadataTitle("Карта сайта"),
   description:
     "Карта сайта ELIZON: каталог оптоволокна, города, сферы применения, блог, кейсы, доставка и контакты.",
   robots: { index: true, follow: true },
