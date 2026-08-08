@@ -8,11 +8,17 @@ const DISALLOW = [
   `${ROUTES.cart}/`,
   ROUTES.payment,
   "/api/",
+  "/api/*",
   "/admin",
   "/admin/",
   "/admin/*",
   "/data/",
   "/data/*",
+  // служебное / утечки конфигов (на всякий случай)
+  "/.env",
+  "/.git",
+  "/package.json",
+  "/node_modules/",
 ];
 
 export default function robots(): MetadataRoute.Robots {

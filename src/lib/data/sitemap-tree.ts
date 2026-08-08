@@ -1,5 +1,6 @@
 import { applicationLandings } from "./application-landings";
 import { applications } from "./applications";
+import { defaultCaseStudies } from "./cases-defaults";
 import { cylinderLandings } from "./cylinder-landings";
 import { cylinderModelsSeo } from "./fiber-cylinders";
 import { cityLandings, keywordLandings } from "./landing-pages";
@@ -99,7 +100,14 @@ export const sitemapTree: SitemapNode[] = [
       href: applicationPath(app.slug),
     })),
   },
-  { label: "Кейсы", href: "/#cases" },
+  {
+    label: "Кейсы",
+    href: "/#cases",
+    children: defaultCaseStudies.map((c) => ({
+      label: c.title,
+      href: `/cases/${c.slug}`,
+    })),
+  },
   { label: "О компании", href: ROUTES.about },
   { label: "Почему мы", href: ROUTES.whyUs },
   { label: "Наши преимущества", href: ROUTES.advantages },

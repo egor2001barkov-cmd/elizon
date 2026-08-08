@@ -25,8 +25,24 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const admin = isAdminPath(pathname);
 
+  // Method hardening: only safe methods + expected form methods
+  const method = request.method.toUpperCase();
+  if (!["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"].includes(method)) {
+    const response = new NextResponse(null, { status: 405 });
+    applySecurityHeaders(response, request);
+    return response;
+  }
+
   if (isBlockedPath(pathname)) {
-    return new NextResponse(null, { status: 404 });
+    const response = new NextResponse(null, { status: 404 });
+    applySecurityHeaders(response, request);
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
+
+  // Never expose admin UI to search engines even if a bot ignores robots.txt
+  if (admin && (method === "GET" || method === "HEAD")) {
+    // still allow page — sealAdmin adds noindex
   }
 
   if (pathname.startsWith("/api/")) {

@@ -6,6 +6,8 @@ import { LAYOUT_MAX_WIDTH, NAV_LINKS, COMPANY, FOOTER_LINKS } from "@/lib/consta
 import { getFooterApplications } from "@/lib/data/landing-pages";
 import { getProductDetailHref, flagshipProduct } from "@/lib/data/products";
 import { catalogItemPath } from "@/lib/seo/catalog-routes";
+import { FooterSitemap } from "@/components/layout/FooterSitemap";
+import { ROUTES } from "@/lib/seo/routes";
 
 /** Cities for geo SEO — unique landing pages */
 const FOOTER_CITIES = [
@@ -124,7 +126,11 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[#8BA4BC] transition-colors hover:text-[#00D4FF]"
+                    className={`text-sm transition-colors hover:text-[#00D4FF] ${
+                      link.href === ROUTES.sitemapPage
+                        ? "font-medium text-[#6ECFFF]"
+                        : "text-[#8BA4BC]"
+                    }`}
                   >
                     {link.label}
                   </Link>
@@ -234,6 +240,8 @@ export function Footer() {
           </div>
         </div>
 
+        <FooterSitemap />
+
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 text-sm text-[#8BA4BC] md:flex-row">
           <p>
             © {new Date().getFullYear()} ELIZON. Все права защищены.
@@ -248,6 +256,12 @@ export function Footer() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href={ROUTES.sitemapPage}
+              className="font-medium text-[#6ECFFF] transition-colors hover:text-[#00D4FF]"
+            >
+              Карта сайта
+            </Link>
           </div>
         </div>
       </div>

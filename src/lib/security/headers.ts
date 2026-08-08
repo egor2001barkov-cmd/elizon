@@ -13,9 +13,14 @@ export function applySecurityHeaders(
   response.headers.set("X-DNS-Prefetch-Control", "on");
   response.headers.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), payment=()"
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
   );
   response.headers.set("X-Permitted-Cross-Domain-Policies", "none");
+  // Modern browsers: disable legacy XSS auditor, rely on CSP
+  response.headers.set("X-XSS-Protection", "0");
+  response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+  response.headers.set("Cross-Origin-Resource-Policy", "same-site");
+  response.headers.set("Origin-Agent-Cluster", "?1");
 
   if (isProd) {
     response.headers.set(
@@ -24,8 +29,7 @@ export function applySecurityHeaders(
     );
   }
 
-  // Analytics: Yandex.Metrika + Google (Search Console verification / gtag if added).
-  // Forms post only to same origin — no public lead store.
+  // Analytics: Yandex.Metrika + Google. Forms post only to same origin.
   const csp = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com https://www.googletagmanager.com https://www.google-analytics.com",
@@ -34,6 +38,9 @@ export function applySecurityHeaders(
     "font-src 'self'",
     "frame-src https://yandex.ru https://*.yandex.ru https://metrika.yandex.ru https://*.metrika.yandex.ru",
     "connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://www.google-analytics.com https://www.googletagmanager.com https://region1.google-analytics.com",
+    "worker-src 'self' blob:",
+    "manifest-src 'self'",
+    "media-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -45,9 +52,10 @@ export function applySecurityHeaders(
 
   response.headers.set("Content-Security-Policy", csp);
 
-  if (request.nextUrl.pathname.startsWith("/api/")) {
+  const path = request.nextUrl.pathname;
+  if (path.startsWith("/api/") || path.startsWith("/admin")) {
     response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
     response.headers.set("Pragma", "no-cache");
   }
 }

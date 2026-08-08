@@ -38,6 +38,7 @@ export const FOOTER_LINKS = {
     { href: ROUTES.faq, label: "Частые вопросы" },
     { href: ROUTES.blog, label: "Блог" },
     { href: ROUTES.catalog, label: "Каталог" },
+    { href: ROUTES.sitemapPage, label: "Карта сайта" },
   ],
   legal: [
     { href: ROUTES.offer, label: "Публичная оферта" },

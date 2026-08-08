@@ -9,6 +9,7 @@ import { DirectSupplierSection } from "@/components/sections/DirectSupplierSecti
 import { CasesSection } from "@/components/sections/CasesSection";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { CtaSection } from "@/components/sections/CtaSection";
+import { HomeInterlinksSection } from "@/components/sections/HomeInterlinksSection";
 import { HomeJsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { SpoolCalculator } from "@/components/catalog/SpoolCalculator";
@@ -51,6 +52,7 @@ export default async function HomePage() {
         </div>
       </section>
       <ReviewsSection />
+      <HomeInterlinksSection />
       <CtaSection />
     </>
   );
