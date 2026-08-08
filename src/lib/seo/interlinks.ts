@@ -67,7 +67,7 @@ export const g657a1Cluster: SeoLinkGroup[] = [
       {
         href: "/g657a2-kupit",
         label: "G.657.A2 купить",
-        description: "Посадочная по A2",
+        description: "Радиус 7,5 мм, катушка 50 км",
         title: "Купить G.657.A2 катушку 50 км",
       },
       {
@@ -203,7 +203,7 @@ export const g657a2Cluster: SeoLinkGroup[] = [
       {
         href: "/g657a1-kupit",
         label: "G.657.A1 купить",
-        description: "Посадочная по A1",
+        description: "Радиус 10 мм, от 120 000 ₽",
         title: "G.657.A1 купить катушку 50 км",
       },
       {
@@ -320,9 +320,9 @@ export const keywordCluster: SeoLinkGroup[] = [
   },
   {
     id: "more",
-    title: "Ещё посадочные",
+    title: "Подбор и цены",
     links: [
-      { href: "/optovolokno-wifi", label: "Оптоволокно Wi‑Fi", description: "Оптика до узла" },
+      { href: "/optovolokno-wifi", label: "Оптоволокно и Wi‑Fi", description: "Оптика до узла" },
       {
         href: "/kabel-optovolokno-dlya-interneta",
         label: "Кабель для интернета",
@@ -346,7 +346,7 @@ export const keywordCluster: SeoLinkGroup[] = [
       { href: ROUTES.applications, label: "Сферы применения", description: "Под вашу задачу" },
       { href: ROUTES.blog, label: "Блог", description: "Сравнения и гайды" },
       { href: ROUTES.faq, label: "FAQ", description: "Ответы на вопросы" },
-      { href: ROUTES.sitemapPage, label: "Карта сайта", description: "Все посадочные" },
+      { href: ROUTES.sitemapPage, label: "Карта сайта", description: "Все разделы" },
       { href: ROUTES.contacts, label: "Контакты", description: "Счёт за 15 минут" },
     ],
   },

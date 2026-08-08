@@ -8,9 +8,9 @@ import { ROUTES } from "@/lib/seo/routes";
 
 export const metadata: Metadata = {
   ...createPageMetadata("sitemapPage"),
-  title: "Карта сайта ELIZON — все публичные страницы",
+  title: "Карта сайта ELIZON — все разделы и товары",
   description:
-    "Полная карта сайта ELIZON: каталог оптоволокна, SEO-посадочные, города, сферы, блог и кейсы. Без служебных и админ-страниц.",
+    "Карта сайта ELIZON: каталог оптоволокна, города, сферы применения, блог и кейсы. Найдите нужный раздел или товар.",
   robots: { index: true, follow: true },
   alternates: { canonical: ROUTES.sitemapPage },
 };
@@ -30,7 +30,7 @@ export default function SitemapPage() {
       <ContentPageShell
         breadcrumbPage={"sitemapPage"}
         title="Карта сайта"
-        subtitle="Все публичные страницы ELIZON для пользователей и поисковых систем. Разделы админки, API и служебные URL намеренно скрыты."
+        subtitle="Все разделы, товары, города и статьи ELIZON — удобный список для поиска нужной страницы."
       >
         <nav aria-label="Карта сайта" className="space-y-10">
           {groups.map((group) => (
@@ -69,11 +69,11 @@ export default function SitemapPage() {
         </nav>
 
         <p className="mt-12 text-sm text-[#8BA4BC]">
-          Машинный список URL для поисковиков:{" "}
-          <Link href="/sitemap.xml" className="text-[#6ECFFF] hover:underline">
-            /sitemap.xml
-          </Link>
-          . Служебные зоны (/admin, /api) закрыты в robots.txt и не индексируются.
+          Не нашли нужное?{" "}
+          <Link href={ROUTES.contacts} className="text-[#6ECFFF] hover:underline">
+            Напишите нам
+          </Link>{" "}
+          — подскажем тип волокна и посчитаем заказ.
         </p>
       </ContentPageShell>
     </>

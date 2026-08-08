@@ -267,8 +267,7 @@ export function G657a2ProductContent({ breadcrumbs }: G657a2ProductContentProps)
           <SeoInterlinks
             preset="product-a2"
             currentHref={getProductDetailHref(product)}
-            title="G.657.A2 — связанные страницы и G.657.A1"
-            subtitle="Сравните с A1 (от 120 000 ₽/50 км), посмотрите посадочные, сферы FTTH/дроны и условия поставки."
+            title="Сравнить и выбрать волокно"
           />
         </div>
       </section>

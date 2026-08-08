@@ -42,8 +42,8 @@ function filterGroups(
 export function SeoInterlinks({
   preset,
   currentHref,
-  title = "Полезные разделы",
-  subtitle = "Связанные страницы — быстрее найти нужный тип волокна, сравнение и условия поставки.",
+  title = "Ещё по теме",
+  subtitle,
   className = "",
   maxGroups,
 }: SeoInterlinksProps) {
@@ -55,15 +55,12 @@ export function SeoInterlinks({
     <ScrollReveal>
       <section
         className={`rounded-2xl border border-[#6ECFFF]/15 bg-gradient-to-br from-[#0A2540]/80 via-[#061829] to-[#0A2540]/40 p-5 sm:p-7 md:p-8 ${className}`}
-        aria-labelledby="seo-interlinks-heading"
+        aria-labelledby="related-links-heading"
       >
         <div className="mb-6 max-w-2xl">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#6ECFFF]/90">
-            Перелинковка
-          </p>
           <h2
-            id="seo-interlinks-heading"
-            className="mt-2 font-display text-xl font-medium text-white md:text-2xl"
+            id="related-links-heading"
+            className="font-display text-xl font-medium text-white md:text-2xl"
           >
             {title}
           </h2>

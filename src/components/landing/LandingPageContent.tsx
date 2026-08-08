@@ -229,24 +229,18 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
         currentHref={currentHref}
         title={
           interlinkPreset === "g657a1"
-            ? "G.657.A1 — связанные страницы"
+            ? "Другие типы волокна и разделы"
             : interlinkPreset === "g657a2"
-              ? "G.657.A2 и соседние типы"
+              ? "Другие типы волокна и разделы"
               : interlinkPreset === "city"
-                ? "Волокно, цены и другие города"
-                : "Каталог, цены и сравнения"
-        }
-        subtitle={
-          interlinkPreset === "g657a1"
-            ? "Перейдите в каталог, сравните с A2 и G.652.D, посмотрите сферы и условия доставки."
-            : "Внутренние ссылки помогают быстрее выбрать тип волокна и оформить заказ."
+                ? "Каталог и другие города"
+                : "Каталог и похожие товары"
         }
       />
 
-      {/* Доп. анкорные ссылки для краулеров */}
       <ScrollReveal>
         <nav
-          aria-label="Дополнительные SEO-ссылки"
+          aria-label="Быстрые ссылки"
           className="rounded-2xl border border-white/6 bg-white/[0.015] px-4 py-4 sm:px-6"
         >
           <p className="mb-2 text-xs uppercase tracking-wider text-[#8BA4BC]/80">

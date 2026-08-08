@@ -18,14 +18,14 @@ const GROUPS = [
     ],
   },
   {
-    title: "Частые запросы",
+    title: "Подбор волокна",
     links: [
       { href: "/opticheskoe-volokno", label: "Оптическое волокно" },
-      { href: "/optovolokno-internet", label: "Оптоволокно интернет" },
-      { href: "/optovolokno-kabel", label: "Оптоволокно кабель" },
-      { href: "/katushka-optovolokna", label: "Катушка оптоволокна" },
+      { href: "/optovolokno-internet", label: "Для интернет-сетей" },
+      { href: "/optovolokno-kabel", label: "Волокно и кабель" },
+      { href: "/katushka-optovolokna", label: "Катушка 50 км" },
       { href: "/opticheskoe-volokno-g652", label: "Волокно G.652" },
-      { href: "/g657a1-kupit", label: "G.657.A1 купить" },
+      { href: "/g657a1-kupit", label: "G.657.A1 — от 120 000 ₽" },
     ],
   },
   {
@@ -46,8 +46,8 @@ export function HomeInterlinksSection() {
     <section className="py-12 sm:py-16" aria-labelledby="home-interlinks-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
         <SectionHeading
-          title="Разделы и популярные страницы"
-          subtitle="Быстрый переход к каталогу, посадочным и сервису — без служебных разделов."
+          title="Каталог и разделы"
+          subtitle="Выберите тип волокна, сферу применения или перейдите к доставке и контактам."
         />
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

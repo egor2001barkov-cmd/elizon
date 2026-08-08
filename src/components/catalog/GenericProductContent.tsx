@@ -162,13 +162,8 @@ export function GenericProductContent({ product, breadcrumbs }: GenericProductCo
             currentHref={getProductDetailHref(product)}
             title={
               product.id === "g657a1-242"
-                ? "G.657.A1 — посадочные, сравнения и сферы"
-                : "Связанные товары и разделы"
-            }
-            subtitle={
-              product.id === "g657a1-242"
-                ? "Посадочные /g657a1-kupit и /optovolokno-g657a1, сравнение с A2, доставка и FAQ."
-                : "Внутренняя перелинковка для быстрого перехода к нужной странице."
+                ? "Сравнить и выбрать волокно"
+                : "Похожие товары и разделы"
             }
           />
         </div>

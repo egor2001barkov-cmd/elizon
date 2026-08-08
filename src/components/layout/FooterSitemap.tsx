@@ -24,15 +24,14 @@ export function FooterSitemap() {
             Карта сайта
           </h3>
           <p className="mt-1 max-w-xl text-sm text-[#8BA4BC]">
-            Все основные разделы, товары и посадочные страницы. Админка и служебные URL не
-            публикуются.
+            Разделы сайта, товары и города поставки — чтобы быстрее найти нужное.
           </p>
         </div>
         <Link
           href={ROUTES.sitemapPage}
           className="inline-flex min-h-[44px] items-center text-sm font-medium text-[#6ECFFF] hover:text-[#00D4FF] hover:underline"
         >
-          Полная карта со всеми страницами →
+          Все страницы →
         </Link>
       </div>
 
