@@ -42,7 +42,7 @@ function filterGroups(
 export function SeoInterlinks({
   preset,
   currentHref,
-  title = "Ещё по теме",
+  title = "Каталог",
   subtitle,
   className = "",
   maxGroups,

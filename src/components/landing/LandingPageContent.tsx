@@ -91,11 +91,7 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
       ))}
 
       {landing.relatedProductIds && landing.relatedProductIds.length > 0 ? (
-        <LandingProductCards
-          productIds={landing.relatedProductIds}
-          title="Товары по этому запросу"
-          subtitle="Цены и характеристики из каталога ELIZON — перейдите в карточку, чтобы оформить заказ или запросить счёт."
-        />
+        <LandingProductCards productIds={landing.relatedProductIds} title="Каталог" />
       ) : null}
 
       {landing.faqItems && landing.faqItems.length > 0 ? (
@@ -228,24 +224,15 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
         preset={interlinkPreset}
         currentHref={currentHref}
         title={
-          interlinkPreset === "g657a1"
-            ? "Другие типы волокна и разделы"
-            : interlinkPreset === "g657a2"
-              ? "Другие типы волокна и разделы"
-              : interlinkPreset === "city"
-                ? "Каталог и другие города"
-                : "Каталог и похожие товары"
+          interlinkPreset === "city" ? "Каталог и города" : "Каталог"
         }
       />
 
       <ScrollReveal>
         <nav
-          aria-label="Быстрые ссылки"
+          aria-label="Каталог и товары"
           className="rounded-2xl border border-white/6 bg-white/[0.015] px-4 py-4 sm:px-6"
         >
-          <p className="mb-2 text-xs uppercase tracking-wider text-[#8BA4BC]/80">
-            Быстрые ссылки
-          </p>
           <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
             <li>
               <Link

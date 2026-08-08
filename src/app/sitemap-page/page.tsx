@@ -27,11 +27,7 @@ export default function SitemapPage() {
           { label: "Карта сайта" },
         ]}
       />
-      <ContentPageShell
-        breadcrumbPage={"sitemapPage"}
-        title="Карта сайта"
-        subtitle="Все разделы, товары, города и статьи ELIZON — удобный список для поиска нужной страницы."
-      >
+      <ContentPageShell breadcrumbPage={"sitemapPage"} title="Карта сайта">
         <nav aria-label="Карта сайта" className="space-y-10">
           {groups.map((group) => (
             <section key={group.id} aria-labelledby={`sitemap-${group.id}`}>

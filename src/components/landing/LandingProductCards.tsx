@@ -62,8 +62,8 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
 
 export function LandingProductCards({
   productIds,
-  title = "Товары из каталога",
-  subtitle = "Актуальные позиции ELIZON — цена за катушку, характеристики и заказ в один клик.",
+  title = "Каталог",
+  subtitle,
 }: LandingProductCardsProps) {
   const products = productIds
     .map((id) => getProductById(id))
@@ -75,12 +75,9 @@ export function LandingProductCards({
     <section aria-labelledby="landing-products-heading">
       <ScrollReveal>
         <div className="mb-5 max-w-2xl">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#6ECFFF]/90">
-            Каталог
-          </p>
           <h2
             id="landing-products-heading"
-            className="mt-2 font-display text-xl font-medium text-white md:text-2xl"
+            className="font-display text-xl font-medium text-white md:text-2xl"
           >
             {title}
           </h2>

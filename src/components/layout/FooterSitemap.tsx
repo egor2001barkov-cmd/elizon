@@ -13,20 +13,12 @@ export function FooterSitemap() {
       className="mt-12 border-t border-white/8 pt-10 sm:mt-14 sm:pt-12"
     >
       <div className="mb-6 flex flex-col gap-2 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#6ECFFF]/90">
-            Навигация
-          </p>
-          <h3
-            id="footer-sitemap-heading"
-            className="mt-1 font-display text-lg font-medium text-white sm:text-xl"
-          >
-            Карта сайта
-          </h3>
-          <p className="mt-1 max-w-xl text-sm text-[#8BA4BC]">
-            Разделы сайта, товары и города поставки — чтобы быстрее найти нужное.
-          </p>
-        </div>
+        <h3
+          id="footer-sitemap-heading"
+          className="font-display text-lg font-medium text-white sm:text-xl"
+        >
+          Карта сайта
+        </h3>
         <Link
           href={ROUTES.sitemapPage}
           className="inline-flex min-h-[44px] items-center text-sm font-medium text-[#6ECFFF] hover:text-[#00D4FF] hover:underline"

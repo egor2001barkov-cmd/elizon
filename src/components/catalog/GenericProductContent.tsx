@@ -160,11 +160,7 @@ export function GenericProductContent({ product, breadcrumbs }: GenericProductCo
           <SeoInterlinks
             preset={productInterlinkPreset(product.id)}
             currentHref={getProductDetailHref(product)}
-            title={
-              product.id === "g657a1-242"
-                ? "Сравнить и выбрать волокно"
-                : "Похожие товары и разделы"
-            }
+            title="Каталог"
           />
         </div>
       </section>

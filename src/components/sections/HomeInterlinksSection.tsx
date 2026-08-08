@@ -45,10 +45,7 @@ export function HomeInterlinksSection() {
   return (
     <section className="py-12 sm:py-16" aria-labelledby="home-interlinks-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
-        <SectionHeading
-          title="Каталог и разделы"
-          subtitle="Выберите тип волокна, сферу применения или перейдите к доставке и контактам."
-        />
+        <SectionHeading title="Каталог" />
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {GROUPS.map((group, gi) => (

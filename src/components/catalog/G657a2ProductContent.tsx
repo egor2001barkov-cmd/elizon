@@ -267,7 +267,7 @@ export function G657a2ProductContent({ breadcrumbs }: G657a2ProductContentProps)
           <SeoInterlinks
             preset="product-a2"
             currentHref={getProductDetailHref(product)}
-            title="Сравнить и выбрать волокно"
+            title="Каталог"
           />
         </div>
       </section>
