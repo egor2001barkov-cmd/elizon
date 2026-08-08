@@ -210,7 +210,7 @@ export const PAGE_SEO: Record<PageKey, PageSeo> = {
   sitemapPage: {
     title: "Карта сайта",
     description:
-      "Полная навигация по elizon.ru: каталог, сферы, кейсы, блог, города, FAQ, доставка и юридические страницы.",
+      "Карта сайта ELIZON: каталог оптоволокна, города, сферы применения, блог, кейсы, доставка и контакты.",
     path: ROUTES.sitemapPage,
     keywords: [...DEFAULT_KEYWORDS, "карта сайта"],
     ogImage: DEFAULT_OG_IMAGE,

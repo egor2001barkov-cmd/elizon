@@ -8,9 +8,9 @@ import { ROUTES } from "@/lib/seo/routes";
 
 export const metadata: Metadata = {
   ...createPageMetadata("sitemapPage"),
-  title: "Карта сайта ELIZON — все разделы и товары",
+  title: "Карта сайта ELIZON",
   description:
-    "Карта сайта ELIZON: каталог оптоволокна, города, сферы применения, блог и кейсы. Найдите нужный раздел или товар.",
+    "Карта сайта ELIZON: каталог оптоволокна, города, сферы применения, блог, кейсы, доставка и контакты.",
   robots: { index: true, follow: true },
   alternates: { canonical: ROUTES.sitemapPage },
 };
@@ -65,11 +65,13 @@ export default function SitemapPage() {
         </nav>
 
         <p className="mt-12 text-sm text-[#8BA4BC]">
-          Не нашли нужное?{" "}
           <Link href={ROUTES.contacts} className="text-[#6ECFFF] hover:underline">
-            Напишите нам
-          </Link>{" "}
-          — подскажем тип волокна и посчитаем заказ.
+            Контакты
+          </Link>
+          {" · "}
+          <Link href={ROUTES.catalog} className="text-[#6ECFFF] hover:underline">
+            Каталог
+          </Link>
         </p>
       </ContentPageShell>
     </>
