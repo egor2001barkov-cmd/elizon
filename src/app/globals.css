@@ -20,7 +20,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
 }
@@ -91,48 +90,16 @@ body {
   }
 }
 
-/* Scroll reveals — never hide content permanently (SSR / no-JS / slow mobile) */
+/* Scroll reveals отключены по требованию владельца: контент показывается сразу,
+   без «подъёма» блоков при загрузке и переходах. Классы остаются как no-op. */
 .motion-reveal-lift,
 .motion-reveal-subtle,
-.motion-reveal-scale {
-  transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease,
-    box-shadow 0.45s ease;
-  will-change: transform, opacity;
-}
-
-.motion-reveal-lift {
-  opacity: 1;
-  transform: translate3d(0, 14px, 0);
-}
-.motion-reveal-lift.is-inview {
-  transform: translate3d(0, 0, 0);
-}
-
-.motion-reveal-subtle {
-  opacity: 1;
-  transform: translate3d(0, 8px, 0);
-}
-.motion-reveal-subtle.is-inview {
-  transform: translate3d(0, 0, 0);
-}
-
-.motion-reveal-scale {
-  opacity: 1;
-  transform: translate3d(0, 10px, 0) scale(0.98);
-}
+.motion-reveal-scale,
+.motion-reveal-lift.is-inview,
+.motion-reveal-subtle.is-inview,
 .motion-reveal-scale.is-inview {
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .motion-reveal-lift,
-  .motion-reveal-subtle,
-  .motion-reveal-scale {
-    transform: none !important;
-    transition: none !important;
-  }
+  transition: none;
+  transform: none;
 }
 
 /* Soft glow pulse on highlighted product card */
