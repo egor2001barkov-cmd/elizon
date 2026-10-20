@@ -31,6 +31,13 @@ export async function POST(request: Request) {
     }
 
     const token = createSessionToken(email.trim());
+    // null = production без ADMIN_SESSION_SECRET (fail-closed) — вход не выдаётся
+    if (!token) {
+      return NextResponse.json(
+        { error: "Вход временно недоступен: на сервере не задан ADMIN_SESSION_SECRET" },
+        { status: 503 }
+      );
+    }
     const res = NextResponse.json({ success: true });
     const cookie = sessionCookieOptions(token);
     res.cookies.set(cookie.name, cookie.value, {

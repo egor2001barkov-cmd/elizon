@@ -3,7 +3,10 @@ import { cookies } from "next/headers";
 
 /** Server-only. Plain password never appears in client bundles. */
 
-const COOKIE = "elz_adm";
+const isProd = process.env.NODE_ENV === "production";
+// __Host- prefix: cookie must be Secure, Path=/, no Domain — enforced by browsers,
+// blocks subdomain-tolerant delivery. Dev (http) keeps the plain name.
+const COOKIE = isProd ? "__Host-elz_adm" : "elz_adm";
 const MAX_AGE_SEC = 60 * 60 * 12; // 12h
 
 // Email allowed to sign in (override via env)
@@ -11,18 +14,30 @@ const ADMIN_EMAIL = (
   process.env.ADMIN_EMAIL || "support@elizon.ru"
 ).toLowerCase();
 
-// scrypt(password, salt) — password itself is NOT stored in source
-const PWD_SALT = "elizon-admin-salt-v1";
+// scrypt(password, salt) — password itself is NOT stored in source.
+// Salt and hash can be rotated via env without touching code.
+const PWD_SALT = process.env.ADMIN_PASSWORD_SALT || "elizon-admin-salt-v1";
 const PWD_HASH_B64 =
   process.env.ADMIN_PASSWORD_HASH ||
-  "+Ia0gBOmBPvN546VGIcvqGVPRohxsePrxVUaTaUGONzA8Zmh6q/l0+HFUxejxDaM/yLYudNIZCtDJiLXRrU5Lw==";
+  "+Ia0gBOmBPvN546VGIcvoGVPRohxsePrxVUaTaUGONzA8Zmh6q/l0+HFUxejxDaM/yLYudNIZCtDJiLXRrU5Lw==";
 
-function sessionSecret(): string {
-  return (
-    process.env.ADMIN_SESSION_SECRET ||
-    process.env.SMTP_PASS ||
-    "elizon-session-fallback-change-me-in-prod"
+const FALLBACK_SECRET = "elizon-session-fallback-change-me-in-prod";
+
+/**
+ * Session signing secret. In production we REFUSE to sign/verify sessions
+ * without a real secret: the fallback constant is public in the repo, and a
+ * public HMAC key lets anyone forge an admin cookie.
+ */
+function sessionSecret(): string | null {
+  const fromEnv = process.env.ADMIN_SESSION_SECRET?.trim();
+  if (fromEnv && fromEnv.length >= 32) return fromEnv;
+  const fromSmtp = process.env.SMTP_PASS?.trim();
+  if (fromSmtp && fromSmtp.length >= 16) return fromSmtp;
+  if (process.env.NODE_ENV !== "production") return FALLBACK_SECRET;
+  console.error(
+    "[ELIZON Admin] ADMIN_SESSION_SECRET не задан — вход в админку заблокирован. Сгенерируйте: openssl rand -hex 32"
   );
+  return null;
 }
 
 export function verifyCredentials(email: string, password: string): boolean {
@@ -40,17 +55,21 @@ export function verifyCredentials(email: string, password: string): boolean {
   }
 }
 
-function sign(payload: string): string {
-  return createHmac("sha256", sessionSecret()).update(payload).digest("base64url");
+function sign(payload: string): string | null {
+  const secret = sessionSecret();
+  if (!secret) return null;
+  return createHmac("sha256", secret).update(payload).digest("base64url");
 }
 
-export function createSessionToken(email: string): string {
+export function createSessionToken(email: string): string | null {
   const exp = Math.floor(Date.now() / 1000) + MAX_AGE_SEC;
   const nonce = randomBytes(8).toString("hex");
   // base64url email — cookie/encoding-safe, no "@" / "." issues
   const emailPart = Buffer.from(email.toLowerCase(), "utf8").toString("base64url");
   const body = `${emailPart}.${exp}.${nonce}`;
-  return `${body}.${sign(body)}`;
+  const sig = sign(body);
+  if (!sig) return null;
+  return `${body}.${sig}`;
 }
 
 export function parseSessionToken(
@@ -62,6 +81,7 @@ export function parseSessionToken(
   const [emailPart, expStr, nonce, sig] = parts;
   const body = `${emailPart}.${expStr}.${nonce}`;
   const expected = sign(body);
+  if (!expected) return null;
   try {
     const a = Buffer.from(sig);
     const b = Buffer.from(expected);
@@ -94,8 +114,8 @@ export function sessionCookieOptions(token: string) {
     name: COOKIE,
     value: token,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
+    secure: isProd,
+    sameSite: "strict" as const,
     path: "/",
     maxAge: MAX_AGE_SEC,
   };
@@ -106,8 +126,8 @@ export function clearSessionCookieOptions() {
     name: COOKIE,
     value: "",
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
+    secure: isProd,
+    sameSite: "strict" as const,
     path: "/",
     maxAge: 0,
   };

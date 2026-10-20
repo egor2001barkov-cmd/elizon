@@ -120,6 +120,14 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   verification: {
     yandex: "c289fa171baf66b2",
+    // Google Search Console / Bing Webmaster — появляются, когда значения вписаны
+    // в .env: NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION / NEXT_PUBLIC_BING_SITE_VERIFICATION
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : {}),
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+      : {}),
   },
   // geo-подсказки для локального SEO (не меняют title/description)
   other: {

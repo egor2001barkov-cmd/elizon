@@ -375,6 +375,11 @@ export function buildBlogArticleSchema(article: BlogArticle) {
     ...article.sections.flatMap((s) => [s.title, ...(s.paragraphs ?? [])]),
   ].join("\n\n");
 
+  // Даты для Article rich results: обновлённые статьи несут updatedAt,
+  // остальные вышли на запуске блога 2026-08-08.
+  const dateModified = article.updatedAt ?? "2026-08-08";
+  const datePublished = article.updatedAt ?? "2026-08-08";
+
   return {
     "@type": "Article",
     "@id": `${absoluteUrl(url)}#article`,
@@ -382,6 +387,8 @@ export function buildBlogArticleSchema(article: BlogArticle) {
     description: article.description,
     articleBody,
     url: absoluteUrl(url),
+    datePublished,
+    dateModified,
     author: { "@id": ORG_ID },
     publisher: {
       "@type": "Organization",
