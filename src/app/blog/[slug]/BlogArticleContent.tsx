@@ -49,7 +49,8 @@ export function BlogArticleContent({ article }: BlogArticleContentProps) {
         <ProseBlock
           key={section.title}
           title={section.title}
-          paragraphs={section.paragraphs}
+          paragraphs={section.paragraphs ?? []}
+          table={section.table}
           delay={i * 0.05}
         />
       ))}

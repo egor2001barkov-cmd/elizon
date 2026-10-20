@@ -372,7 +372,7 @@ export function buildBlogArticleSchema(article: BlogArticle) {
   const url = `/blog/${article.slug}`;
   const articleBody = [
     article.intro,
-    ...article.sections.flatMap((s) => [s.title, ...s.paragraphs]),
+    ...article.sections.flatMap((s) => [s.title, ...(s.paragraphs ?? [])]),
   ].join("\n\n");
 
   return {
