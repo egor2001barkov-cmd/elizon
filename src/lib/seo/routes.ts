@@ -69,15 +69,6 @@ export const SEO_LANDING_REDIRECTS = [
   { source: "/optovolokno-wifi", destination: "/optovolokno-internet" },
   { source: "/kabel-optovolokno-dlya-interneta", destination: "/optovolokno-internet" },
   { source: "/opticheskoe-volokno-kabel", destination: "/optovolokno-kabel" },
-  // города без заметного спроса — в каталог
-  { source: "/krasnoyarsk", destination: "/katalog" },
-  { source: "/voronezh", destination: "/katalog" },
-  { source: "/perm", destination: "/katalog" },
-  { source: "/ufa", destination: "/katalog" },
-  { source: "/volgograd", destination: "/katalog" },
-  { source: "/saratov", destination: "/katalog" },
-  { source: "/tyumen", destination: "/katalog" },
-  { source: "/barnaul", destination: "/katalog" },
 ] as const;
 
 /** Внутренние пути App Router (папки в app/). */
