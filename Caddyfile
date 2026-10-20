@@ -11,6 +11,14 @@ www.elizon.ru {
 
 elizon.ru {
 	encode gzip zstd
+
+	# Тяжёлая статика (спецификации) — мимо Docker-образа
+	handle /docs/* {
+		root * /var/www/elizon-static
+		header Cache-Control "public, max-age=86400"
+		file_server
+	}
+
 	reverse_proxy 127.0.0.1:3000
 	header {
 		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
