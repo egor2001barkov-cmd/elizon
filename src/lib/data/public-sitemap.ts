@@ -211,14 +211,12 @@ export function getFooterSitemapGroups(): PublicSitemapGroup[] {
           "optovolokno-internet",
           "optovolokno-kabel",
           "katushka-optovolokna",
-          "opticheskoe-volokno-g652",
-          "optovolokno-wifi",
-          "kabel-optovolokno-dlya-interneta",
-          "g657a1-kupit",
-          "g657a2-kupit",
           "cena-optovolokna",
           "kupit-optovolokno",
           "optovolokno-optom",
+          "postavshchik-optovolokna",
+          "optovolokno-dlya-fpv",
+          "opticheskij-tros",
         ];
         const byHref = new Map(g.links.map((l) => [l.href.replace(/^\//, ""), l]));
         const picked = priority

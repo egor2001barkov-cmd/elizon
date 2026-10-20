@@ -68,14 +68,14 @@ export function FooterSitemap() {
         <Link href="/katushka-optovolokna" className="hover:text-[#6ECFFF]">
           катушка оптоволокна
         </Link>
-        <Link href="/opticheskoe-volokno-g652" className="hover:text-[#6ECFFF]">
-          волокно G.652
+        <Link href="/optovolokno/g652/g652d" className="hover:text-[#6ECFFF]">
+          волокно G.652.D
         </Link>
-        <Link href="/g657a1-kupit" className="hover:text-[#6ECFFF]">
-          G.657.A1 купить
+        <Link href="/kupit-optovolokno" className="hover:text-[#6ECFFF]">
+          купить оптоволокно
         </Link>
-        <Link href="/g657a2-kupit" className="hover:text-[#6ECFFF]">
-          G.657.A2 купить
+        <Link href="/cena-optovolokna" className="hover:text-[#6ECFFF]">
+          цена оптоволокна
         </Link>
         <Link href="/optovolokno/g657/g657a1" className="hover:text-[#6ECFFF]">
           G.657.A1 120 000 ₽

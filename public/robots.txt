@@ -1,0 +1,102 @@
+User-Agent: *
+Allow: /
+Disallow: /korzina
+Disallow: /korzina/
+Disallow: /korzina/oplata
+Disallow: /api/
+Disallow: /api/*
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /data/
+Disallow: /data/*
+Disallow: /.env
+Disallow: /.git
+Disallow: /package.json
+Disallow: /node_modules/
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /korzina
+Disallow: /korzina/
+Disallow: /korzina/oplata
+Disallow: /api/
+Disallow: /api/*
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /data/
+Disallow: /data/*
+Disallow: /.env
+Disallow: /.git
+Disallow: /package.json
+Disallow: /node_modules/
+
+User-Agent: Googlebot-Image
+Allow: /
+Allow: /images/
+Disallow: /korzina
+Disallow: /korzina/
+Disallow: /korzina/oplata
+Disallow: /api/
+Disallow: /api/*
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /data/
+Disallow: /data/*
+Disallow: /.env
+Disallow: /.git
+Disallow: /package.json
+Disallow: /node_modules/
+
+User-Agent: Yandex
+Allow: /
+Disallow: /korzina
+Disallow: /korzina/
+Disallow: /korzina/oplata
+Disallow: /api/
+Disallow: /api/*
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /data/
+Disallow: /data/*
+Disallow: /.env
+Disallow: /.git
+Disallow: /package.json
+Disallow: /node_modules/
+
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&_openstat&yclid&gclid&from&yansearch&utm_referrer /
+
+User-Agent: YandexImages
+Allow: /
+Allow: /images/
+Disallow: /korzina
+Disallow: /korzina/
+Disallow: /korzina/oplata
+Disallow: /api/
+Disallow: /api/*
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /data/
+Disallow: /data/*
+Disallow: /.env
+Disallow: /.git
+Disallow: /package.json
+Disallow: /node_modules/
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: YandexGPT
+Allow: /
+
+Sitemap: https://elizon.ru/sitemap.xml

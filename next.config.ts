@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import {
   APPLICATION_LEGACY_REDIRECTS,
   ROUTES,
+  SEO_LANDING_REDIRECTS,
   SEO_ROUTE_REDIRECTS,
   SEO_ROUTE_REWRITES,
 } from "./src/lib/seo/routes";
@@ -24,6 +25,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...SEO_ROUTE_REDIRECTS,
+      ...SEO_LANDING_REDIRECTS.map((r) => ({
+        source: r.source,
+        destination: r.destination,
+        permanent: true,
+      })),
       ...APPLICATION_LEGACY_REDIRECTS.map((r) => ({
         source: r.source,
         destination: r.destination,

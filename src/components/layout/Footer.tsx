@@ -196,8 +196,8 @@ export function Footer() {
               </li>
               <li>От 120 000 ₽ / 50 км</li>
               <li className="pt-1">
-                <Link href="/g657a1-kupit" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
-                  G.657.A1 купить
+                <Link href="/kupit-optovolokno" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
+                  Купить оптоволокно
                 </Link>
               </li>
             </ul>
@@ -244,7 +244,8 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 text-sm text-[#8BA4BC] md:flex-row">
           <p>
-            © {new Date().getFullYear()} ELIZON. Все права защищены.
+            © {new Date().getFullYear()} ELIZON · {COMPANY.legalName}
+            {COMPANY.inn ? ` · ИНН ${COMPANY.inn}` : ""}. Все права защищены.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             {FOOTER_LINKS.legal.map((link) => (

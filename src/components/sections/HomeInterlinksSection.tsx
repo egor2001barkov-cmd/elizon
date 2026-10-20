@@ -24,8 +24,8 @@ const GROUPS = [
       { href: "/optovolokno-internet", label: "Для интернет-сетей" },
       { href: "/optovolokno-kabel", label: "Волокно и кабель" },
       { href: "/katushka-optovolokna", label: "Катушка 50 км" },
-      { href: "/opticheskoe-volokno-g652", label: "Волокно G.652" },
-      { href: "/g657a1-kupit", label: "G.657.A1 — от 120 000 ₽" },
+      { href: "/optovolokno-dlya-fpv", label: "Для FPV и БПЛА" },
+      { href: "/cena-optovolokna", label: "Цена оптоволокна" },
     ],
   },
   {

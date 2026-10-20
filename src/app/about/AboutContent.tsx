@@ -110,10 +110,10 @@ export function AboutContent() {
               `${COMPANY.legalName}.`,
               COMPANY.inn
                 ? `ИНН ${COMPANY.inn}${COMPANY.ogrnip ? `, ОГРНИП ${COMPANY.ogrnip}` : ""}.`
-                : "ИНН и ОГРНИП указываем в счёте и по запросу (или задайте NEXT_PUBLIC_COMPANY_INN / OGRNIP в env).",
-              COMPANY.yandexMaps.url
-                ? `Карточка в Яндекс.Бизнес: ${COMPANY.yandexMaps.url}`
-                : "Карточку Яндекс.Бизнес подключим по ссылке организации — задайте NEXT_PUBLIC_YANDEX_BUSINESS_URL.",
+                : "Полные реквизиты (ИНН и ОГРНИП) указываем в счёте и договоре — запросите у менеджера: support@elizon.ru или по телефону на сайте.",
+              ...(COMPANY.yandexMaps.url
+                ? [`Карточка в Яндекс Картах: ${COMPANY.yandexMaps.url}`]
+                : []),
             ]}
           />
         </div>

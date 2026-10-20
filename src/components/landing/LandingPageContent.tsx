@@ -251,18 +251,19 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
               </Link>
             </li>
             <li>
-              <Link href="/g657a1-kupit" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
-                G.657.A1 купить
+              <Link
+                href={catalogItemPath("optovolokno", "g657", "g657a1")}
+                className="text-[#8BA4BC] hover:text-[#6ECFFF]"
+              >
+                G.657.A1 — 120 000 ₽/50 км
               </Link>
             </li>
             <li>
-              <Link href="/optovolokno-g657a1" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
-                оптоволокно G.657.A1
-              </Link>
-            </li>
-            <li>
-              <Link href="/g657a2-kupit" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
-                G.657.A2 купить
+              <Link
+                href={catalogItemPath("optovolokno", "g652", "g652d")}
+                className="text-[#8BA4BC] hover:text-[#6ECFFF]"
+              >
+                G.652.D — 120 000 ₽/50 км
               </Link>
             </li>
             <li>
@@ -286,8 +287,11 @@ export function LandingPageContent({ landing, breadcrumbs }: LandingPageContentP
               </Link>
             </li>
             <li>
-              <Link href="/opticheskoe-volokno-g652" className="text-[#8BA4BC] hover:text-[#6ECFFF]">
-                оптическое волокно G.652
+              <Link
+                href={catalogItemPath("optovolokno", "g652", "g652d")}
+                className="text-[#8BA4BC] hover:text-[#6ECFFF]"
+              >
+                оптическое волокно G.652.D
               </Link>
             </li>
             <li>

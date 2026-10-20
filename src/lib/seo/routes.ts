@@ -47,6 +47,39 @@ export const APPLICATION_LEGACY_REDIRECTS = [
   { source: "/privasi", destination: "/politika" },
 ] as const;
 
+/**
+ * SEO-склейка 20.10.2026: один интент — одна страница.
+ * Парные коммерческие лендинги уводим 301 на карточки товаров/каталог,
+ * города без заметного спроса — на каталог.
+ */
+export const SEO_LANDING_REDIRECTS = [
+  // «купить G.657.A2 / G.657.A1 / G.652.D» — карточка товара каноническая
+  { source: "/g657a2-kupit", destination: "/optovolokno/g657/g657a2" },
+  { source: "/optovolokno-g657a2", destination: "/optovolokno/g657/g657a2" },
+  { source: "/g657a1-kupit", destination: "/optovolokno/g657/g657a1" },
+  { source: "/optovolokno-g657a1", destination: "/optovolokno/g657/g657a1" },
+  { source: "/optovolokno-g652d", destination: "/optovolokno/g652/g652d" },
+  { source: "/opticheskoe-volokno-g652", destination: "/optovolokno/g652" },
+  // синонимы общего интента «купить оптоволокно»
+  { source: "/volokno-opticheskoe-kupit", destination: "/kupit-optovolokno" },
+  { source: "/optovolokno-pod-zakaz", destination: "/kupit-optovolokno" },
+  // «катушка оптоволокна»: один лендинг вместо двух
+  { source: "/katushka-optovolokna-50-km", destination: "/katushka-optovolokna" },
+  // интернет/wi-fi/кабель — сводим к двум сильным страницам
+  { source: "/optovolokno-wifi", destination: "/optovolokno-internet" },
+  { source: "/kabel-optovolokno-dlya-interneta", destination: "/optovolokno-internet" },
+  { source: "/opticheskoe-volokno-kabel", destination: "/optovolokno-kabel" },
+  // города без заметного спроса — в каталог
+  { source: "/krasnoyarsk", destination: "/katalog" },
+  { source: "/voronezh", destination: "/katalog" },
+  { source: "/perm", destination: "/katalog" },
+  { source: "/ufa", destination: "/katalog" },
+  { source: "/volgograd", destination: "/katalog" },
+  { source: "/saratov", destination: "/katalog" },
+  { source: "/tyumen", destination: "/katalog" },
+  { source: "/barnaul", destination: "/katalog" },
+] as const;
+
 /** Внутренние пути App Router (папки в app/). */
 export const INTERNAL_ROUTES = {
   catalog: "/catalog",

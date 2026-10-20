@@ -82,8 +82,8 @@ export function BlogArticleContent({ article }: BlogArticleContentProps) {
           G.657.A2 в каталоге
         </Link>
         {" · "}
-        <Link href="/g657a1-kupit" className="text-[#6ECFFF] hover:underline">
-          G.657.A1 купить
+        <Link href="/cena-optovolokna" className="text-[#6ECFFF] hover:underline">
+          Цена оптоволокна
         </Link>
         {" · "}
         <Link href="/faq" className="text-[#6ECFFF] hover:underline">

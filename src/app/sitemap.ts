@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllBlogSlugs } from "@/lib/data/blog";
+import { blogArticles, getAllBlogSlugs } from "@/lib/data/blog";
 import {
   getAllCategorySlugs,
   getAllProductParams,
@@ -20,6 +20,11 @@ import { applicationPath, ROUTES } from "@/lib/seo/routes";
 import { getProductPhotos } from "@/lib/data/product-images";
 
 const BASE = "https://elizon.ru";
+
+/** Дата последнего контентного обновления сайта (честный lastmod, не дата сборки). */
+const SITE_UPDATED = "2026-10-20";
+/** Прошлое массовое обновление контента — для страниц, не менявшихся с тех пор. */
+const PREVIOUS_UPDATE = "2026-08-08";
 
 const KEYWORD_LANDING_SLUGS = new Set(keywordLandingSlugs);
 const APPLICATION_ROUTES = new Set(applicationLandingSlugs.map((s) => applicationPath(s)));
@@ -45,30 +50,46 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     catalogItemPath(category, subcategory, product)
   );
 
-  // Корзина и оплата — noindex, в sitemap не включаем
+  // Корзина и оплата — noindex, в sitemap не включаем.
+  // Дедуп: один и тот же путь не должен попадать в карту дважды.
   const routes = [
-    "",
-    ROUTES.catalog,
-    ...categoryRoutes,
-    ...subcategoryRoutes,
-    ...productRoutes,
-    ROUTES.applications,
-    ...applicationRoutes,
-    ROUTES.about,
-    ROUTES.whyUs,
-    ROUTES.advantages,
-    ROUTES.services,
-    ROUTES.delivery,
-    ROUTES.faq,
-    ROUTES.blog,
-    ROUTES.contacts,
-    ROUTES.offer,
-    ROUTES.privacy,
-    ROUTES.sitemapPage,
-    ...caseRoutes,
-    ...blogRoutes,
-    ...landingRoutes,
+    ...new Set([
+      "",
+      ROUTES.catalog,
+      ...categoryRoutes,
+      ...subcategoryRoutes,
+      ...productRoutes,
+      ROUTES.applications,
+      ...applicationRoutes,
+      ROUTES.about,
+      ROUTES.whyUs,
+      ROUTES.advantages,
+      ROUTES.services,
+      ROUTES.delivery,
+      ROUTES.faq,
+      ROUTES.blog,
+      ROUTES.contacts,
+      ROUTES.offer,
+      ROUTES.privacy,
+      ROUTES.sitemapPage,
+      ...caseRoutes,
+      ...blogRoutes,
+      ...landingRoutes,
+    ]),
   ];
+
+  // Честный lastmod: расширенные статьи блога несут свою дату, лендинги обновлены в SITE_UPDATED.
+  const blogUpdated = new Map<string, string>();
+  for (const a of blogArticles) {
+    if (a.updatedAt) blogUpdated.set(`/blog/${a.slug}`, a.updatedAt);
+  }
+  const lastModifiedFor = (route: string): string => {
+    if (route.startsWith("/blog/")) return blogUpdated.get(route) ?? PREVIOUS_UPDATE;
+    if (route.startsWith("/cases/")) return PREVIOUS_UPDATE;
+    if (landingRoutes.includes(route) || applicationRoutes.includes(route)) return SITE_UPDATED;
+    if (route === "") return SITE_UPDATED;
+    return PREVIOUS_UPDATE;
+  };
 
   const productImageMap = new Map<string, string[]>();
   for (const product of catalogProducts) {
@@ -95,7 +116,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return routes.map((route) => {
     const entry: MetadataRoute.Sitemap[number] = {
       url: `${BASE}${route}`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor(route),
       changeFrequency:
         route === ""
           ? "weekly"

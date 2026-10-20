@@ -90,7 +90,7 @@ export function HeroSection() {
           </h1>
 
           <p className="mt-4 max-w-lg text-base leading-relaxed text-[#8BA4BC] sm:mt-5 sm:text-lg">
-            Катушки 50 км под заказ, срок {LEAD_TIME_LABEL}. G.657.A2 от 150 000 ₽, G.657.A1 от
+            Катушки 50 км под заказ, срок {LEAD_TIME_LABEL} G.657.A2 от 150 000 ₽, G.657.A1 от
             120 000 ₽. Для магистралей, доступа и городских сетей.
           </p>
 

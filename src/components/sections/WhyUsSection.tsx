@@ -17,17 +17,6 @@ export function WhyUsSection() {
             <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#8BA4BC] sm:mt-4 sm:text-base md:text-lg">
               {whyWeAreBest.intro}
             </p>
-            <ul className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-              {whyWeAreBest.reasons.map((r) => (
-                <li
-                  key={r.title}
-                  className="rounded-xl border border-white/8 bg-white/[0.03] p-3.5 sm:p-4"
-                >
-                  <p className="font-medium text-[#6ECFFF]">{r.title}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-[#8BA4BC]">{r.text}</p>
-                </li>
-              ))}
-            </ul>
           </div>
         </ScrollReveal>
 
