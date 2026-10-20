@@ -4,6 +4,21 @@ export function getContactInboxEmail(): string {
   return process.env.CONTACT_EMAIL?.trim() || COMPANY.email;
 }
 
+/**
+ * Дубли заявок на личную почту владельца.
+ * По умолчанию — egor.freeman@yandex.ru; переопределяется LEADS_CC_EMAIL
+ * (несколько адресов через запятую). Пустое значение отключает дубли.
+ */
+export function getLeadsCcEmails(): string {
+  const raw = process.env.LEADS_CC_EMAIL;
+  if (raw === undefined) return "egor.freeman@yandex.ru";
+  return raw
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean)
+    .join(", ");
+}
+
 export interface SendMailOptions {
   subject: string;
   text: string;
@@ -16,6 +31,7 @@ export async function sendContactEmail({
   replyTo,
 }: SendMailOptions): Promise<boolean> {
   const to = getContactInboxEmail();
+  const cc = getLeadsCcEmails();
   const host = process.env.SMTP_HOST;
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
@@ -42,6 +58,7 @@ export async function sendContactEmail({
     await transporter.sendMail({
       from: process.env.SMTP_FROM?.trim() || `"ELIZON" <${user}>`,
       to,
+      ...(cc ? { cc } : {}),
       replyTo: replyTo?.trim() || undefined,
       subject,
       text,
