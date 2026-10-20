@@ -8,6 +8,7 @@ import {
   getProductsForSubcategory,
 } from "@/lib/data/catalog-tree";
 import { CatalogSectionLayout } from "@/components/catalog/CatalogSectionLayout";
+import { CatalogExtraContent } from "@/components/catalog/CatalogExtraContent";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
@@ -42,6 +43,8 @@ export function SubcategoryContent({ category, subcategory }: SubcategoryContent
           </ScrollReveal>
         ))}
       </div>
+
+      <CatalogExtraContent category={category} subcategory={subcategory} />
     </CatalogSectionLayout>
   );
 }

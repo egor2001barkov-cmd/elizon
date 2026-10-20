@@ -3,6 +3,7 @@
 import type { CatalogCategoryNode } from "@/lib/data/catalog-tree";
 import { buildCatalogBreadcrumbs } from "@/lib/data/catalog-tree";
 import { CatalogSectionLayout } from "@/components/catalog/CatalogSectionLayout";
+import { CatalogExtraContent } from "@/components/catalog/CatalogExtraContent";
 import { SubcategoryCards } from "@/components/catalog/SubcategoryCards";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { RelatedCases } from "@/components/catalog/RelatedCases";
@@ -75,6 +76,7 @@ export function CategoryContent({ category, cases }: CategoryContentProps) {
           cases={cases}
         />
       ) : null}
+          <CatalogExtraContent category={category} />
     </CatalogSectionLayout>
   );
 }
