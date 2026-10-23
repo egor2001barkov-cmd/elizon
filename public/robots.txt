@@ -100,3 +100,5 @@ User-Agent: YandexGPT
 Allow: /
 
 Sitemap: https://elizon.ru/sitemap.xml
+# YML-фид товаров (Яндекс-товары / Маркет)
+# https://elizon.ru/yml.xml

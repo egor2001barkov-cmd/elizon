@@ -43,7 +43,7 @@ docker compose up -d --build
 Caddy (HTTPS):
 
 ```bash
-sudo cp Caddyfile /etc/caddy/Caddyfile
+sudo cp Caddyfile /etc/caddy/sites/elizon.caddy  # НЕ в /etc/caddy/Caddyfile — там импорты всех сайтов (главный под chattr +i), инцидент 19.10.2026
 sudo systemctl enable --now caddy
 sudo systemctl reload caddy
 ```

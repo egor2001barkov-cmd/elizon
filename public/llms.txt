@@ -15,6 +15,7 @@
 - FAQ: https://elizon.ru/faq
 - Карта сайта: https://elizon.ru/karta-sajta
 - Sitemap XML: https://elizon.ru/sitemap.xml
+- YML-фид товаров: https://elizon.ru/yml.xml
 
 ## Контакты
 - Телефон: +7 (926) 449-41-04
