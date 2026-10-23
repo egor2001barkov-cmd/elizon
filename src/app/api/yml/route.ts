@@ -2,6 +2,7 @@ import { catalogProducts, type Product } from "@/lib/data/products";
 import { getProductCatalogPath } from "@/lib/data/catalog-tree";
 import { SITE_NAME } from "@/lib/seo/metadata";
 
+// Отдаётся по каноническому URL /yml.xml через rewrite из next.config.
 export const dynamic = "force-static";
 export const revalidate = 86400;
 

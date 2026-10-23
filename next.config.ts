@@ -20,7 +20,11 @@ const nextConfig: NextConfig = {
     unoptimized: process.env.NEXT_IMAGE_UNOPTIMIZED === "1",
   },
   async rewrites() {
-    return [...SEO_ROUTE_REWRITES];
+    return [
+      ...SEO_ROUTE_REWRITES,
+      // YML-фид товаров: канонический URL с расширением .xml
+      { source: "/yml.xml", destination: "/api/yml" },
+    ];
   },
   async redirects() {
     return [
