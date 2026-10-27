@@ -103,8 +103,18 @@ export function middleware(request: NextRequest) {
   if (!fromOwnRewrite) {
     const publicPath = toPublicPath(pathname);
     if (publicPath !== pathname) {
-      const url = request.nextUrl.clone();
-      url.pathname = publicPath;
+      // Абсолютный URL из заголовков прокси: request.url за Caddy строится
+      // как https://<host апстрима>:<порт>, такой Location увёл бы браузер
+      // на localhost.
+      const proto = (request.headers.get("x-forwarded-proto") || "https").split(",")[0].trim();
+      const host = (
+        request.headers.get("x-forwarded-host") ||
+        request.headers.get("host") ||
+        "elizon.ru"
+      )
+        .split(",")[0]
+        .trim();
+      const url = new URL(`${proto}://${host}${publicPath}${request.nextUrl.search}`);
       const response = NextResponse.redirect(url, 308);
       applySecurityHeaders(response, request);
       return response;
@@ -113,7 +123,11 @@ export function middleware(request: NextRequest) {
 
   const catalogInternalPath = resolveCatalogInternalPath(pathname);
   if (catalogInternalPath && catalogInternalPath !== pathname) {
+    // Аналогично: rewrite-URL с https-схемой Next считает внешним адресом и
+    // ходит туда прокси (EPROTO на https→http). Принудительно http — тогда это
+    // внутренний переход на тот же сервер.
     const url = request.nextUrl.clone();
+    url.protocol = "http:";
     url.pathname = catalogInternalPath;
     const headers = new Headers(request.headers);
     headers.set("x-elizon-internal", "1");
