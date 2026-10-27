@@ -277,7 +277,7 @@ export function CartContent() {
                       <input
                         id="order-email"
                         type="email"
-                        placeholder="mail@company.ru"
+                        placeholder="ivan@company.ru"
                         value={form.email}
                         onChange={(e) => updateField("email", e.target.value)}
                         className={inputClass}

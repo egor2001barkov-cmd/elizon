@@ -68,7 +68,7 @@ export function FeaturedProductSection() {
 
               <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
                 <Button href={`${ROUTES.contacts}#form`} className="w-full sm:w-auto">
-                  Купить сейчас
+                  Запросить счёт
                 </Button>
                 <Button
                   href={getProductDetailHref(product)}

@@ -100,8 +100,11 @@ export function PaymentForm({ session, onPaidOffline }: PaymentFormProps) {
 
         {status === "pending" ? (
           <div className="space-y-4 text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/15 text-2xl text-amber-400">
-              ⏳
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/15 text-amber-400">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
             </div>
             <p className="text-white">Заказ принят</p>
             <p className="text-sm text-[#8BA4BC]">{errorMsg}</p>

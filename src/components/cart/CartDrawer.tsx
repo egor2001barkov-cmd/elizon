@@ -47,7 +47,12 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {items.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <p className="text-4xl opacity-30">🛒</p>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#8BA4BC] opacity-30" aria-hidden>
+                <path d="M6 6h15l-1.5 9H8L6 6z" />
+                <path d="M6 6L5 3H2" />
+                <circle cx="9" cy="20" r="1.5" fill="currentColor" stroke="none" />
+                <circle cx="18" cy="20" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
               <p className="mt-4 text-[#8BA4BC]">Корзина пуста</p>
               <Button
                 href={ROUTES.catalog}

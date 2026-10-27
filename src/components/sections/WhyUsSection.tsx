@@ -1,6 +1,5 @@
 "use client";
 
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { whyUsCards, whyWeAreBest } from "@/lib/data/applications";
@@ -12,18 +11,13 @@ export function WhyUsSection() {
         <ScrollReveal>
           <div className="mb-10 rounded-2xl border border-[#6ECFFF]/15 bg-gradient-to-br from-[#6ECFFF]/8 to-transparent p-5 sm:mb-14 sm:p-8 md:mb-16 md:p-10">
             <h2 className="font-display text-xl font-medium text-white sm:text-2xl md:text-3xl lg:text-4xl">
-              {whyWeAreBest.headline}
+              Почему клиенты выбирают нас
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#8BA4BC] sm:mt-4 sm:text-base md:text-lg">
               {whyWeAreBest.intro}
             </p>
           </div>
         </ScrollReveal>
-
-        <SectionHeading
-          title="Почему клиенты выбирают нас"
-          subtitle="Коротко — пять вещей, которые отличают нас от перекупщиков и «поставщиков по запросу»."
-        />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {whyUsCards.map((card, i) => (

@@ -133,7 +133,12 @@ export function ProductPhotoSlider({
           </div>
 
           <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-[#071e33]/80 text-white/90 transition-colors group-hover:border-[#6ECFFF]/40 group-hover:text-[#6ECFFF]">
-            ⛶
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+              <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+              <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+              <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+            </svg>
           </span>
           <p className="pointer-events-none absolute bottom-3 left-3 right-14 truncate text-left text-xs text-white/90 sm:text-sm">
             {current.caption || current.alt}

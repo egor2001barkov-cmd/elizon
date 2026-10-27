@@ -126,7 +126,7 @@ export function ContactForm({ id = "form", compact = false }: ContactFormProps) 
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             className={inputClass}
-            placeholder="email@company.ru"
+            placeholder="ivan@company.ru"
           />
         </div>
         <div>
