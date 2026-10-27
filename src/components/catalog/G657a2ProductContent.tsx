@@ -10,6 +10,8 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { ProseBlock } from "@/components/content/ProseBlock";
+import { productSeoContent } from "@/lib/data/product-seo-content";
 import { CatalogTreeNav } from "@/components/catalog/CatalogTreeNav";
 import type { BreadcrumbItem } from "@/components/layout/Breadcrumbs";
 import { PageBreadcrumbs } from "@/components/layout/PageBreadcrumbs";
@@ -261,6 +263,14 @@ export function G657a2ProductContent({ breadcrumbs }: G657a2ProductContentProps)
           </div>
         </div>
       </section>
+
+      {productSeoContent[product.id]?.map((section, i) => (
+        <section key={section.title} className={i === 0 ? "pb-4" : "pb-4"}>
+          <div className="mx-auto max-w-4xl px-5 md:px-8">
+            <ProseBlock title={section.title} paragraphs={section.paragraphs} delay={i * 0.03} />
+          </div>
+        </section>
+      ))}
 
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
