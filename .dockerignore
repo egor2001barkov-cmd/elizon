@@ -1,0 +1,15 @@
+# В образ не попадает: экономия места на диске VPS при сборке
+.git
+.gitignore
+.next
+node_modules
+npm-debug.log*
+*.md
+mobile-home.png
+docker-compose.yml
+Dockerfile
+.dockerignore
+.env*
+!.env.example
+scripts/
+kaywoon-audit/
