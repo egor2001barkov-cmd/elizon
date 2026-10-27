@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { resolveCatalogInternalPath } from "@/lib/seo/catalog-routes";
+import { toPublicPath } from "@/lib/seo/routes";
 import { isBlockedPath } from "@/lib/security/blocked-paths";
 import { LIMITS } from "@/lib/security/constants";
 import { getClientIp } from "@/lib/security/get-client-ip";
@@ -93,11 +94,30 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Канонизация прямых заходов на внутренние пути App Router (/catalog,
+  // /about, /catalog/cart/…) → публичный URL. Раньше жили в next.config
+  // redirects, но те срабатывают повторно после rewrite ниже и закольцовывали
+  // /katalog, /korzina и категории каталога. Маркер отличает наш собственный
+  // rewrite (внутренний путь) от прямого захода клиента.
+  const fromOwnRewrite = request.headers.get("x-elizon-internal") === "1";
+  if (!fromOwnRewrite) {
+    const publicPath = toPublicPath(pathname);
+    if (publicPath !== pathname) {
+      const url = request.nextUrl.clone();
+      url.pathname = publicPath;
+      const response = NextResponse.redirect(url, 308);
+      applySecurityHeaders(response, request);
+      return response;
+    }
+  }
+
   const catalogInternalPath = resolveCatalogInternalPath(pathname);
   if (catalogInternalPath && catalogInternalPath !== pathname) {
     const url = request.nextUrl.clone();
     url.pathname = catalogInternalPath;
-    const response = NextResponse.rewrite(url);
+    const headers = new Headers(request.headers);
+    headers.set("x-elizon-internal", "1");
+    const response = NextResponse.rewrite(url, { request: { headers } });
     applySecurityHeaders(response, request);
     return response;
   }

@@ -178,25 +178,12 @@ export const SEO_ROUTE_REWRITES = [
   { source: ROUTES.sitemapPage, destination: INTERNAL_ROUTES.sitemapPage },
 ] as const;
 
+/**
+ * Внутренние пути НЕ канонизируются здесь: редиректы конфига срабатывают
+ * повторно после middleware-rewrite (публичный → внутренний) и закольцовывают
+ * запрос. Канонизация прямых заходов на внутренние пути — в middleware.ts
+ * через toPublicPath(). Здесь только публичные → публичные.
+ */
 export const SEO_ROUTE_REDIRECTS = [
-  { source: INTERNAL_ROUTES.payment, destination: ROUTES.payment, permanent: true },
-  { source: INTERNAL_ROUTES.cart, destination: ROUTES.cart, permanent: true },
-  { source: INTERNAL_ROUTES.catalog, destination: ROUTES.catalog, permanent: true },
-  { source: `${INTERNAL_ROUTES.catalog}/:path+`, destination: "/:path+", permanent: true },
   { source: `${ROUTES.catalog}/:path+`, destination: "/:path+", permanent: true },
-  {
-    source: `${INTERNAL_ROUTES.applications}/:sphere`,
-    destination: `${ROUTES.applications}/:sphere`,
-    permanent: true,
-  },
-  { source: INTERNAL_ROUTES.applications, destination: ROUTES.applications, permanent: true },
-  { source: INTERNAL_ROUTES.about, destination: ROUTES.about, permanent: true },
-  { source: INTERNAL_ROUTES.contacts, destination: ROUTES.contacts, permanent: true },
-  { source: INTERNAL_ROUTES.whyUs, destination: ROUTES.whyUs, permanent: true },
-  { source: INTERNAL_ROUTES.advantages, destination: ROUTES.advantages, permanent: true },
-  { source: INTERNAL_ROUTES.services, destination: ROUTES.services, permanent: true },
-  { source: INTERNAL_ROUTES.delivery, destination: ROUTES.delivery, permanent: true },
-  { source: INTERNAL_ROUTES.offer, destination: ROUTES.offer, permanent: true },
-  { source: INTERNAL_ROUTES.privacy, destination: ROUTES.privacy, permanent: true },
-  { source: INTERNAL_ROUTES.sitemapPage, destination: ROUTES.sitemapPage, permanent: true },
 ] as const;
