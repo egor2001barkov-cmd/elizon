@@ -10,6 +10,11 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ProseBlock } from "@/components/content/ProseBlock";
+import {
+  productSeoContent,
+  getCylinderSeoSections,
+} from "@/lib/data/product-seo-content";
 import { useCart, productToCartItem } from "@/context/CartContext";
 import { ROUTES } from "@/lib/seo/routes";
 import {
@@ -39,6 +44,9 @@ export function GenericProductContent({ product, breadcrumbs }: GenericProductCo
   const { addItem } = useCart();
 
   const priceOnRequest = isPriceOnRequest(product);
+
+  const seoSections =
+    productSeoContent[product.id] ?? getCylinderSeoSections(product.id);
 
   const handleAdd = () => {
     if (product.id === "custom-length") {
@@ -154,6 +162,16 @@ export function GenericProductContent({ product, breadcrumbs }: GenericProductCo
           </ScrollReveal>
         </div>
       </section>
+
+      {seoSections.length > 0 && (
+        <section className="pb-4 sm:pb-8">
+          <div className="mx-auto max-w-4xl space-y-8 px-5 md:px-8">
+            {seoSections.map((section, i) => (
+              <ProseBlock key={section.title} title={section.title} paragraphs={section.paragraphs} delay={i * 0.03} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8">
