@@ -69,6 +69,13 @@ export const SEO_LANDING_REDIRECTS = [
   { source: "/optovolokno-wifi", destination: "/optovolokno-internet" },
   { source: "/kabel-optovolokno-dlya-interneta", destination: "/optovolokno-internet" },
   { source: "/opticheskoe-volokno-kabel", destination: "/optovolokno-kabel" },
+  // каннибализация 27.10: тонкие старые статьи склеены с сильными страницами
+  { source: "/blog/optovolokno-pod-zakaz", destination: "/kupit-optovolokno" },
+  { source: "/blog/optovolokno-moskva", destination: "/moscow" },
+  { source: "/blog/optovolokno-spb", destination: "/spb" },
+  { source: "/blog/optovolokno-regiony", destination: "/dostavka" },
+  { source: "/blog/optovolokno-datacenter", destination: "/blog/optovolokno-dlya-tcod" },
+  { source: "/blog/svarka-g657a2-s-g652d", destination: "/blog/svarka-g657a2" },
 ] as const;
 
 /** Внутренние пути App Router (папки в app/). */
