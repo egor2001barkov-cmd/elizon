@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { NavigationMode } from "@/components/NavigationMode";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { OrganizationJsonLd } from "@/components/seo/JsonLd";
@@ -153,6 +154,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col antialiased bg-[#071e33] text-white"
         style={{ backgroundColor: "#071e33", color: "#ffffff", margin: 0 }}
       >
+        <NavigationMode />
         <CartProvider>
           <BackgroundGlow />
           <OrganizationJsonLd />
