@@ -2,7 +2,6 @@
 
 import type { BreadcrumbItem } from "@/components/layout/Breadcrumbs";
 import { GenericProductContent } from "@/components/catalog/GenericProductContent";
-import { G657a2ProductContent } from "@/components/catalog/G657a2ProductContent";
 import type { CatalogCategoryNode, CatalogSubcategoryNode } from "@/lib/data/catalog-tree";
 import type { Product } from "@/lib/data/products";
 
@@ -16,9 +15,9 @@ interface ProductPageContentProps {
 }
 
 export function ProductPageContent({ resolved, breadcrumbs }: ProductPageContentProps) {
-  if (resolved.product.id === "g657a2-242") {
-    return <G657a2ProductContent breadcrumbs={breadcrumbs} />;
-  }
-
+  // Все товары — единый рендер: страница отдаётся из статического пререндера
+  // байт-в-байт, SEO-описания присутствуют в исходном HTML. Спец-рендер
+  // флагмана с 3D-сценой (ssr: false) переводил маршрут в динамическую
+  // отдачу без текста в HTML — убран 27.10.2026.
   return <GenericProductContent product={resolved.product} breadcrumbs={breadcrumbs} />;
 }
