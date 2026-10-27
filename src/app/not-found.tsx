@@ -33,7 +33,7 @@ export default function NotFound() {
         Страница не найдена
       </h1>
       <p className="mt-3 max-w-md text-[#8BA4BC]">
-        Ссылка устарела или была набрана с ошибкой. Ниже — рабочие разделы сайта.
+        Ссылка устарела или была набрана с ошибкой. Вот рабочие разделы сайта.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <Button href="/">На главную</Button>
